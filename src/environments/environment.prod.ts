@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  API_URL:'https://bluediamondresearch.com/WEB01/Delicious-Meal/api'
 };

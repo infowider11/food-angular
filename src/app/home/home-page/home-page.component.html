@@ -1,0 +1,241 @@
+<div class="hero-area-wrapper">
+    <div class="hero-bg" *ngIf="homePageContent.location_background_image" style="background-image: url('{{homePageContent.location_background_image}}');"></div>
+    <div class="hero-bg" *ngIf="!homePageContent.location_background_image" style="background-image: url('assets/img/here_slider.png');"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6 order-md-1">
+                <!--div class="popular-posts-wrapper owl-carousel hero-carousel"-->
+
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-template carouselSlide>
+                          <div class="slide">
+                            <img src="assets/img/food1.png" alt="img 1">
+                          </div>
+                        </ng-template>
+                        <ng-template carouselSlide>
+                          <div class="slide">
+                            <img src="assets/img/food.png" alt="img 2">
+                          </div>
+                        </ng-template>
+                      </owl-carousel-o>
+
+                <!--/div-->
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="here-content">
+
+                    <h1 class="heading-one" *ngIf="homePageContent.location_heading">{{homePageContent.location_heading}}</h1>
+                    <h1 class="heading-one" *ngIf="!homePageContent.location_heading">Fetching</h1>
+
+
+                    <p *ngIf="homePageContent.location_description" [innerHTML]="homePageContent.location_description"></p>
+                    <form action="" class="location-form">
+                        <div class="form-content">
+                            <div class="input-wrapper">
+                                <select name="location_name"  #select_area [(ngModel)]="selectedAreaId">
+                                    <option value="">Select Area</option>
+                                    <option [selected]="area.id == selectedAreaId" *ngFor="let area of areas" [value]="area.id">{{area.area_name}} ({{area.area_post_code}}) </option>
+                                </select>
+                            </div>
+                            <!--div class="input-wrapper">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" class="form-control pl-4" placeholder="Drop Your Location">
+                            </div-->
+                            <div class="input-wrapper input-btn">
+                                <button *ngIf="!selectedAreaId" type="button" (click)="OpenLocationWiseMeals(select_area.value)" class="default-btn">Proceed</button>
+                                <a *ngIf="selectedAreaId" routerLink="/area-group/{{selectedAreaId}}" class="default-btn">Proceed</a>
+                            </div>
+                        </div>
+                    </form>
+                </div> <!-- Content End  -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Here Area -->
+
+<!-- Start Order Step -->
+<div class="order-step-area section-ptb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto mb-5 mb-xs-0">
+                <div class="section-title text-center">
+                    <h2 class="heading-2-extra">Easy Order Steps</h2>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <!-- <div class="col-lg-4 col-sm-6 text-center px-0">
+                <div class="single-step">
+                    <img src="img/step_01.png" alt="step one" class="" />
+                    <h5 class="heading-5 pt-4 mb-1">Select your Restaurant</h5>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+                </div>
+            </div> -->
+            <div class="col-lg-4 col-sm-6 text-center px-0">
+                <div class="single-step">
+                    <img src="assets/img/step_01.png" alt="step one" class="" />
+                    <h5 class="heading-5 pt-4 mb-1">Select your Meal</h5>
+                    <p>Lorem ipsum dolor sit, amet consectetur <br>adipisicing elit.Lorem ipsum dolor sit.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center px-0">
+                <div class="single-step">
+                    <img src="assets/img/step_02.png" alt="step one" class="" />
+                    <h5 class="heading-5 pt-4 mb-1">Pay Cash/Online</h5>
+                    <p>Lorem ipsum dolor sit, amet consectetur <br>adipisicing elit.Lorem ipsum dolor sit.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center px-0">
+                <div class="single-step">
+                    <img src="assets/img/step_04.png" alt="step two" class="" />
+                    <h5 class="heading-5 pt-4 mb-1">Enjoy Your Meal</h5>
+                    <p>Lorem ipsum dolor sit, amet consectetur <br>adipisicing elit.Lorem ipsum dolor sit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Order Step -->
+
+
+<!-- Start Foods Tabs Area -->
+<div class="foods-tabs-area section-ptb bg-semi-white">
+    <div class="container">
+
+        <div class=" row filter-form mb-5">
+            <div class="col-sm-4">
+                <p>Product Categories</p>
+                <select (change)="FilterChanged()" [(ngModel)]="catid" class="form-control">
+                    <option value="">All Category</option>
+                    <option *ngFor="let category of categories" [value]="category.id">{{category.title}}</option>
+                </select>
+            </div>
+            <!--div class="col-sm-4 pl-2 pr-2"> 
+                    <div class=" snap-label">
+                        Price: $
+                        <span class="example-val" id="price-slider-snap-value-lower"></span>
+                        - $
+                        <span class="example-val" id="price-slider-snap-value-upper"></span>
+                    </div>
+                <div class="form-group mt-0">
+                    <div id="price-slider-snap"></div>
+                </div>
+            </div-->
+            <div class="col-sm-4">
+                <p>Meal Type</p>
+                <select class="form-control"  (change)="FilterChanged()" [(ngModel)]="mealtype">
+                    <option value="">All Types</option>
+                    <option *ngFor="let mealsType of mealsTypes" [value]="mealsType.id">{{mealsType.title}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row"  *ngIf="showMealsLoader">
+
+            <div class="col-lg-12 text-center"><h2>Loading...</h2></div>
+        </div>
+        <div class="row"  *ngIf="!showMealsLoader">
+
+            <div class="col-lg-4" *ngFor="let meal of meals">
+                <div class="card border-0 product-card custom-round">
+                    <div class="card-thumb">
+                        <a routerLink="/meal-detail/{{meal.id}}" class="black-overlay">
+                            <img *ngIf="meal.images.length==0" src="assets/img/meal6.png" class="card-img-top" alt="food" />
+                            <img *ngIf="meal.images.length > 0" src="{{meal.images[0].image}}" class="card-img-top" alt="food" />
+                        </a>
+                        <div class="product-type ms-3 day-badge">
+                            <!--p class="m-0 text-white"><i class="fas fa-solid fa-calendar-day"></i> <span>Tueday</span>
+                            </p-->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <small class="meal-cons">{{meal.category.title}}</small>
+                        <h6 class="heading-6"><a routerLink="/mail-detail/{{meal.id}}">{{meal.meal_type.title}}</a></h6>
+                        <p>{{meal.short_description}}</p>
+                        <div class="card-meta d-flex pb-2 align-items-center">
+                            <div class="product-rating">
+                                <span class="far fa-star"></span>
+                                <span class="rating-point">{{meal.rating}}</span>
+                            </div>
+                            <div class="product-price flex-grow-1">
+                                <span>${{meal.price}}</span>
+                            </div>
+                        </div>
+                        <a href="#" class="sm-btn add-tocard"><i class="fas fa-plus"></i> Add To Bag</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12" *ngIf="meals.length<=0">
+                <div class="alert alert-danger text-center">No records found...</div>
+            </div>
+
+        </div> <!-- COL END -->
+    </div>
+</div>
+<!-- End Foods Tabs Area -->
+<!-- Start About Section -->
+<div class="about-section-area section-ptb">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 mb-xs-5">
+                <div class="section-thumb text-center">
+                    <img src="assets/img/food_plate.png" alt="about" class="img-fluid w-75" />
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 align-self-center">
+                <div class="section-title-3 mb-3">
+                    <h2 class="heading-2-extra" >{{whyOrderContent.title}}</h2>
+                    <p>{{whyOrderContent.subheading}}</p>
+                </div>
+                <div class="section-content">
+                    <div class="post-excerpt py-3">
+                        <p>
+                            {{whyOrderContent.subheading}}
+                        </p>
+                        <p [innerHtml]="whyOrderContent.description">
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End About Section -->
+
+<div class="contact-wrapper count-section-area pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12">
+                <div
+                    class="single-contact d-flex align-items-center shadow custom-round justify-content-center text-center">
+                    <div class="contact-info">
+                        <h3> <span class="counter">{{foodDeliveredCount}}</span>+</h3>
+                        <p>Food Deliverd</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div
+                    class="single-contact d-flex align-items-center shadow custom-round justify-content-center text-center">
+                    <div class="contact-info">
+                        <h3> <span class="counter">{{setisfiedCount}}</span>+</h3>
+                        <p>Satisfied</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div
+                    class="single-contact d-flex align-items-center shadow custom-round justify-content-center text-center">
+                    <div class="contact-info">
+                        <h3> <span class="counter">{{experienceCount}}</span>+</h3>
+                        <p>Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
