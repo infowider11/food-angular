@@ -33,6 +33,8 @@ export class HomePageComponent implements OnInit {
 
   area_group: any = '';
 
+  dynamicSlides:any = []
+
 
 
 
@@ -74,6 +76,11 @@ export class HomePageComponent implements OnInit {
     });
     this.ngOnInit();
 
+  }
+
+  ComingSoon(){
+    alert('Coming Soon!')
+    return false;
   }
 
   getMealsFun() {
@@ -129,7 +136,7 @@ export class HomePageComponent implements OnInit {
       console.log(data);
       if (data.status == 1 && data.data) {
         this.homePageContent = data.data
-
+        this.dynamicSlides = data.data.images
       }
     })
   }
@@ -156,6 +163,16 @@ export class HomePageComponent implements OnInit {
 
       if (data.status == 1 && data.data.length > 0) {
         this.categories = data.data;
+      }
+
+
+    })
+
+    this.mealService.getMealType().subscribe((data: any) => {
+      console.log(data);
+
+      if (data.status == 1 && data.data.length > 0) {
+        this.mealsTypes = data.data;
       }
 
 

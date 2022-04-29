@@ -8,7 +8,7 @@
      src: url('../webfonts/AvenirLTStd-Book.otf');
 }
  body {
-     font-family: "AvenirLTStd", sans-serif;
+     font-family: "AvenirLTStd", sans-serif !important;
      font-size: 15px;
      color: #5a5b67;
      line-height: 1.5rem;
@@ -417,7 +417,6 @@
 }
  .widget-title-2 {
      position: relative;
-     padding-left:;
      border-bottom: 1px solid #e1e1e1;
 } 
  .widget-title-2 h4 {
@@ -1575,11 +1574,15 @@
     }
 }
  .hero-area-wrapper p {
-     font-weight: 500;
+     font-weight: normal;
      margin: 10px 0 30px;
+     color:#5a5b67;
 }
  .input-wrapper {
      position: relative;
+}
+a{
+    text-decoration: none !important;
 }
  .input-wrapper i {
      position: absolute;
@@ -1593,6 +1596,12 @@
      position: relative;
      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
      max-width: 100%;
+}
+.location-form select{
+    padding: 16px;
+    width: 100%;
+    outline: 0px !important;
+    border: 0;
 }
 .h100{
 	height:100%;
@@ -2404,6 +2413,7 @@
 /****************************** 11. Footer Area *************************/
  .footer-wrapper {
      background: #282932;
+     font-size: 15px;
 }
  .footer-wrapper::before {
      background: url("../img/f-loc-left.png") no-repeat bottom left;
@@ -4184,7 +4194,22 @@ h1, h2, h3, h4, h5, h6{
 	margin:0px 0 0 5px;
 	font-size: 20px;
 }
-
+.set-heightmin{
+    min-height: 600px;
+}
+.card-img, .card-img-bottom, .card-img-top {
+    width: 100%;
+    height: 245px;
+    object-fit: cover;
+}
+body .navbar-light .navbar-toggler-icon{
+    background: none;
+}
+.navbar-light .navbar-toggler{
+    border:0px;
+    outline: 0px !important;
+    box-shadow: 0px 0px 0px !important;
+}
  @media (max-width: 575px) { 
  .radio-custom h4{
 	 font-size:15px;
