@@ -103,7 +103,7 @@
             <div class="col-sm-4">
                 <p>Product Categories</p>
                 <select (change)="FilterChanged()" [(ngModel)]="catid" class="form-control">
-                    <option value="">All Category</option>
+                    <option [selected] [value]="0">All Category</option>
                     <option *ngFor="let category of categories" [value]="category.id">{{category.title}}</option>
                 </select>
             </div>
@@ -121,7 +121,7 @@
             <div class="col-sm-4">
                 <p>Meal Type</p>
                 <select class="form-control"  (change)="FilterChanged()" [(ngModel)]="mealtype">
-                    <option value="">All Types</option>
+                    <option [selected] [value]="0">All Types</option>
                     <option *ngFor="let mealsType of mealsTypes" [value]="mealsType.id">{{mealsType.title}}</option>
                 </select>
             </div>
