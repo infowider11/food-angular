@@ -107,17 +107,7 @@
                     <option *ngFor="let category of categories" [value]="category.id">{{category.title}}</option>
                 </select>
             </div>
-            <!--div class="col-sm-4 pl-2 pr-2"> 
-                    <div class=" snap-label">
-                        Price: $
-                        <span class="example-val" id="price-slider-snap-value-lower"></span>
-                        - $
-                        <span class="example-val" id="price-slider-snap-value-upper"></span>
-                    </div>
-                <div class="form-group mt-0">
-                    <div id="price-slider-snap"></div>
-                </div>
-            </div-->
+          
             <div class="col-sm-4">
                 <p>Meal Type</p>
                 <select class="form-control"  (change)="FilterChanged()" [(ngModel)]="mealtype">
@@ -136,7 +126,7 @@
             <div class="col-lg-4" *ngFor="let meal of meals">
                 <div class="card border-0 product-card custom-round">
                     <div class="card-thumb">
-                        <a (click)="ComingSoon();"  class="black-overlay">
+                        <a routerLink="/meal-detail/{{meal.id}}" class="black-overlay">
                             <img *ngIf="meal.images.length==0" src="assets/img/meal6.png" class="card-img-top" alt="food" />
                             <img *ngIf="meal.images.length > 0" src="{{meal.images[0].image}}" class="card-img-top" alt="food" />
                         </a>
@@ -147,7 +137,7 @@
                     </div>
                     <div class="card-body">
                         <small class="meal-cons">{{meal.category.title}}</small>
-                        <h6 class="heading-6"><a (click)="ComingSoon();" >{{meal.meal_type.title}}</a></h6>
+                        <h6 class="heading-6"><a routerLink="/meal-detail/{{meal.id}}" >{{meal.meal_type.title}}</a></h6>
                         <p>{{meal.short_description}}</p>
                         <div class="card-meta d-flex pb-2 align-items-center">
                             <div class="product-rating">
@@ -158,7 +148,7 @@
                                 <span>${{meal.price}}</span>
                             </div>
                         </div>
-                        <a (click)="ComingSoon();" class="sm-btn add-tocard"><i class="fas fa-plus"></i> Add To Bag</a>
+                        <a routerLink="/meal-detail/{{meal.id}}" class="sm-btn add-tocard"><i class="fas fa-plus"></i> Add To Bag</a>
                     </div>
                 </div>
             </div>

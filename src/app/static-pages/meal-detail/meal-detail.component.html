@@ -8,8 +8,8 @@
                         <h1 class="heading-one">Lunch Detail</h1>
                         <div class="page-nav">
                             <ul>
-                                <li><a href="#">Home ></a></li>
-                                <li>Lunch Details</li>
+                                <li><a routerLink="/home">Home > </a></li>
+                                <li> Lunch Details</li>
                             </ul>
                         </div>
                     </div>
@@ -27,47 +27,24 @@
                 <!-- Start Product Thumb -->
                 <div class="col-lg-5 col-sm-5 mb-4 mb-lg-0">
                     <div class="product-thumbs">
-                        <div id="sync1" class="owl-carousel owl-theme">
-                            <div class="item">
-                                <img src="assets/img/meal6.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal5.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal4.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal3.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal2.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal1.png" class="img-fluid" />
-                            </div>
-                        </div>
+                        
+                        <owl-carousel-o *ngIf="dynamicSlides.length>0" [options]="customOptions">
+                            <ng-container *ngFor="let slide of dynamicSlides">
+                              <ng-template carouselSlide [id]="slide.id">
+                                <img [src]="slide.image" >
+                              </ng-template>
+                            </ng-container>
+                          </owl-carousel-o>
 
-                        <div id="sync2" class="owl-carousel owl-theme mt-2">
-                            <div class="item">
-                                <img src="assets/img/meal6.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal5.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal4.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal3.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal2.png" class="img-fluid" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/img/meal1.png" class="img-fluid" />
-                            </div>
-                        </div>
+                          <owl-carousel-o *ngIf="dynamicSlides.length==0" [options]="customOptions">
+                            <ng-container >
+                              <ng-template carouselSlide [id]="'0'">
+                                <img [src]="'assets/img/meal6.png'" >
+                              </ng-template>
+                            </ng-container>
+                          </owl-carousel-o>
+
+                       
                     </div>
                 </div>
                 <!-- Start Product Thumb -->
@@ -75,16 +52,16 @@
                 <!-- Start Product Content -->
                 <div class="col-lg-7 col-sm-7">
                     <div class="product-content">
-                        <small>Classic North Indian</small>
-                        <h2 class="heading-2">Dinner</h2>
+                        <small *ngIf="mealData.category">{{mealData.category.title}}</small>
+                        <h2 class="heading-2">{{mealData.heading}}</h2>
                         <div class="product-rating">
-                            <p><i class="far fa-star"></i> <span>4.5</span> (4 Customer Review)</p>
+                            <p><i class="far fa-star"></i> <span>{{mealData.rating}}</span> ({{mealData.reviews}} Customer Review)</p>
                         </div>
                         <div class="product-price">
-                            <p>$19.00</p>
+                            <p>${{mealData.price}}</p>
                         </div>
-                        <div class="product-text">
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                        <div class="product-text" [innerHTML]="mealData.short_description">
+                            
                         </div>
 
                         <div class="set-days">
@@ -107,19 +84,12 @@
                                     <input class="form-control" type="date" value="13">
                                 </div>
                                 <div class="meal-type">
-                                    <select class="form-control">
-                                        <option>Meal type</option>
-                                        <option>Bull roast</option>
-                                        <option>Dal bhati</option>
-                                        <option>Dinner</option>
+                                    <select class="form-control" >
+                                        <option [value]="0">Meal type</option>
+                                        <option *ngFor="let mealType of mealsTypes" [value]="mealType.id">{{mealType.title}}</option>
                                     </select>
                                 </div>
-                                <div class="meal-option">
-                                    <select class="form-control">
-                                        <option>Lunch</option>
-                                        <option>Dinner</option>
-                                    </select>
-                                </div>
+                                
                                 <div class="product-action d-flex align-items-center ">
                                     <form action="#">
                                         <input type="number" value="1" min="1">
@@ -137,18 +107,11 @@
                                 </div>
                                 <div class="meal-type">
                                     <select class="form-control">
-                                        <option>Meal type</option>
-                                        <option>Bull roast</option>
-                                        <option>Dal bhati</option>
-                                        <option>Dinner</option>
+                                        <option [value]="0">Meal type</option>
+                                        <option *ngFor="let mealType of mealsTypes" [value]="mealType.id">{{mealType.title}}</option>
                                     </select>
                                 </div>
-                                <div class="meal-option">
-                                    <select class="form-control">
-                                        <option>Lunch</option>
-                                        <option>Dinner</option>
-                                    </select>
-                                </div>
+                              
                                 <div class="product-action d-flex align-items-center ">
                                     <form action="#">
                                         <input type="number" value="1" min="1">
@@ -169,7 +132,7 @@
                         </div>
                         <div class="product-action d-flex align-items-center mt-4">
 
-                            <a href="cart.php" class="default-btn"><i class="fas fa-plus"></i> Book Order</a>
+                            <a routerLink="cards" class="default-btn"><i class="fas fa-plus"></i> Book Order</a>
                         </div>
                         <div class="same-dar-orxcer mt-4">
                             <a href="" class="default-btn" data-bs-toggle="modal"
@@ -197,7 +160,7 @@
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
                                         type="button" role="tab" aria-controls="reviews" aria-selected="false">
-                                        reviews(124)
+                                        reviews({{mealData.reviews}})
                                     </a>
                                 </li>
 
@@ -205,25 +168,8 @@
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="info" role="tabpanel">
                                     <h6 class="heading-6">Additional Information</h6>
-                                    <div class="general-nav-3 mt-4">
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged. It
-                                            was popularised in the 1960s with the release of Letraset sheets containing
-                                            Lorem Ipsum passages, and more recently with desktop publishing software
-                                            like Aldus PageMaker including versions of Lorem Ipsum.</p>
-
-                                        <p>It is a long established fact that a reader will be distracted by the
-                                            readable content of a page when looking at its layout. The point of using
-                                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-                                            opposed to using 'Content here, content here', making it look like readable
-                                            English. Many desktop publishing packages and web page editors now use Lorem
-                                            Ipsum as their default model text, and a search for 'lorem ipsum' will
-                                            uncover many web sites still in their infancy. Various versions have evolved
-                                            over the years, sometimes by accident, sometimes on purpose (injected humour
-                                            and the like).</p>
+                                    <div class="general-nav-3 mt-4" [innerHTML]="mealData.detail_description">
+                                        
                                     </div>
                                 </div>
                                 <div class="tab-pane fade " id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
@@ -232,36 +178,35 @@
                                         <div class="col-sm-3">
                                             <div class="rating-block">
                                                 <h4>Average user rating</h4>
-                                                <h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
-                                                <button type="button" class="btn btn-warning btn-sm"
+                                                <h2 class="bold padding-bottom-7">{{mealData.rating}} <small>/ 5</small></h2>
+                                                <button type="button" class="btn {{mealData.rating>=1 ? 'btn-warning' : 'btn-default btn-grey' }} btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-warning btn-sm"
+                                                <button type="button" class="btn  {{mealData.rating>=2 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-warning btn-sm"
+                                                <button type="button" class="btn  {{mealData.rating>=3 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-default btn-grey btn-sm"
+                                                <button type="button" class="btn  {{mealData.rating>=4 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-default btn-grey btn-sm"
+                                                <button type="button" class="btn  {{mealData.rating>=5 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <hr />
-                                            <div class="review-block">
+                                            <div class="review-block" *ngIf="reviews.length > 0">
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image"
@@ -385,6 +330,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -399,3 +345,38 @@
     </div>
     <!-- End Product Details -->
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="contact-popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Contact us for Same Day Order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class=" control-label">Name</label>   
+            <input type="text" placeholder="Name" class="form-control"> 
+          </div>
+          <div class="form-group">
+            <label class=" control-label">Email address</label>   
+            <input type="email" placeholder="Email address" class="form-control"> 
+          </div>
+          <div class="form-group">
+            <label class=" control-label">Delivery Address</label>   
+            <input type="text" placeholder="Delivery Address" class="form-control"> 
+          </div>
+          <div class="form-group">
+            <label class=" control-label">Phone number</label>   
+            <input type="text" placeholder="Phone number" class="form-control"> 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-warning">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Contact Popup-->

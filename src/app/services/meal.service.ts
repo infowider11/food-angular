@@ -47,12 +47,16 @@ export class MealService {
       params = params.set(param,data[param])
     }
 
-    
-
-
-    
-
     return this.httpClient.get<any>(this.apiURL + '/getMeals/',{params})
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
+  getMealById(meal_id:any):Observable<any> {
+    let params = new HttpParams().set("meal_id",meal_id);
+
+    return this.httpClient.get<any>(this.apiURL + '/getMealById/',{params})
       .pipe(
         catchError(this.errorHandler)
       )
