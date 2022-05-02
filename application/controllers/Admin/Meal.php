@@ -229,7 +229,7 @@ class Meal extends CI_Controller
                       		$ext =end($newName);
                       		$fileName = 'assets/admin/image' . rand() . time() . '.' . $ext;
                        		if(move_uploaded_file($_FILES['image']['tmp_name'][$i], $fileName)){
-                        		$imgarray=array('meal_id' =>$run, 'image'=>$fileName );
+                        		$imgarray=array('meal_id' =>$id, 'image'=>$fileName );
                        			 $run2=$this->common_model->InsertData('meal_images',$imgarray);
                        		}
                        		else
