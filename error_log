@@ -1,0 +1,38 @@
+[02-Feb-2021 12:00:35 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api::change_password() in /home/vitalqzv/public_html/WEB01/Sports-card/application/controllers/Api.php on line 753
+[16-Mar-2021 15:06:28 Asia/Dubai] PHP Fatal error:  Cannot redeclare Site::contact() in /home/vitalqzv/public_html/WEB01/IDESPATCH/application/controllers/Site.php on line 28
+[16-Mar-2021 15:06:41 Asia/Dubai] PHP Fatal error:  Cannot redeclare Site::contact() in /home/vitalqzv/public_html/WEB01/IDESPATCH/application/controllers/Site.php on line 28
+[26-Mar-2021 08:12:33 UTC] PHP Warning:  include(include/header.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 1
+[26-Mar-2021 08:12:33 UTC] PHP Warning:  include(include/header.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 1
+[26-Mar-2021 08:12:33 UTC] PHP Warning:  include(): Failed opening 'include/header.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 1
+[26-Mar-2021 08:12:33 UTC] PHP Warning:  include(include/footer.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 23
+[26-Mar-2021 08:12:33 UTC] PHP Warning:  include(include/footer.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 23
+[26-Mar-2021 08:12:33 UTC] PHP Warning:  include(): Failed opening 'include/footer.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 23
+[26-Mar-2021 08:16:45 UTC] PHP Warning:  include(include/header.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 1
+[26-Mar-2021 08:16:45 UTC] PHP Warning:  include(include/header.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 1
+[26-Mar-2021 08:16:45 UTC] PHP Warning:  include(): Failed opening 'include/header.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 1
+[26-Mar-2021 08:16:45 UTC] PHP Warning:  include(include/footer.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 23
+[26-Mar-2021 08:16:45 UTC] PHP Warning:  include(include/footer.php): failed to open stream: No such file or directory in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 23
+[26-Mar-2021 08:16:45 UTC] PHP Warning:  include(): Failed opening 'include/footer.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/vitalqzv/public_html/WEB01/IDESPATCH/delivery.php on line 23
+[27-Apr-2021 13:37:14 Asia/Dubai] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home/webwiqpq/public_html/WEB01/sportago/application/controllers/Api.php on line 162
+[04-Dec-2021 11:29:43 Asia/Dubai] PHP Fatal error:  Cannot redeclare Home::pricing() in /home1/webwiqpq/public_html/WEB01/a4y1/application/controllers/Home.php on line 57
+[08-Dec-2021 09:49:03 Asia/Dubai] PHP Fatal error:  Cannot redeclare Home::ContactUs() in /home4/bluednmd/public_html/WEB01/a4y1/application/controllers/Home.php on line 211
+[23-Dec-2021 15:43:32 Asia/Dubai] PHP Parse error:  syntax error, unexpected 'define' (T_STRING) in /home4/bluednmd/public_html/WEB01/a4y1/application/config/constants.php on line 93
+[25-Dec-2021 11:46:47 Asia/Dubai] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home4/bluednmd/public_html/WEB01/a4y1/application/views/site/categories.php on line 157
+[25-Dec-2021 11:47:22 Asia/Dubai] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home4/bluednmd/public_html/WEB01/a4y1/application/views/site/categories.php on line 157
+[25-Dec-2021 11:48:10 Asia/Dubai] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home4/bluednmd/public_html/WEB01/a4y1/application/views/site/categories.php on line 157
+[25-Dec-2021 11:49:37 Asia/Dubai] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home4/bluednmd/public_html/WEB01/a4y1/application/views/site/categories.php on line 158
+[04-Feb-2022 11:22:32 Asia/Dubai] PHP Fatal error:  Can't use function return value in write context in /home4/bluednmd/public_html/WEB01/a4y1/application/controllers/PostAds.php on line 808
+[04-Feb-2022 11:22:43 Asia/Dubai] PHP Fatal error:  Can't use function return value in write context in /home4/bluednmd/public_html/WEB01/a4y1/application/controllers/PostAds.php on line 808
+[16-Feb-2022 09:12:51 Asia/Dubai] PHP Fatal error:  Cannot use [] for reading in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 664
+[17-Feb-2022 16:20:14 Asia/Dubai] PHP Fatal error:  Cannot redeclare Categories::updateCategory() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Admin/Categories.php on line 186
+[21-Feb-2022 15:27:20 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api::addPortfolio() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 1285
+[21-Feb-2022 15:27:37 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api::addPortfolio() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 1285
+[21-Feb-2022 15:27:42 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api::addPortfolio() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 1285
+[21-Feb-2022 15:27:54 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api::addPortfolio() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 1285
+[21-Feb-2022 16:31:47 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api1::serviceList() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api1.php on line 1463
+[21-Feb-2022 16:32:20 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api1::serviceList() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api1.php on line 1463
+[21-Feb-2022 16:33:05 Asia/Dubai] PHP Fatal error:  Cannot redeclare Api1::serviceList() in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api1.php on line 1463
+[01-Apr-2022 09:45:25 Asia/Dubai] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 2150
+[01-Apr-2022 13:58:27 Asia/Dubai] PHP Warning:  Unterminated comment starting line 1435 in /home1/vitalqzv/public_html/WEB01/QuickCash/application/controllers/Api.php on line 1435
+[22-Apr-2022 11:39:58 Asia/Dubai] PHP Fatal error:  Cannot use [] for reading in /home4/bluednmd/public_html/WEB01/Delicious-Meal/application/views/admin/meals-list.php on line 188
+[22-Apr-2022 11:55:12 Asia/Dubai] PHP Fatal error:  Cannot redeclare Meal::meal_list() in /home4/bluednmd/public_html/WEB01/Delicious-Meal/application/controllers/Admin/Meal.php on line 105
