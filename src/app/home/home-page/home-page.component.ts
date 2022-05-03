@@ -25,18 +25,12 @@ export class HomePageComponent implements OnInit {
   foodDeliveredCount: number = 0;
   experienceCount: number = 0;
   showMealsLoader = true;
-
   mealsearch: any = {}
   catid = "";
   mealtype = "";
   selectedAreaId: any = "";
-
   area_group: any = '';
-
   dynamicSlides:any = []
-
-
-
 
 
   constructor(public mealService: MealService, public commonService: CommonServiceService, private router: Router, private actRoute: ActivatedRoute) {
