@@ -6,19 +6,7 @@ class Home extends CI_Controller {
 		//$this->check_login();
 		header("Access-Control-Allow-Origin:*");
     $this->db->query("set sql_mode = ''");
-    $this->load->model("Send_sms");
-
-				$language = $this->session->userdata('language');
-
-				if ($language && $language == 'arabic') {
-				 $this->lang->load('arabic_lang', 'arabic');	
-				 $this->lang11 = "arb";
-				} else {
-				 $this->lang->load('english_lang', 'english');
-				 $this->lang11 = "eng";
-				} 
-				//echo $lang;
-
+   
   }
 	
 	public function check_login(){
