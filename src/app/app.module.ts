@@ -9,7 +9,9 @@ import { GeneralModule } from './general/general.module';
 import { HomeModule } from './home/home.module';
 import { StaticPagesModule } from './static-pages/static-pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -23,8 +25,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AuthUserModule,
     StaticPagesModule,
     HttpClientModule,
-    BrowserAnimationsModule
-    
+    BrowserAnimationsModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

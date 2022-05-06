@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MealService } from '../../services/meal.service';
 import { CommonServiceService } from 'src/app/services/common-service.service';
-import { NiceSelectModule } from "ng-nice-select";
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -26,8 +25,8 @@ export class HomePageComponent implements OnInit {
   experienceCount: number = 0;
   showMealsLoader = true;
   mealsearch: any = {}
-  catid = "";
-  mealtype = "";
+  catid = 0;
+  mealtype = 0;
   selectedAreaId: any = "";
   area_group: any = '';
   dynamicSlides:any = []
@@ -72,10 +71,7 @@ export class HomePageComponent implements OnInit {
 
   }
 
-  ComingSoon(){
-    alert('Coming Soon!')
-    return false;
-  }
+ 
 
   getMealsFun() {
 

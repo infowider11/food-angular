@@ -11,11 +11,8 @@ export class CommonServiceService {
 
   private apiURL = environment.API_URL;
 
-  httpOptions = {
-    hearders: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+  httpOptions = new HttpHeaders().set('Content-Type','application/json')
+  
 
   constructor(private httpClient: HttpClient) { }
 
@@ -49,6 +46,21 @@ export class CommonServiceService {
 
   getFooterContent(): Observable<any> {
     return this.httpClient.get<any>(this.apiURL + '/getFooterContent')
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
+  convertJSONToFormData(params:any){
+      let n = new FormData();
+      for(let key in params){
+        n.append(key,params[key])
+      }
+      return n;
+  }
+
+  contactForSameDay(data:any): Observable<any> {
+    return this.httpClient.post<any>(this.apiURL + '/contactForSameDay',this.convertJSONToFormData(data))
       .pipe(
         catchError(this.errorHandler)
       )

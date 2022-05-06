@@ -27,24 +27,24 @@
                 <!-- Start Product Thumb -->
                 <div class="col-lg-5 col-sm-5 mb-4 mb-lg-0">
                     <div class="product-thumbs">
-                        
+
                         <owl-carousel-o *ngIf="dynamicSlides.length>0" [options]="customOptions">
                             <ng-container *ngFor="let slide of dynamicSlides">
-                              <ng-template carouselSlide [id]="slide.id">
-                                <img [src]="slide.image" >
-                              </ng-template>
+                                <ng-template carouselSlide [id]="slide.id">
+                                    <img [src]="slide.image">
+                                </ng-template>
                             </ng-container>
-                          </owl-carousel-o>
+                        </owl-carousel-o>
 
-                          <owl-carousel-o *ngIf="dynamicSlides.length==0" [options]="customOptions">
-                            <ng-container >
-                              <ng-template carouselSlide [id]="'0'">
-                                <img [src]="'assets/img/meal6.png'" >
-                              </ng-template>
+                        <owl-carousel-o *ngIf="dynamicSlides.length==0" [options]="customOptions">
+                            <ng-container>
+                                <ng-template carouselSlide [id]="'0'">
+                                    <img [src]="'assets/img/meal6.png'">
+                                </ng-template>
                             </ng-container>
-                          </owl-carousel-o>
+                        </owl-carousel-o>
 
-                       
+
                     </div>
                 </div>
                 <!-- Start Product Thumb -->
@@ -55,73 +55,52 @@
                         <small *ngIf="mealData.category">{{mealData.category.title}}</small>
                         <h2 class="heading-2">{{mealData.heading}}</h2>
                         <div class="product-rating">
-                            <p><i class="far fa-star"></i> <span>{{mealData.rating}}</span> ({{mealData.reviews}} Customer Review)</p>
+                            <p><i class="far fa-star"></i> <span>{{mealData.rating}}</span> ({{mealData.reviews}}
+                                Customer Review)</p>
                         </div>
                         <div class="product-price">
                             <p>${{mealData.price}}</p>
                         </div>
                         <div class="product-text" [innerHTML]="mealData.short_description">
-                            
+
                         </div>
 
-                        <div class="set-days">
-                            <div class="head-maela">
-                                <h3>Please choose Date</h3>
-                                <p>You can Choose Multiple date</p>
-                            </div>
-                            <div class="choose-date">
-                                <input type="text" class="form-control date" placeholder="Please Pick dates">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                        </div>
+                     
                         <div class="well show-fdae">
                             <div class="head-maela">
                                 <h3>Please choose Meal options</h3>
                             </div>
+
                             <!-- loop -->
-                            <div class="selected-date">
+                            <div class="selected-date" *ngFor="let mealOption of mealOptions; let indexOfelement=index;" id="mealOption{{indexOfelement}}">
                                 <div class="date-rows">
-                                    <input class="form-control" type="date" value="13">
-                                </div>
-                                <div class="meal-type">
-                                    <select class="form-control" >
-                                        <option [value]="0">Meal type</option>
-                                        <option *ngFor="let mealType of mealsTypes" [value]="mealType.id">{{mealType.title}}</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="product-action d-flex align-items-center ">
-                                    <form action="#">
-                                        <input type="number" value="1" min="1">
-                                    </form>
-                                </div>
-                                <div class="meal-delete">
-                                    <a href="" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- loop -->
-                            <!-- loop -->
-                            <div class="selected-date">
-                                <div class="date-rows">
-                                    <input class="form-control" type="date" value="13">
+                                    <input class="form-control" min="{{today}}" type="date" value="13">
                                 </div>
                                 <div class="meal-type">
                                     <select class="form-control">
                                         <option [value]="0">Meal type</option>
-                                        <option *ngFor="let mealType of mealsTypes" [value]="mealType.id">{{mealType.title}}</option>
+                                        <option *ngFor="let mealType of mealsTypes" [value]="mealType.id">
+                                            {{mealType.title}}</option>
                                     </select>
                                 </div>
-                              
+                                <div class="meal-type" style="width: 50%;">
+
+                                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="preferences">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
                                 <div class="product-action d-flex align-items-center ">
                                     <form action="#">
                                         <input type="number" value="1" min="1">
                                     </form>
                                 </div>
                                 <div class="meal-delete">
-                                    <a href="" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                    <a href="javascript:;" (click)="addMore()" *ngIf="indexOfelement==0" class="btn btn-warning"><i class="fa fa-plus"></i></a>
+                                    <a href="javascript:;" (click)="remoteItem(indexOfelement)" *ngIf="indexOfelement!=0" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
                                 </div>
                             </div>
                             <!-- loop -->
+                           
                         </div>
 
                         <div class="specail-note">
@@ -132,7 +111,7 @@
                         </div>
                         <div class="product-action d-flex align-items-center mt-4">
 
-                            <a routerLink="cards" class="default-btn"><i class="fas fa-plus"></i> Book Order</a>
+                            <a (click)="ComingSoon()" class="default-btn"><i class="fas fa-plus"></i> Book Order</a>
                         </div>
                         <div class="same-dar-orxcer mt-4">
                             <a href="" class="default-btn" data-bs-toggle="modal"
@@ -169,7 +148,7 @@
                                 <div class="tab-pane fade show active" id="info" role="tabpanel">
                                     <h6 class="heading-6">Additional Information</h6>
                                     <div class="general-nav-3 mt-4" [innerHTML]="mealData.detail_description">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade " id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
@@ -178,24 +157,30 @@
                                         <div class="col-sm-3">
                                             <div class="rating-block">
                                                 <h4>Average user rating</h4>
-                                                <h2 class="bold padding-bottom-7">{{mealData.rating}} <small>/ 5</small></h2>
-                                                <button type="button" class="btn {{mealData.rating>=1 ? 'btn-warning' : 'btn-default btn-grey' }} btn-sm"
+                                                <h2 class="bold padding-bottom-7">{{mealData.rating}} <small>/ 5</small>
+                                                </h2>
+                                                <button type="button"
+                                                    class="btn {{mealData.rating>=1 ? 'btn-warning' : 'btn-default btn-grey' }} btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn  {{mealData.rating>=2 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
+                                                <button type="button"
+                                                    class="btn  {{mealData.rating>=2 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn  {{mealData.rating>=3 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
+                                                <button type="button"
+                                                    class="btn  {{mealData.rating>=3 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn  {{mealData.rating>=4 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
+                                                <button type="button"
+                                                    class="btn  {{mealData.rating>=4 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
-                                                <button type="button" class="btn  {{mealData.rating>=5 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
+                                                <button type="button"
+                                                    class="btn  {{mealData.rating>=5 ? 'btn-warning' : 'btn-default btn-grey' }}  btn-sm"
                                                     aria-label="Left Align">
                                                     <i class="fas fa-solid fa-star"></i>
                                                 </button>
@@ -349,34 +334,62 @@
 <!-- Modal -->
 <div class="modal fade" id="contact-popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Contact us for Same Day Order</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contact us for Same Day Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="deliveryFormSubmit()">
+                <div class="modal-body">
+                    <div *ngIf="contactFormMsg" class="alert alert-success">{{contactFormMsg}}</div>
+                    <div class="form-group">
+                        <label class=" control-label">Name</label>
+                        <input type="text" formControlName="name" placeholder="Name" class="form-control">
+                        <div *ngIf="form.controls['name'].touched && form.controls['name'].invalid" class="text-danger">
+                            <div *ngIf="form.controls['name'].errors && form.controls['name'].errors['required']">Name
+                                is required</div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Email address</label>
+                        <input type="email" formControlName="email" placeholder="Email address" class="form-control">
+                        <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid"
+                            class="text-danger">
+                            <div *ngIf="form.controls['email'].errors && form.controls['email'].errors['required']">
+                                email is required</div>
+                            <div *ngIf="form.controls['email'].errors && form.controls['email'].errors['email']">Valid
+                                email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Delivery Address</label>
+                        <input type="text" formControlName="delivery_address" placeholder="Delivery Address"
+                            class="form-control">
+                        <div *ngIf="form.controls['delivery_address'].touched && form.controls['delivery_address'].invalid"
+                            class="text-danger">
+                            <div
+                                *ngIf="form.controls['delivery_address'].errors && form.controls['delivery_address'].errors['required']">
+                                Address is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Phone number</label>
+                        <input type="number" formControlName="phone" placeholder="Phone number" class="form-control">
+                        <div *ngIf="form.controls['phone'].touched && form.controls['phone'].invalid"
+                            class="text-danger">
+                            <div *ngIf="form.controls['phone'].errors && form.controls['phone'].errors['required']">
+                                Phone is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="!form.valid || contactFormLoader" class="btn btn-warning">Submit
+                        <i *ngIf="contactFormLoader" class="fa fa-spin fa-spinner"></i></button>
+                </div>
+            </form>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label class=" control-label">Name</label>   
-            <input type="text" placeholder="Name" class="form-control"> 
-          </div>
-          <div class="form-group">
-            <label class=" control-label">Email address</label>   
-            <input type="email" placeholder="Email address" class="form-control"> 
-          </div>
-          <div class="form-group">
-            <label class=" control-label">Delivery Address</label>   
-            <input type="text" placeholder="Delivery Address" class="form-control"> 
-          </div>
-          <div class="form-group">
-            <label class=" control-label">Phone number</label>   
-            <input type="text" placeholder="Phone number" class="form-control"> 
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning">Submit</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <!-- Contact Popup-->
+</div>
+<!-- Contact Popup-->

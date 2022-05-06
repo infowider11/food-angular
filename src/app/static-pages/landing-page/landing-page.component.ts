@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonServiceService } from 'src/app/services/common-service.service';
-import { NiceSelectModule } from "ng-nice-select";
 import { MealService } from '../../services/meal.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';

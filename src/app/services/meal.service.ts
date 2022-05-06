@@ -62,6 +62,13 @@ export class MealService {
       )
   }
 
+  getPreferences():Observable<any> {
+    return this.httpClient.get<any>(this.apiURL + '/preferences/' )
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
   
   getAreaServed(): Observable<any> {
     return this.httpClient.get<any>(this.apiURL + '/getAreaServed/')

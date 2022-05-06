@@ -9,9 +9,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SearchComponent } from './search/search.component';
 import { MealDetailComponent } from './meal-detail/meal-detail.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule,ReactiveFormsModule } from '@angular/forms'; 
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -29,7 +31,11 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     CommonModule,
     RouterModule,
     FormsModule,
-    CarouselModule
+    CarouselModule,
+    ReactiveFormsModule,
+    NgMultiSelectDropDownModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports:[
     ContactUsComponent,

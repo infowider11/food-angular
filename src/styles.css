@@ -1,0 +1,9 @@
+.relative {
+    position: relative;
+}
+.relative i.fa.fa-caret-down {
+    position: absolute;
+    top: 36px;
+    right: 13px;
+    font-size: 13px;
+}
