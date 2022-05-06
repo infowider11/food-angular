@@ -7,3 +7,18 @@
     right: 13px;
     font-size: 13px;
 }
+.my-select .multiselect-item-checkbox input[type=checkbox] + div:before {
+    box-sizing: content-box !important;
+    color: #ffae00 !important;
+    border: 2px solid #ffae00 !important;
+}
+.my-select .multiselect-item-checkbox input[type=checkbox]:checked + div:before {
+    background: #ffae00 !important;
+}
+.my-select .dropdown-btn .selected-item-container .selected-item {
+    border: 1px solid #ffae00 !important;
+    background: #ffae00 !important;
+    font-size: 12px !important;
+    border-radius: 4px !important;
+    margin:2px 0px;
+}
