@@ -12,6 +12,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+
+
 
 @NgModule({
   declarations: [
@@ -28,7 +33,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     BrowserAnimationsModule,
     NgMultiSelectDropDownModule.forRoot(),
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

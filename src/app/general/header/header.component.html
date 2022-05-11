@@ -28,10 +28,10 @@
                                 <a class="nav-link" routerLink="/login"  routerLinkActive="active"><i class="far fa-user"></i> Login</a>
                             </li>
                             <li class="nav-item mini-cart">
-                                <a href="cart.php" class="nav-link">
+                                <a routerLink="/cart" class="nav-link">
                                     <i class="fas fa-shopping-bag"></i>
                                 
-                                    <!--sup class="cart-quantity">2</sup-->
+                                    <sup *ngIf="cartCount > 0" class="cart-quantity">{{cartCount}}</sup>
                                 </a>
                                 <!--div class="mini-cart-box">
                                     <div class="cart-item">

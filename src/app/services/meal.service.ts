@@ -62,12 +62,26 @@ export class MealService {
       )
   }
 
-  getPreferences():Observable<any> {
-    return this.httpClient.get<any>(this.apiURL + '/preferences/' )
+  getPreferences(cat_id:any=''):Observable<any> {
+    let params = new HttpParams().set("cat_id",cat_id);
+
+    return this.httpClient.get<any>(this.apiURL + '/preferences/',{params})
       .pipe(
         catchError(this.errorHandler)
       )
   }
+
+
+  getMealData(meal_ids:any=''):Observable<any> {
+    let params = new HttpParams().set("meal_ids",meal_ids);
+
+    return this.httpClient.get<any>(this.apiURL + '/getMealsDataForCart/',{params})
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
+
 
   
   getAreaServed(): Observable<any> {

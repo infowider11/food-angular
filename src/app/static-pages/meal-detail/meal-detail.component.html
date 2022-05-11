@@ -65,58 +65,100 @@
 
                         </div>
 
-                     
+                        <!-- <form (ngSubmit)="addtoCart()"> -->
+
+
                         <div class="well show-fdae">
                             <div class="head-maela">
                                 <h3>Please choose Meal options</h3>
                             </div>
 
                             <!-- loop -->
-                            <div class="selected-date" *ngFor="let mealOption of mealOptions; let indexOfelement=index;" id="mealOption{{indexOfelement}}">
+                            <div class="selected-date"
+                                *ngFor="let mealOption of mealOptions; let indexOfelement=index;">
                                 <div class="date-rows">
-                                    <input class="form-control" min="{{today}}" type="date" value="13">
-                                </div>
-                                <div class="meal-type">
-                                    <select class="form-control">
-                                        <option [value]="0">Meal type</option>
-                                        <option *ngFor="let mealType of mealsTypes" [value]="mealType.id">
-                                            {{mealType.title}}</option>
-                                    </select>
+                                    <mat-form-field>
+                                        <input [matDatepickerFilter]="myHolidayFilter" matInput type="text"
+                                            [max]="maxDate" autocomplete="off" [min]="date" [(ngModel)]="mealOption.date" [matDatepicker]="picker"
+                                            placeholder="Choose a date">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
                                 </div>
                                 <div class="meal-type my-select" style="width: 50%;">
+                                    <a href="javascript:void(0)" (click)="OpenModal(indexOfelement)">Meal preference</a>
+                                    <!--<ng-multiselect-dropdown [settings]="dropdownSettings" [(ngModel)]="mealOption.preference" [data]="preferences">
+                                    </ng-multiselect-dropdown> -->
 
-                                    <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="preferences">
-                                    </ng-multiselect-dropdown>
+                                    <div class="modal fade" id="preference-popup{{indexOfelement}}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Select your meal
+                                                        preference</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+
+
+                                                    <div class="form-group"
+                                                        *ngFor='let c of mealOption.preference; let i = index'>
+                                                        <label>Preference 1</label>
+                                                        <select class="form-control" [(ngModel)]="c.id">
+                                                            <option [value]="0" selected>---Choose Preference---
+                                                            </option>
+                                                            <option *ngFor="let preference of preferences"
+                                                                [value]="preference.id">
+                                                                {{preference.title}}</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="product-action d-flex align-items-center ">
-                                    <form action="#">
-                                        <input type="number" value="1" min="1">
-                                    </form>
+                                    <input type="number" value="1" min="1" [(ngModel)]="mealOption.qunatity">
                                 </div>
                                 <div class="meal-delete">
-                                    <a href="javascript:;" (click)="addMore()" *ngIf="indexOfelement==0" class="btn btn-warning"><i class="fa fa-plus"></i></a>
-                                    <a href="javascript:;" (click)="remoteItem(indexOfelement)" *ngIf="indexOfelement!=0" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                    <a href="javascript:;" (click)="addMore()" *ngIf="indexOfelement==0"
+                                        class="btn btn-warning">Add</a>
+                                    <a href="javascript:;" (click)="remoteItem(indexOfelement)"
+                                        *ngIf="indexOfelement!=0" class="btn btn-danger"><i
+                                            class="far fa-trash-alt"></i></a>
                                 </div>
                             </div>
                             <!-- loop -->
-                           
+
                         </div>
 
                         <div class="specail-note">
                             <div class="head-maela">
                                 <h3>Any special note</h3>
                             </div>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" [(ngModel)]="remark"></textarea>
                         </div>
                         <div class="product-action d-flex align-items-center mt-4">
 
-                            <a (click)="ComingSoon()" class="default-btn"><i class="fas fa-plus"></i> Book Order</a>
+                            <a (click)="addtoCart()" class="default-btn"><i class="fas fa-plus"></i> Book Order</a>
+
                         </div>
+                        <!-- </form> -->
+
                         <div class="same-dar-orxcer mt-4">
                             <a href="" class="default-btn" data-bs-toggle="modal"
                                 data-bs-target="#contact-popup">Contact us for same day order</a>
                         </div>
+
                     </div>
                 </div>
                 <!-- End Product Content -->

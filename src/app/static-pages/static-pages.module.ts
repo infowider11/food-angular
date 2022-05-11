@@ -14,6 +14,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CartComponent } from './cart/cart.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     PageNotFoundComponent,
     SearchComponent,
     MealDetailComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +39,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   exports:[
     ContactUsComponent,

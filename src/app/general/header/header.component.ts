@@ -7,11 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  myAlreadyItems: any = [];
+  cartCount:number = 0;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    
+    this.getCartCount();
   }
 
+  getCartCount(){
+    var alreadyItems = localStorage.getItem("cart");
+    this.myAlreadyItems = alreadyItems;
+    var alreadyItemsArr = JSON.parse(this.myAlreadyItems);
+    this.cartCount = (alreadyItemsArr) ? alreadyItemsArr.length : 0;
+  }
 }
