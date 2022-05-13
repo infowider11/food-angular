@@ -6,7 +6,8 @@ class Home extends CI_Controller {
 		//$this->check_login();
 		header("Access-Control-Allow-Origin:*");
     $this->db->query("set sql_mode = ''");
-   
+  
+
   }
 	
 	public function check_login(){

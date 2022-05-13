@@ -6,8 +6,7 @@ class Home extends CI_Controller {
 		//$this->check_login();
 		header("Access-Control-Allow-Origin:*");
     $this->db->query("set sql_mode = ''");
- 
-				//echo $lang;
+
 
   }
 	
@@ -234,6 +233,47 @@ class Home extends CI_Controller {
 		$data['contact_data'] = $this->common_model->GetAllData('contact_request');
 		$this->load->view('admin/contact-list', $data);
 	}
+
+	public function setting_management()
+	{
+		$data['setting'] = $this->common_model->GetSingleData('settings',array('id'=>1));
+		$this->load->view('admin/setting-management', $data);
+	}
+
+
+	public function update_setting()
+	{
+		$this->form_validation->set_rules('transaction', 'Comission', 'required|trim');
+
+        if ($this->form_validation->run() == true) {
+            $update['transaction'] = $this->input->post('transaction');
+            
+            $run = $this->common_model->UpdateData('settings',array('id'=>1),  $update);
+            //echo $run; die;
+            if ($run) {
+             
+                $this->session->set_flashdata('msg', '<div class="alert alert-success">Success! Commission has been updated successfully.</div>');
+                $json['status'] = 1;
+            } else {
+                $json['message'] = '<div class="alert alert-danger">Error! Something went wrong.</div>';
+                $json['status'] = 0;
+            }
+            
+        } else {
+            $json['message'] = $this->form_validation->error_array();
+            $json['status'] = 0;
+        }
+    
+        echo json_encode($json);
+	}
+
+
+	public function sameday_delivery()
+	{
+		$data['sameday'] = $this->common_model->GetAllData('contact_for_sameday','','id','desc');
+		$this->load->view('admin/sameday-delivery', $data);
+	}
+
 
 }
 	

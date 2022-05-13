@@ -76,6 +76,21 @@
                             <li><a href="<?= site_url('admin/meal-list'); ?>">Meal List</a></li>
                         </ul>
                     </li>
+
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-043-menu"></i>
+                            <span class="nav-text">Preference Management</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="<?= site_url('admin/preference-list'); ?>">Preference List</a></li>
+                        </ul>
+                    </li>
+                    <li style="display: none;"><a href="<?= site_url('admin/setting-management'); ?>"><i class="flaticon-043-menu"></i>Setting Management</a></li> 
+                    <li><a href="<?= site_url('admin/sameday-delivery'); ?>"><i class="flaticon-043-menu"></i>Sameday Delivery Request</a></li>
+
+
+
+
                     <!-- <li><a href="<?php echo site_url('admin/post-job-list'); ?>" class="ai-icon" aria-expanded="false">
                             <i class="flaticon-043-menu"></i>
                             <span class="nav-text">Post Job List</span>

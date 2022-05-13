@@ -194,10 +194,34 @@
                     <div class="mb-3 col-md-12">
                         <label><strong>Disabled Days : </strong></label> 
                         <?php $days = explode(',', $val['disabled_days']);
+                        $disabled_days = '';
                         foreach($days as $value)
                         {
-                            echo $value.',';
+                            //echo $value.',';
+                            if ($value==1) {
+                                $disabled_days .= "Sunday, ";
+                            }
+                            if ($value==2) {
+                                $disabled_days .= "Monday, ";
+                            }
+                            if ($value==3) {
+                                $disabled_days .= "Tuesday, ";
+                            } 
+
+                            if ($value==4) {
+                                $disabled_days .= "Wednesday, ";
+                            }
+                            if ($value==5) {
+                                $disabled_days .= "Thursday, ";
+                            }
+                            if ($value==6) {
+                                $disabled_days .= "Friday, ";
+                            }
+                            if ($value==7) {
+                                $disabled_days .= "Saturday";
+                            }
                         }
+                        echo $disabled_days;
                         ?>
                     </div>
                 </div>

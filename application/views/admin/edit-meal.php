@@ -165,13 +165,13 @@ Content body start
                                             <label class="form-label"><strong>Select Disable Days</strong></label>
                                             <select name="disabled_days[]" value="$mealData['disabled_days']" class="form-control select2" multiple >
 
-                                                <option data-select="<?= $selected ?>" value="sunday">Sunday</option>
-                                                <option data-select="<?= $selected ?>" value="monday">Monday</option>
-                                                <option  value="tuesday">Tuesday</option>
-                                                <option  value="wednesday">Wednesday</option>
-                                                <option  value="thursday">Thursday</option>
-                                                <option value="friday">Friday</option>
-                                                <option  value="saturday">Saturday</option>
+                                                <option data-select="<?= $selected ?>" value="1">Sunday</option>
+                                                <option data-select="<?= $selected ?>" value="2">Monday</option>
+                                                <option  value="3">Tuesday</option>
+                                                <option  value="4">Wednesday</option>
+                                                <option  value="5">Thursday</option>
+                                                <option value="6">Friday</option>
+                                                <option  value="7">Saturday</option>
                                             
                                             
                                         </select>

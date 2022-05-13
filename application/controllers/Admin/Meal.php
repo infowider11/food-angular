@@ -289,5 +289,86 @@ class Meal extends CI_Controller
         echo json_encode($json);
     }
 
+    public function preference_list()
+    {
+    	$data['preference'] = $this->common_model->GetAllData('preference', '', 'id', 'desc');
+    	$data['category'] = $this->common_model->GetAllData('category', '', 'title','asc');
+    	$this->load->view('admin/preference-list', $data);
+    }
+
+
+	public function add_preference(){
+		
+		$this->form_validation->set_rules('title','Preference Name', 'required|trim');
+		$this->form_validation->set_rules('category_id','category', 'required|trim');
+
+		if($this->form_validation->run()==false)
+		{
+			$json['status'] = 0;
+			$json['message'] = $this->form_validation->error_array();
+		} else {
+			$insert['title'] = $this->input->post('title');
+			$insert['category_id'] = $this->input->post('category_id');
+
+			$run = $this->common_model->InsertData('preference', $insert);
+			if($run)
+			{
+				$this->session->set_flashdata('msgs','<div class="alert alert-success">Success! Preference has beed added successfully.</div>');
+				$json['status']=1;
+			}  else {
+				$this->session->set_flashdata('msgs','<div class="alert alert-danger">Something is Worng.</div>');
+				$json['status']=0;
+			}
+
+		}
+		echo json_encode($json);
+	}
+
+	public function update_preference(){
+		
+		$this->form_validation->set_rules('title','Preference Name', 'required|trim');
+		$this->form_validation->set_rules('category_id','category', 'required|trim');
+
+		if($this->form_validation->run()==false)
+		{
+			$json['status'] = 0;
+			$json['message'] = $this->form_validation->error_array();
+		} else {
+			$id = $this->input->post('id');
+			$update['title'] = $this->input->post('title');
+			$update['category_id'] = $this->input->post('category_id');
+
+			$run = $this->common_model->UpdateData('preference',array('id'=>$id), $update);
+			if($run)
+			{	
+				$this->session->set_flashdata('msgs','<div class="alert alert-success">Success! Preference has beed updated successfully.</div>');
+				$json['status']=1;
+			}  else {
+				$this->session->set_flashdata('msgs','<div class="alert alert-danger">Something is Worng.</div>');
+				$json['status']=0;
+			}
+
+		}
+		echo json_encode($json);
+	}
+
+	public function delete_preference(){
+		
+		
+			$id = $this->input->post('id');
+			
+			$run = $this->common_model->DeleteData('preference',array('id'=>$id));
+			if($run)
+			{
+				$this->session->set_flashdata('msgs','<div class="alert alert-success">Success! Preference has beed deleted successfully.</div>');
+				$json['status']=1;
+			}  else {
+				$this->session->set_flashdata('msgs','<div class="alert alert-danger">Something is Worng.</div>');
+				$json['status']=0;
+			}
+
+		echo json_encode($json);
+	}
+
 }
 

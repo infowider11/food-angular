@@ -25,6 +25,163 @@ class Api extends CI_Controller {
 		echo json_encode($data);
 		exit();
 	}
+
+	public function setting()
+	{
+		$data = $this->common_model->GetSingleData('settings', array('id'=>1));
+		if($data)
+		{
+			$output['status'] = 1;
+			$output['data'] = $data;
+		}
+		else{
+			$output['status'] = 0;
+			$output['message'] = 'No data found';
+		}
+		echo json_encode($output);
+	}
+
+	public function preferences()
+	{
+		$where = "1=1";
+		if (isset($_REQUEST['cat_id']) && !empty($_REQUEST['cat_id'])) {
+				$where .= ' and category_id='.$_REQUEST['cat_id'].'';
+		}
+		$data = $this->common_model->GetAllData('preference', $where);
+		if($data)
+		{ 
+			$list = [];
+			foreach($data as $v)
+			{
+				$datas = $v;
+				array_push($list, $datas);
+			}
+			$output['status'] = 1;
+			$output['message'] = "List";
+			$output['data'] = $list;
+		} else {
+			$output['status'] = 0;
+			$output['message'] = "No Data Found";
+		}
+		echo json_encode($output);
+	}
+
+
+	public function getPreferenceById()
+	{
+		 if(isset($_REQUEST['id']) && !empty($_REQUEST['id'])) {
+		 		$id = $_REQUEST['id'];
+
+		 		$run = $this->common_model->GetSingleData('preference', array('id'=>$id));
+		 		if ($run) {
+		 			 $output['status'] = 1;
+					 $output['message'] = 'Success';
+					 $output['data']= $run;
+		 		} else {
+		 			 $output['status'] = 0;
+					 $output['message'] = 'No record found';
+		 		}
+		} else {
+
+			$output['status'] = 0;
+			$output['message'] = 'Check parameter.';
+			$output['data']= array();
+		}
+
+		return $this->response($output);
+	}
+	
+	public function contactForSameDay(){
+		
+	 
+
+		//https://webwiders.in/WEB01/QuickCash/Api/Signup
+		
+		// $this->form_validation->set_rules('user_type','user_type','trim|required');
+		$this->form_validation->set_rules('name','name','trim|required');
+		$this->form_validation->set_rules('email','email','trim|required');
+		$this->form_validation->set_rules('phone','phone','trim|required');
+		$this->form_validation->set_rules('delivery_address','Delivery Address','trim|required');
+
+		if($this->form_validation->run()){
+			
+			$insert['name'] = $this->input->post('name');
+			$insert['email'] = $this->input->post('email');
+			$insert['phone'] = $this->input->post('phone');
+			$insert['delivery_address'] = $this->input->post('delivery_address');
+			
+			$insert['created_at'] = date('Y-m-d H:i:s');
+			$insert['updated_at'] = date('Y-m-d H:i:s');
+
+			$run = $this->common->InsertData('contact_for_sameday',$insert);						
+			
+			$output['status'] = 1;
+			$output['message']="You request has been sent successfully. We will contact you soon.";
+			
+
+
+		}  else {
+
+			$output['status'] = 0;
+
+			$output['message'] = "Check parameter!";
+
+		}
+
+		echo json_encode($output);
+
+	}
+
+	public function contactUs(){
+
+		//https://webwiders.in/WEB01/QuickCash/Api/Signup
+		
+		// $this->form_validation->set_rules('user_type','user_type','trim|required');
+		$this->form_validation->set_rules('name','name','trim|required');
+		$this->form_validation->set_rules('email','email','trim|required');
+		$this->form_validation->set_rules('phone','phone','trim|required');
+		$this->form_validation->set_rules('subject','subject','trim|required');
+		$this->form_validation->set_rules('message','message','trim|required');
+
+		if($this->form_validation->run()){
+			
+			$insert['name'] = $this->input->post('name');
+			$insert['email'] = $this->input->post('email');
+			$insert['phone'] = $this->input->post('phone');
+			$insert['subject'] = $this->input->post('subject');
+			$insert['message'] = $this->input->post('message');
+			
+			$insert['created_at'] = date('Y-m-d H:i:s');
+			$insert['updated_at'] = date('Y-m-d H:i:s');
+
+			$run = $this->common->InsertData('contact_request',$insert);						
+
+
+			/*$subject="Account created successfully!!";
+			$body = '<p>Hello '.$insert['full_name'].'</p>';
+			$body .= '<p>Your account has been created successfully.</p>'; 
+			$body .= '<p>Kindly verify your accout</p>'; 
+			$body .= '<p>OTP is : '.$insert['otp'].'</p>'; 
+			$send = $this->common_model->SendMail($insert['email'],$subject,$body); 
+
+			$output['data'] = $this->CustomerProfile($run);*/
+			
+			$output['status'] = 1;
+			$output['message']="You request has been sent successfully. We will contact us soon.";
+			
+
+
+		}  else {
+
+			$output['status'] = 0;
+
+			$output['message'] = "Check parameter!";
+
+		}
+
+		echo json_encode($output);
+
+	}
 	
 	public function getCategory(){
 		$data = $this->common_model->GetAllData('category');
@@ -153,8 +310,8 @@ class Api extends CI_Controller {
 		
 	}
 	public function getMeals(){
-		
-		$where = "is_enabled = 1";
+		//
+		$where = "is_enabled = 1 and is_taking=1";
 		
 		if(isset($_REQUEST['category']) && $_REQUEST['category'] != 0){
 			$where .= " and category = ".$_REQUEST['category'];
@@ -190,6 +347,7 @@ class Api extends CI_Controller {
 		
 		foreach($data as $key => $value){
 			$list[$key] = $this->MealData($value['id']);
+			$list[$key]['short_description'] = strip_tags(substr($list[$key]['short_description'], 0, 20).'...');
 		}
 		
 		$output['status'] = 1;;
@@ -198,6 +356,33 @@ class Api extends CI_Controller {
 		$output['data'] = $list;
 		return $this->response($output);
 		
+	}
+
+	public function getMealsDataForCart()
+	{
+		//
+		 if(isset($_REQUEST['meal_ids']) && !empty($_REQUEST['meal_ids'])) {
+
+		 	$id_parts = explode(',', $_REQUEST['meal_ids']);
+
+		 	$result = array();
+		 	foreach ($id_parts as $key => $value) {
+
+		 		 $result[$key] = $this->MealData($value);
+		 		 $result[$key]['all_preferences'] = $this->common_model->GetAllData('preference', array('category_id'=>$result[$key]['category']['id']));
+		 	}
+			$output['status'] = 1;
+			$output['message'] = 'Success';
+			$output['data']= $result;
+			 
+		} else {
+
+			$output['status'] = 0;
+			$output['message'] = 'Check parameter.';
+			$output['data']= array();
+		}
+
+		return $this->response($output);
 	}
 	public function getMealById(){
 		
@@ -228,6 +413,18 @@ class Api extends CI_Controller {
 		
 		if($meal){
 			
+			if (!empty($meal['disabled_dates'])) {
+
+				$parts= explode(',', $meal['disabled_dates']);
+				$newDates = '';
+				foreach ($parts as $key => $value) {
+					 $newDates .= date('m-d-Y', strtotime($value)).',';
+				}
+				$meal['disabled_dates'] = rtrim($newDates,',');
+			} else {
+				$meal['disabled_dates'] = '';				
+			}
+
 			$meal['category'] = $this->common_model->GetDataById('category',$meal['category']);
 			$meal['meal_type'] = $this->common_model->GetDataById('meal_type',$meal['meal_type']);
 			$meal['area_group'] = $this->common_model->GetDataById('area_served',$meal['area_group']);
@@ -236,6 +433,7 @@ class Api extends CI_Controller {
 			
 			$meal['images'] = $images;
 			$meal['rating'] = 0;
+			$meal['reviews'] = 0;
 			
 			
 			
@@ -1010,5 +1208,7 @@ class Api extends CI_Controller {
 	}
 	
 	*/
+
+	
 }
 ?>

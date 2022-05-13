@@ -79,6 +79,11 @@ $route['admin/meal-type-list'] = 'Admin/Meal';
 $route['admin/meal-list'] = 'Admin/Meal/meal_list';
 $route['admin/add-meals'] = 'Admin/Meal/add_meals';
 $route['admin/edit-meal/(:any)'] = 'Admin/Meal/edit_meal/$1';
+$route['admin/preference-list'] = 'Admin/Meal/preference_list';
+$route['admin/setting-management'] = 'Admin/Home/setting_management';
+$route['admin/sameday-delivery'] = 'Admin/Home/sameday_delivery';
+
+
 // $route['admin/add-main-content'] = 'Admin/Home/add_content';
 // $route['admin/edit-main-content/(:any)'] = 'Admin/Home/edit_content/$1';
 
