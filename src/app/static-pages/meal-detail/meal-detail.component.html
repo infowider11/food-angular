@@ -105,7 +105,7 @@
 
                                                     <div class="form-group"
                                                         *ngFor='let c of mealOption.preference; let i = index'>
-                                                        <label>Preference 1</label>
+                                                        <label>Preference {{i+1}}</label>
                                                         <select class="form-control" [(ngModel)]="c.id">
                                                             <option [value]="0" selected>---Choose Preference---
                                                             </option>

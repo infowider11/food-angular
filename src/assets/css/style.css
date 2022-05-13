@@ -142,7 +142,7 @@
 }
  .heading-2 {
      font-size: 1.9rem;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      font-weight: normal;
 }
  @media (min-width: 768px) and (max-width: 991px) {
@@ -163,7 +163,7 @@
  .heading-2-extra {
      font-size: 2rem;
      font-weight: normal;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      color: #0c0f2e;
      padding-bottom: 0px;
 	 margin:0px;
@@ -192,7 +192,7 @@
 }
  .active-heading {
      font-size: 2rem;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      color: #ffae00;
      font-weight: normal;
 }
@@ -213,7 +213,7 @@
 }
  .special-heading {
      font-size: 1rem;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      font-weight: normal;
 }
  @media (max-width: 768px) {
@@ -230,7 +230,7 @@
      font-size: 1.1rem;
      font-weight: normal;
      color: #0c0f2e;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 }
  .overly, .post-comments ol li, .footer-wrapper, .about .post-thumb, .services-area .single-service, .login-form-wrapper {
      position: relative;
@@ -420,7 +420,7 @@
      border-bottom: 1px solid #e1e1e1;
 } 
  .widget-title-2 h4 {
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      font-weight: normal;
 	 font-size:20px;
 }
@@ -587,7 +587,7 @@
      border: 0;
      font-weight: normal;
      transition: all .4s linear 0s;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 }
  @media (min-width: 768px) and (max-width: 991px) {
      .default-btn-3 {
@@ -611,7 +611,7 @@
      border: 0;
      font-weight: normal;
      transition: all .4s linear 0s;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 }
  @media (min-width: 768px) and (max-width: 991px) {
      .default-btn-3-alt {
@@ -1009,7 +1009,7 @@
      font-size: 1.25rem;
      font-weight: 700;
      position: relative;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      line-height: 30px;
      padding: 45px;
      color: #0c0f2e;
@@ -1134,7 +1134,7 @@
 }
  .post-comments ol li article.comment-body .comment-details span.date {
      color: #ffae00;
-     font-family: "AvenirLTStd", sans-serif;
+     font-family: "AvenirLTStd", sans-serif !important;
 }
  .post-comments ol li article.comment-body .comment-details p {
      max-width: 90%;
@@ -1312,7 +1312,7 @@
      position: relative;
      padding: 20px;
      display: inline-block;
-     font-family: "AvenirLTStd", sans-serif;
+     font-family: "AvenirLTStd", sans-serif !important;
      font-weight: 500;
      font-size: 15px;
      color: #0c0f2e;
@@ -1551,7 +1551,7 @@
 }
  .hero-area-wrapper .heading-one {
      font-size: 3rem;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
      font-weight: normal;
      margin-bottom: 15px;
 }
@@ -2020,7 +2020,7 @@ a{
      align-items: center;
 }
  .client-info .heading-6-alt {
-     font-family: "AvenirLTStd", sans-serif;
+     font-family: "AvenirLTStd", sans-serif !important;
      margin-bottom: 5px;
 }
  .client-info .client-thumb {
@@ -2149,7 +2149,7 @@ a{
      display: flex;
      justify-content: space-between;
      align-items: center;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 }
  .post-meta p {
      margin-bottom: 0;
@@ -2501,7 +2501,7 @@ a{
      padding: 30px 0;
 }
  .page-header-container .heading-one {
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 	 color:#fff;
 	 font-size:30px;
 }
@@ -2909,7 +2909,7 @@ a{
     font-weight: normal;
     color: #ffae00;
     padding: 5px 0;
-    font-family: "MetaSerifPro", serif;
+    font-family: "MetaSerifPro", serif !important;
 }
  .product-content .product-action .default-btn {
      padding: 10px 25px;
@@ -2941,7 +2941,7 @@ a{
      font-weight: normal;
      text-transform: capitalize;
      font-size: 1.563rem;
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 }
  .reviews-info .nav-tabs li a:hover, .reviews-info .nav-tabs li a.active {
      color: #ffae00;
@@ -2956,7 +2956,7 @@ a{
      margin-right: 15px;
 }
  .date {
-     font-family: "MetaSerifPro", serif;
+     font-family: "MetaSerifPro", serif !important;
 }
  .date p {
      margin-bottom: 5px;
@@ -3148,7 +3148,7 @@ a{
      height: auto;
 }
  .payment-card-form button {
-     font-family: "AvenirLTStd", sans-serif;
+     font-family: "AvenirLTStd", sans-serif !important;
 }
  .delivery-address .single-contact {
      max-width: 100%;
@@ -3458,7 +3458,7 @@ a{
     transition: all .4s linear 0s;
     color: #0c0f2e;		
     margin: 0px;
-    font-family: "MetaSerifPro", serif;
+    font-family: "MetaSerifPro", serif !important;
 }
 .card .card-body p{
 	line-height:22px;
@@ -3559,7 +3559,7 @@ a{
     font-size: 22px;
     font-weight: normal;
     margin: 12px 0 5px;
-    font-family: "MetaSerifPro", serif;
+    font-family: "MetaSerifPro", serif !important;
     color: #000;
 }
 .review-block-description {
@@ -3597,7 +3597,7 @@ a{
 	padding:40px 0px;
 }
 h3.lead.fw-normal.mb-2{
-	font-family:"MetaSerifPro", serif;
+	font-family:"MetaSerifPro", serif !important;
 	margin:0px;
 }
 .card.card_checkout .card-body p{
@@ -4034,7 +4034,7 @@ h3.lead.fw-normal.mb-2{
 	margin:20px 0px 0px;
 }
 .head-maela h3{
-	font-family:"MetaSerifPro", serif;
+	font-family:"MetaSerifPro", serif !important;
 	margin:0px;
 	font-size:20px;
 }
@@ -4062,7 +4062,7 @@ h3.lead.fw-normal.mb-2{
 	opacity:0.9;
 }
 h1, h2, h3, h4, h5, h6{
-	font-family:"MetaSerifPro", serif;
+	font-family:"MetaSerifPro", serif !important;
 }
 .fill-pernal-deila {
     background: #fff;

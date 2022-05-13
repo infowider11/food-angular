@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonServiceService } from 'src/app/services/common-service.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { getDate, ComingSoon } from '../../common_fun'
+import { CartService } from '../../services/cart.service'
 
 
 declare var $: any;
@@ -100,7 +101,13 @@ export class MealDetailComponent implements OnInit {
     autoplay: true,
   }
 
-  constructor(public mealService: MealService, private router: Router, private actRoute: ActivatedRoute, public commonServices: CommonServiceService) {
+  constructor(
+    public mealService: MealService,
+    private router: Router,
+    private actRoute: ActivatedRoute,
+    public commonServices: CommonServiceService,
+    private cartService:CartService
+    ) {
     this.meal_id = this.actRoute.snapshot.params['id'];
     console.log(this.meal_id);
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -123,7 +130,6 @@ export class MealDetailComponent implements OnInit {
       return;
     }
 
-    console.log(this.mealOptions);
 
     this.mealService.getMealById(this.meal_id).subscribe((data: any) => {
       console.log('getMealById', data);
@@ -172,7 +178,6 @@ export class MealDetailComponent implements OnInit {
     })
 
   }
-
 
   ngOnInit(): void {
 
@@ -234,33 +239,35 @@ export class MealDetailComponent implements OnInit {
   }
 
   addtoCart() {
-
-    //localStorage.setItem("cart",'[{"id":"6","remark":"sdfsdf","product":[{"date":"2022-05-10","meal_type":"1","preference":[{"id":"1","title":"Jackfruit dry"}],"qunatity":3}]},{"id":"8","remark":"esfsffd ","product":[{"date":"2022-05-11","meal_type":"1","preference":[{"id":"1","title":"Jackfruit dry"},{"id":"2","title":"Matar paneer"}],"qunatity":1},{"date":"2022-05-12","meal_type":"2","preference":[{"id":"2","title":"Matar paneer"}],"qunatity":1}]},{"id":"9","remark":"sfdsfdsf","product":[{"date":"2022-05-11","meal_type":"2","preference":[{"id":"2","title":"Matar paneer"}],"qunatity":1},{"date":"2022-05-13","meal_type":"2","preference":[{"id":"1","title":"Jackfruit dry"}],"qunatity":1}]},{"id":"2","remark":"sdfdsfs","product":[{"date":"2022-05-10T10:44:16.093Z","preference":"","qunatity":2},{"date":"2022-05-11T18:30:00.000Z","preference":"","qunatity":3},{"date":"2022-05-13T18:30:00.000Z","preference":"","qunatity":3}]}]');
-
-    var alreadyItems = localStorage.getItem("cart");
-    this.myAlreadyItems = alreadyItems;
-    var alreadyItemsArr = JSON.parse(this.myAlreadyItems);
-
-    //console.log('data-length', alreadyItemsArr.length);
-    //console.log('data', alreadyItemsArr);
-    let result: any = [];
-    if (alreadyItemsArr && alreadyItemsArr.length > 0) {
-      result = alreadyItemsArr.filter((data: any) => {
-        console.log(data.id);
-        if (data.id !== this.meal_id) {
-          return data;
-        }
-
-      });
-    }
     var myArr: any = {};
     myArr.id = this.meal_id;
     myArr.remark = this.remark;
-    myArr.product = this.mealOptions;
-    result.push(myArr);
+    
+    myArr.item = this.mealData;
 
-    localStorage.setItem("cart", JSON.stringify(result));
-    console.log('data', localStorage.getItem("cart"));
+    
+
+    for(let i = 0; i < this.mealOptions.length; i++){
+      let preference = this.mealOptions[i].preference;
+
+
+      for(let k = 0; k < preference.length; k++){
+        let newPref = this.preferences.filter((item:any)=>{
+          if(preference[k].id==item.id){
+            return item;
+          }
+        })
+        if(newPref.length>0){
+          this.mealOptions[i].preference[k] = newPref
+        }
+        
+      }
+      
+    }
+    myArr.product = this.mealOptions;
+    
+    this.cartService.addToCart(myArr);
+
     this.router.navigate(['/cart']);
     return;
   }

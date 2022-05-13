@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MealService } from 'src/app/services/meal.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { getDate, ComingSoon } from '../../common_fun'
+import { ComingSoon } from '../../common_fun'
+import { CartService } from '../../services/cart.service'
 
 @Component({
   selector: 'app-cart',
@@ -9,13 +10,15 @@ import { getDate, ComingSoon } from '../../common_fun'
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+
   myAlreadyItems: any = [];
-  cartCount:number = 0;
+  cartCount: number = 0;
   meal_ids: any = '';
   mealData: any = [];
   dynamicSlides: any = [];
-  preferenceData: any= [];
+  preferenceData: any = [];
   ComingSoon: any = ComingSoon;
+  totalPrice: number = 0;
 
   customOptions: OwlOptions = {
     loop: true,
@@ -27,77 +30,104 @@ export class CartComponent implements OnInit {
     autoplay: true,
   }
 
-  constructor(public mealService: MealService) { }
+  constructor(
+    public mealService: MealService,
+    private cartService: CartService
+  ) { 
+    
+  }
 
   ngOnInit(): void {
+    
+    //this.getMyPreferences();
     this.GetCartItems();
     //this.GetPreferenceById(1);
   }
 
-  GetCartItems(){
-    var alreadyItems = localStorage.getItem("cart");
-    this.myAlreadyItems = alreadyItems;
-    this.myAlreadyItems = JSON.parse(this.myAlreadyItems);
+  GetCartItems() {
 
-    var result: any = [];
-    var ids:any=[];
-    if (this.myAlreadyItems && this.myAlreadyItems.length > 0) {
-      result = this.myAlreadyItems.filter((data: any) => {
-        //console.log(data.id);
-      
-        ids.push(data.id);
-        //return this.meal_id = 
-      });
+    this.myAlreadyItems = this.cartService.getItems();
+
+    let newVar = this.myAlreadyItems;
+    if (newVar.length > 0) {
+      for (let i = 0; i < newVar.length; i++) {
+        let totalQantity = newVar[i].product.map((item: any, index: number) => {
+          return item.qunatity;
+        }).reduce((prev: any, curr: any) => prev + curr, 0);
+
+        newVar[i].totalQantity = totalQantity;
+
+        //console.log('mealData',this.preferenceData)
+        /*
+        if(this.preferenceData.length > 0  && newVar[i].product.length > 0){
+
+          for (let k = 0; k < newVar[i].product.length; k++) {
+
+            let newPreF = [];
+            let old = newVar[i].product[k].preference;
+            
+
+            if(old && old.length){
+
+              for (let j = 0; j < old.length; j++) {
+
+                console.log('mealData',old[j])
+
+
+                let newPreFd = this.preferenceData.find((item:any) => {
+                  if(item.id==old[j]){
+                    return item
+                  }
+                })
+                if(newPreFd){
+                  newPreF.push(newPreFd);
+                }
+
+              }
+
+            }
+
+            newVar[i].product[k].preference = newPreF
+
+            
+          }
+
+        } else {
+          this.preferenceData.length = []
+        }*/
+        
+
+
+        this.totalPrice += (totalQantity * newVar[i].item.price);
+
+
+
+      }
     }
-    this.meal_ids = ids.toString();
-    console.log('id', this.meal_ids);
-    this.MyMealData();
-    
+
+    this.mealData = this.myAlreadyItems
+    console.log('mealData',this.mealData)
 
   }
 
-  MyMealData() {
-    this.mealService.getMealData(this.meal_ids).subscribe((data: any) => {
-      //console.log('mealData', data);
+  removeFromCart(remove_meal_id: number) {
+    this.cartService.removeItem(remove_meal_id);
+    this.GetCartItems();
+    
+  }
+
+
+
+
+  getMyPreferences() {
+    this.mealService.getPreferences().subscribe((data: any) => {
+      
       if (data.status == 1) {
-
-        for(let i = 0; i < data.data.length; i++){
-          let newData = data.data[i];
-
-          let obj = this.myAlreadyItems.find(function(item:any){
-            return item.id === newData.id;
-
-            //console.log('hello',item.id);
-          })
-
-          if(obj){
-            newData.carddata = obj
-          }
-          
-          
-          this.mealData.push(newData);
-        }
-
-        console.log('sdf',this.mealData)
+        this.preferenceData = data.data
       }
-    }); 
-  } 
-
-
-  getPerferenceName(preference_id: any=''){
-
-    if(preference_id !== "0") {
-     
-      /*this.mealService.getPreferencesById(preference_id).subscribe((data: any) => {
-        console.log('preferences', data);
-        if (data.status == 1) {
-          return this.preferenceData = data.data.title;
-        }
-      }) */
-      console.log('id', preference_id);
-    }
-    //console.log('cat', this.preferenceData) ;
-  } 
+      console.log('preferences', this.preferenceData);
+    })
+  }
 
 
 }

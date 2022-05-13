@@ -31,7 +31,7 @@
                                 <a routerLink="/cart" class="nav-link">
                                     <i class="fas fa-shopping-bag"></i>
                                 
-                                    <sup *ngIf="cartCount > 0" class="cart-quantity">{{cartCount}}</sup>
+                                    <sup *ngIf="cartService.items.length > 0" class="cart-quantity">{{cartService.items.length}}</sup>
                                 </a>
                                 <!--div class="mini-cart-box">
                                     <div class="cart-item">
