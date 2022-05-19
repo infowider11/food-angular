@@ -33,12 +33,12 @@ export class CartComponent implements OnInit {
   constructor(
     public mealService: MealService,
     private cartService: CartService
-  ) { 
-    
+  ) {
+
   }
 
   ngOnInit(): void {
-    
+
     //this.getMyPreferences();
     this.GetCartItems();
     //this.GetPreferenceById(1);
@@ -51,54 +51,19 @@ export class CartComponent implements OnInit {
     let newVar = this.myAlreadyItems;
     if (newVar.length > 0) {
       for (let i = 0; i < newVar.length; i++) {
-        let totalQantity = newVar[i].product.map((item: any, index: number) => {
-          return item.qunatity;
-        }).reduce((prev: any, curr: any) => prev + curr, 0);
 
-        newVar[i].totalQantity = totalQantity;
-
-        //console.log('mealData',this.preferenceData)
-        /*
-        if(this.preferenceData.length > 0  && newVar[i].product.length > 0){
-
-          for (let k = 0; k < newVar[i].product.length; k++) {
-
-            let newPreF = [];
-            let old = newVar[i].product[k].preference;
-            
-
-            if(old && old.length){
-
-              for (let j = 0; j < old.length; j++) {
-
-                console.log('mealData',old[j])
-
-
-                let newPreFd = this.preferenceData.find((item:any) => {
-                  if(item.id==old[j]){
-                    return item
-                  }
-                })
-                if(newPreFd){
-                  newPreF.push(newPreFd);
-                }
-
-              }
-
-            }
-
-            newVar[i].product[k].preference = newPreF
-
-            
-          }
-
+        if (newVar[i].product.length) {
+          let totalQantity = newVar[i].product.map((item: any, index: number) => {
+            return item.qunatity;
+          }).reduce((prev: any, curr: any) => prev + curr, 0);
+          newVar[i].totalQantity = totalQantity;
+          this.totalPrice += (totalQantity * newVar[i].item.price);
         } else {
-          this.preferenceData.length = []
-        }*/
-        
+          newVar[i].totalQantity = 0;
+          this.totalPrice += (0 * newVar[i].item.price);
+        }
 
 
-        this.totalPrice += (totalQantity * newVar[i].item.price);
 
 
 
@@ -106,14 +71,14 @@ export class CartComponent implements OnInit {
     }
 
     this.mealData = this.myAlreadyItems
-    console.log('mealData',this.mealData)
+    console.log('mealData', this.mealData)
 
   }
 
   removeFromCart(remove_meal_id: number) {
     this.cartService.removeItem(remove_meal_id);
     this.GetCartItems();
-    
+
   }
 
 
@@ -121,7 +86,7 @@ export class CartComponent implements OnInit {
 
   getMyPreferences() {
     this.mealService.getPreferences().subscribe((data: any) => {
-      
+
       if (data.status == 1) {
         this.preferenceData = data.data
       }

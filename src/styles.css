@@ -715,3 +715,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 70px;
     line-height: 80px;
 }
+.mat-calendar-body-today:not(.mat-calendar-body-selected) {   border-color: transparent!important;   background-color: transparent!important; }

@@ -79,14 +79,16 @@
                                 <div class="date-rows">
                                     <mat-form-field>
                                         <input [matDatepickerFilter]="myHolidayFilter" matInput type="text"
-                                            [max]="maxDate" autocomplete="off" [min]="date" [(ngModel)]="mealOption.date" [matDatepicker]="picker"
+                                            [max]="maxDate" autocomplete="off" [min]="date"
+                                            [(ngModel)]="mealOption.date" [matDatepicker]="picker"
                                             placeholder="Choose a date">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
                                 </div>
                                 <div class="meal-type my-select" style="width: 50%;">
-                                    <a href="javascript:void(0)" (click)="OpenModal(indexOfelement)">Meal preference</a>
+                                    <a href="javascript:void(0)" *ngIf="preferences.length > 0"
+                                        (click)="OpenModal(indexOfelement)">Meal preference</a>
                                     <!--<ng-multiselect-dropdown [settings]="dropdownSettings" [(ngModel)]="mealOption.preference" [data]="preferences">
                                     </ng-multiselect-dropdown> -->
 
@@ -105,14 +107,17 @@
 
                                                     <div class="form-group"
                                                         *ngFor='let c of mealOption.preference; let i = index'>
-                                                        <label>Preference {{i+1}}</label>
-                                                        <select class="form-control" [(ngModel)]="c.id">
-                                                            <option [value]="0" selected>---Choose Preference---
-                                                            </option>
-                                                            <option *ngFor="let preference of preferences"
-                                                                [value]="preference.id">
-                                                                {{preference.title}}</option>
-                                                        </select>
+                                                        <div >
+                                                            <label>Preference {{i+1}}</label>
+                                                            <select class="form-control" [(ngModel)]="c.id">
+                                                                <option [value]="0" selected>Select Preference
+                                                                </option>
+                                                                <option *ngFor="let preference of preferences"
+                                                                    [value]="preference.id">
+                                                                    {{preference.title}}</option>
+                                                            </select>
+                                                        </div>
+
                                                     </div>
 
                                                 </div>
@@ -139,6 +144,8 @@
                             </div>
                             <!-- loop -->
 
+                            <div class="alert alert-danger" *ngIf="showErrorForDate">Please select date.</div>
+
                         </div>
 
                         <div class="specail-note">
@@ -155,8 +162,7 @@
                         <!-- </form> -->
 
                         <div class="same-dar-orxcer mt-4">
-                            <a href="" class="default-btn" data-bs-toggle="modal"
-                                data-bs-target="#contact-popup">Contact us for same day order</a>
+                            <a href="javascript:;" (click)="AlertMessage('Currently we support same day orders only over phone and if the orders are placed before 11:00 AM');" class="default-btn">Contact us for same day order</a>
                         </div>
 
                     </div>

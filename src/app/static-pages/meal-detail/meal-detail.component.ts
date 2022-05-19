@@ -6,7 +6,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonServiceService } from 'src/app/services/common-service.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { getDate, ComingSoon } from '../../common_fun'
+import { getDate, ComingSoon, AlertMessage } from '../../common_fun'
 import { CartService } from '../../services/cart.service'
 
 
@@ -38,19 +38,20 @@ export class MealDetailComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
   today: any = getDate()
   ComingSoon: any = ComingSoon;
+  AlertMessage: any = AlertMessage;
   date = new Date();
   timestand = new Date().setDate(new Date().getDate() + 7);
   maxDate = new Date(this.timestand);
-
+  showErrorForDate: boolean = false;
   myHolidayDates = [
     new Date("12/1/2020")
   ];
   myHolidayDays = [
     '1'
   ];
-  
-  myHolidayFilter = (d:any): boolean => {
-    if(d && this.myHolidayDates.length > 0){
+
+  myHolidayFilter = (d: any): boolean => {
+    if (d && this.myHolidayDates.length > 0) {
 
       let returndata = true;
 
@@ -58,11 +59,11 @@ export class MealDetailComponent implements OnInit {
       const day = d.getDay();
       //return !this.myHolidayDates.find(x => x.getTime() == time);
 
-      if(this.myHolidayDates.find(x => x.getTime() == time)){
+      if (this.myHolidayDates.find(x => x.getTime() == time)) {
         returndata = false;
       }
 
-      if(this.myHolidayDays.find(x => x == day)){
+      if (this.myHolidayDays.find(x => x == day)) {
         returndata = false;
       }
 
@@ -70,7 +71,7 @@ export class MealDetailComponent implements OnInit {
     } else {
       return true;
     }
-    
+
   }
 
 
@@ -83,7 +84,7 @@ export class MealDetailComponent implements OnInit {
 
   mealOptions: any = [
     {
-      date: new Date(),
+      date: '',
       preference: [{ id: "0" }, { id: "0" }, { id: "0" }, { id: "0" }, { id: "0" }],
       qunatity: 1
     }
@@ -106,8 +107,8 @@ export class MealDetailComponent implements OnInit {
     private router: Router,
     private actRoute: ActivatedRoute,
     public commonServices: CommonServiceService,
-    private cartService:CartService
-    ) {
+    private cartService: CartService
+  ) {
     this.meal_id = this.actRoute.snapshot.params['id'];
     console.log(this.meal_id);
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -115,7 +116,7 @@ export class MealDetailComponent implements OnInit {
 
   addMore() {
     this.mealOptions.push({
-      date: new Date(),
+      date: '',
       preference: [{ id: "0" }, { id: "0" }, { id: "0" }, { id: "0" }, { id: "0" }],
       qunatity: 1
     });
@@ -141,18 +142,18 @@ export class MealDetailComponent implements OnInit {
         this.dynamicSlides = data.data.images
         console.log(this.myHolidayDates);
 
-        if(data.data.disabled_dates){
-          const  disabled_dates = data.data.disabled_dates.split(",")
-      
-          for(let i =0; i < disabled_dates.length; i++){
+        if (data.data.disabled_dates) {
+          const disabled_dates = data.data.disabled_dates.split(",")
+
+          for (let i = 0; i < disabled_dates.length; i++) {
             this.myHolidayDates.push(new Date(disabled_dates[i]))
           }
         }
 
-        if(data.data.disabled_days){
-          const  disabled_days = data.data.disabled_days.split(",")
-      
-          for(let i =0; i < disabled_days.length; i++){
+        if (data.data.disabled_days) {
+          const disabled_days = data.data.disabled_days.split(",")
+
+          for (let i = 0; i < disabled_days.length; i++) {
             this.myHolidayDays.push(disabled_days[i])
           }
         }
@@ -181,7 +182,7 @@ export class MealDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+  
 
     this.dropdownSettings = {
       idField: 'id',
@@ -239,33 +240,54 @@ export class MealDetailComponent implements OnInit {
   }
 
   addtoCart() {
+
+    let checkDate = this.mealOptions.find((item: any) => {
+      if (item.date == '') {
+        return item
+      }
+    })
+
+    if (checkDate) {
+      console.log('mealOptions', this.mealOptions);
+      this.showErrorForDate = true
+      return
+    }
+
     var myArr: any = {};
     myArr.id = this.meal_id;
     myArr.remark = this.remark;
-    
+
+    this.showErrorForDate = false
+
     myArr.item = this.mealData;
 
-    
 
-    for(let i = 0; i < this.mealOptions.length; i++){
+
+
+
+    for (let i = 0; i < this.mealOptions.length; i++) {
       let preference = this.mealOptions[i].preference;
 
 
-      for(let k = 0; k < preference.length; k++){
-        let newPref = this.preferences.filter((item:any)=>{
-          if(preference[k].id==item.id){
+      for (let k = 0; k < preference.length; k++) {
+        let newPref = this.preferences.filter((item: any) => {
+          if (preference[k].id == item.id) {
             return item;
           }
         })
-        if(newPref.length>0){
+        if (newPref.length > 0) {
           this.mealOptions[i].preference[k] = newPref
         }
-        
+
       }
-      
+
     }
+
     myArr.product = this.mealOptions;
-    
+
+
+
+
     this.cartService.addToCart(myArr);
 
     this.router.navigate(['/cart']);

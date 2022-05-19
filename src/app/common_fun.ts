@@ -19,3 +19,8 @@ export function ComingSoon(){
   alert('Coming Soon!')
   return false;
 }
+
+export function AlertMessage(message:string){
+  alert(message)
+  return false;
+}
