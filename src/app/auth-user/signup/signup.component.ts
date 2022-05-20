@@ -6,11 +6,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
   ComingSoon:any=ComingSoon
   form!: FormGroup;
@@ -30,7 +30,9 @@ export class LoginComponent implements OnInit {
 
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('',[Validators.required])
+      password: new FormControl('',[Validators.required]),
+      name: new FormControl('',[Validators.required]),
+      confirm_password: new FormControl('',[Validators.required]),
     })
   }
   
@@ -38,13 +40,20 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login() {
+  signup() {
 
     this.is_loading = true;
     console.log('1', this.form.value);
 
 
-    this.userService.attemptLogin(this.form.value).subscribe((data: any) => {
+    if(this.form.value.password != this.form.value.confirm_password) {
+      this.login_error_message = "Confirm password not matched with new Password field"
+      this.is_loading = false;
+      return
+    }
+    this.is_loading = true;
+
+    this.userService.signup(this.form.value).subscribe((data: any) => {
       console.log('contact form', data);
       this.login_error_message = '';
       this.is_loading = false;

@@ -14,13 +14,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CheckoutModule } from './checkout/checkout.module';
+import { SidebarComponent } from './user/sidebar/sidebar.component';
+import { UserModule } from './user/user.module';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    CheckoutModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,6 +19,13 @@ export function ComingSoon(){
   alert('Coming Soon!')
   return false;
 }
+export function convertJSONToFormData(params: any) {
+  let n = new FormData();
+  for (let key in params) {
+    n.append(key, params[key])
+  }
+  return n;
+}
 
 export function AlertMessage(message:string){
   alert(message)

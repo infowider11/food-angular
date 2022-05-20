@@ -1,0 +1,24 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-dashbord',
+  templateUrl: './dashbord.component.html',
+  styleUrls: ['./dashbord.component.css']
+})
+export class DashbordComponent implements OnInit {
+
+  constructor(
+    private router: Router,
+    public AuthService:AuthService
+  ) { 
+    if(!this.AuthService.is_user_logged_in){
+      this.router.navigate(['/login']);
+    }
+  }
+
+  ngOnInit(): void {
+  }
+
+}

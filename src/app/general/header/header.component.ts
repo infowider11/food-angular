@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -10,9 +11,13 @@ export class HeaderComponent implements OnInit {
 
   myAlreadyItems: any = [];
 
-  constructor(public cartService:CartService) {}
+  constructor(
+    public cartService:CartService,
+    public AuthService:AuthService
+  ) {}
 
   ngOnInit(): void {
+    
   }
 
 }

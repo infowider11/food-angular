@@ -1,0 +1,371 @@
+<div class="page-header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="page-header-container">
+                    <div class="page-header-content">
+                        <h1 class="heading-one">Checkout</h1>
+                        <div class="page-nav">
+                            <ul>
+                                <li><a routerLink="/home">Home &gt;</a></li>
+                                <li>Shopping Cart</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cart_info">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="fill-pernal-deila">
+                    <h3>Items</h3>
+                    <div class="items-det">
+                        <div class="card rounded-3 mb-4 card_checkout"
+                            *ngFor="let mealDataV of items; let indexOfelement=index;">
+                            <div class="card-body p-2">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-10 col-lg-10 col-xl-10">
+                                        <h3 class="lead fw-normal">{{mealDataV.item.name}}</h3>
+                                        <div *ngFor="let product of mealDataV.product">
+                                            <div class="cart-deol">
+                                                <span>{{product.date | date : 'dd-MM-yyyy'}}</span>
+
+                                                <label
+                                                    *ngIf="product.preference[0][0] && product.preference[0][0].title">{{product.preference[0][0].title}}</label>
+
+
+                                            </div>
+                                        </div>
+                                        <p>Price: <span class="text-muted">${{mealDataV.item.price}} X
+                                                {{mealDataV.totalQantity}}</span></p>
+
+                                        <p>Special note: <span class="text-muted"> {{mealDataV.remark}} </span></p>
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 col-xl-2 ">
+                                        <h5 class="mb-0">${{mealDataV.item.price * mealDataV.totalQantity}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card rounded-3 mb-4 card_checkout">
+                            <div class="card-body p-2 table-order">
+                                <table class="table">
+                                    <tr>
+                                        <td class="text-right">Subtotal </td>
+                                        <td class="text-right">${{totalPrice}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Tax </td>
+                                        <td class="text-right">${{tax_price}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">Delivery Fee </td>
+                                        <td class="text-right">${{delivery_fee}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-right">Total </th>
+                                        <th class="text-right">${{grandTotal}} </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <form [formGroup]="form">
+                    <div class="delivery-address">
+
+                        <div class="condition-div" *ngIf="step1">
+                            <div id="Cars3" class="desc">
+                                <div class="delivery-div">
+                                    <div class="newkdf">
+                                        <h5 class="mb-0">Enter Your Email</h5>
+                                        <div class="form-group">
+                                            <label class=" control-label">Email</label>
+                                            <input (keyup)="step2 ? checkEmail() : ''" type="email" formControlName="email"
+                                                placeholder="Email address" class="form-control">
+                                            <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['email'].errors && form.controls['email'].errors['required']">
+                                                    email is required</div>
+                                                <div
+                                                    *ngIf="form.controls['email'].errors && form.controls['email'].errors['email']">
+                                                    Valid
+                                                    email is required</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" *ngIf="step2 && is_new_user">
+                                            <label class=" control-label">Name</label>
+                                            <input type="text" (keyup)="step3 ? showStep3() : ''" formControlName="name" placeholder="Enter Name"
+                                                class="form-control">
+                                            <div *ngIf="form.controls['name'].touched && form.controls['name'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['name'].errors && form.controls['name'].errors['required']">
+                                                    Name is required</div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group" *ngIf="step2 && is_new_user">
+                                            <label class=" control-label">Set Password</label>
+                                            <input type="password" (keyup)="step3 ? showStep3() : ''" formControlName="set_password"
+                                                placeholder="Enter password" class="form-control">
+                                            <div *ngIf="form.controls['set_password'].touched && form.controls['set_password'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['set_password'].errors && form.controls['set_password'].errors['required']">
+                                                    Password is required</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" *ngIf="step2 && is_new_user">
+                                            <label class=" control-label">Confirm Password</label>
+                                            <input type="password" (keyup)="step3 ? showStep3() : ''" formControlName="confirm_password"
+                                                placeholder="Enter Cofirm password" class="form-control">
+                                            <div *ngIf="form.controls['confirm_password'].touched && form.controls['confirm_password'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['confirm_password'].errors && form.controls['confirm_password'].errors['required']">
+                                                    Confirm Password is required</div>
+                                            </div>
+
+                                            <div class="text text-danger" *ngIf="same_password_error">{{same_password_error}}</div>
+                                            <div class="text text-danger" *ngIf="signup_password_error">{{signup_password_error}}</div>
+                                        </div>
+
+                                        <div class="form-group" *ngIf="step2 && !is_new_user">
+                                            <label class=" control-label">Enter Password</label>
+                                            <input type="password" formControlName="password"
+                                                placeholder="Enter password" class="form-control">
+                                            <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['password'].errors && form.controls['password'].errors['required']">
+                                                    Password is required</div>
+                                                
+                                            </div>
+                                            <div class="text text-danger" *ngIf="login_error_message">{{login_error_message}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="!step2">
+                                        <div class="col text-right">
+                                            <button type="submit" (click)="checkEmail()"
+                                                class="default-btn-3-alt mt-4 pull-right"
+                                                [disabled]="form.controls['email'].invalid || is_loading">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="is_new_user && step2 && !step3">
+                                        <div class="col text-right">
+                                            <button type="submit" (click)="showStep3()"
+                                                class="default-btn-3-alt mt-4 pull-right"
+                                                [disabled]="form.controls['name'].invalid || form.controls['set_password'].invalid || is_loading">Next</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="!is_new_user && step2 && !step3">
+                                        <div class="col text-right">
+                                            <button type="submit" (click)="attemptLogin()"
+                                                class="default-btn-3-alt mt-4 pull-right"
+                                                [disabled]="form.controls['email'].invalid || form.controls['password'].invalid || is_loading">Login</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="myRadioGroup" class="condition-div" *ngIf="step3">
+                            <div class="radio-custom">
+                                <label class="radio-inline" for="radios-0">
+                                    <h4>Pickup Point</h4>
+                                </label>
+                            </div>
+                            <div id="Cars2" class="desc">
+                                <div class="pickup-div">
+                                    <h5>Please Choose Pickup Point</h5>
+                                    <div class="row">
+
+                                        <div class="col-lg-12 col-sm-12"
+                                            *ngFor="let pickup_addres of pickup_address; let i = index">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                    formControlName="pickup_location" id="flexRadioDefault1"
+                                                    [value]="pickup_addres.id" [checked]="i==0?true:false">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    <div class="single-contact d-flex align-items-center p-4">
+                                                        <div class="sample-icon mr-2">
+                                                            <i class="fas fa-home"></i>
+                                                        </div>
+                                                        <div class="contact-info ml-3">
+                                                            <h5 class="heading-5 mb-2">{{pickup_addres.title}}</h5>
+                                                            <p>{{pickup_addres.address}}</p>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="step3 && !step4">
+                                <div class="col text-right">
+                                    <button type="submit" (click)="showStep4()"
+                                        class="default-btn-3-alt mt-4 pull-right"
+                                        [disabled]="form.controls['pickup_location'].invalid">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="myRadioGroup" class="condition-div" *ngIf="step4">
+                            <div class="radio-custom">
+                                <label class="radio-inline" for="radios-1">
+                                    <h4>Delivery Address</h4>
+                                </label>
+                            </div>
+
+                            <div id="Cars3" class="desc">
+                                <div class="delivery-div">
+                                    <div class="newkdf">
+                                        <h5 class="mb-0">Enter Your Delivery Details</h5>
+                                        <div class="form-group">
+                                            <label class=" control-label">Delivery Person Name</label>
+                                            <input type="text" (keyup)="step5 ? showStep5() : ''" formControlName="delivery_name"
+                                                placeholder="Enter Name" class="form-control">
+                                            <div *ngIf="form.controls['delivery_name'].touched && form.controls['delivery_name'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['delivery_name'].errors && form.controls['delivery_name'].errors['required']">
+                                                    Name is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class=" control-label">Delivery Person Email</label>
+                                            <input type="email" (keyup)="step5 ? showStep5() : ''" formControlName="delivery_email"
+                                                placeholder="Enter Email" class="form-control">
+                                            <div *ngIf="form.controls['delivery_email'].touched && form.controls['delivery_email'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['delivery_email'].errors && form.controls['delivery_email'].errors['required']">
+                                                    Email is required</div>
+                                                <div
+                                                    *ngIf="form.controls['delivery_email'].errors && form.controls['delivery_email'].errors['email']">
+                                                    Valid email is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class=" control-label">Delivery Person Phone</label>
+                                            <input type="text" (keyup)="step5 ? showStep5() : ''" formControlName="delivery_phone"
+                                                placeholder="Enter Phone" class="form-control">
+                                            <div *ngIf="form.controls['delivery_phone'].touched && form.controls['delivery_phone'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['delivery_phone'].errors && form.controls['delivery_phone'].errors['required']">
+                                                    Phone is required</div>
+                                                <div
+                                                    *ngIf="form.controls['delivery_phone'].errors && form.controls['delivery_phone'].errors['pattern']">
+                                                    Please enter valid phone number</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class=" control-label">Delivery Address</label>
+                                            <input type="text" (keyup)="step5 ? showStep5() : ''" formControlName="delivery_address"
+                                                placeholder="Enter Address" class="form-control">
+                                            <div *ngIf="form.controls['delivery_address'].touched && form.controls['delivery_address'].invalid"
+                                                class="text-danger">
+                                                <div
+                                                    *ngIf="form.controls['delivery_address'].errors && form.controls['delivery_address'].errors['required']">
+                                                    Address is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class=" control-label">Remark</label>
+                                            <input type="text" formControlName="delivery_remark"
+                                                placeholder="Optional" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="step4 && !step5">
+                                <div class="col text-right">
+                                    <button type="submit" (click)="showStep5()"
+                                        class="default-btn-3-alt mt-4 pull-right"
+                                        [disabled]="form.controls['delivery_name'].invalid || form.controls['delivery_email'].invalid || form.controls['delivery_email'].invalid || form.controls['delivery_phone'].invalid || form.controls['delivery_address'].invalid">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="foods-tabs-area" *ngIf="step5">
+                            <div>
+                                <h3>Payment Method</h3>
+                            </div>
+                            <div class="supported-cards my-2">
+                                <ul>
+                                    <li>We Accept:</li>
+                                    <li><img src="assets/img/debit_card.png" alt="visa" class="img-fluid"></li>
+                                    <li><img src="assets/img/master_card.png" alt="visa" class="img-fluid"></li>
+                                    <li><img src="assets/img/discover_card.png" alt="visa" class="img-fluid"></li>
+                                    <li><img src="assets/img/visa_card_02.png" alt="visa" class="img-fluid"></li>
+                                    <li><img src="assets/img/express.png" alt="visa" class="img-fluid"></li>
+                                </ul>
+                            </div>
+                            <div class="payment-card-form">
+                                <form action="#">
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control" placeholder="Card Number"
+                                                ruquired="">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 mb-3 mb-lg-0">
+                                            <input type="text" class="form-control" placeholder="Enter Valid (MM/YY)"
+                                                ruquired="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" placeholder="CVV">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control"
+                                                placeholder="Enter The Card Holder Name" ruquired="">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <div class="form-group form-check">
+                                                <label class="form-check-label" for="user_agree">Agree With All
+                                                    Tarms And Condation.</label>
+                                                <input type="checkbox" class="form-check-input" style="width: auto;"
+                                                    id="user_agree">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="submit" (click)="ComingSoon();" class="default-btn-3-alt w-100 mt-4">Pay
+                                                ${{grandTotal}}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

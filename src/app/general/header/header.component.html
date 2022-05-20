@@ -25,7 +25,8 @@
                                 <a class="nav-link"  routerLink="/contact-us" routerLinkActive="active">Contact</a>
                             </li-->
                             <li class="nav-item login-item">
-                                <a class="nav-link" routerLink="/login"  routerLinkActive="active"><i class="far fa-user"></i> Login</a>
+                                <a class="nav-link" *ngIf="!AuthService.is_user_logged_in" routerLink="/login"  routerLinkActive="active"><i class="far fa-user"></i> Login</a>
+                                <a class="nav-link" *ngIf="AuthService.is_user_logged_in" routerLink="/dashboard"  routerLinkActive="active"><i class="far fa-user"></i> {{AuthService.userdata.name}}</a>
                             </li>
                             <li class="nav-item mini-cart">
                                 <a routerLink="/cart" class="nav-link">

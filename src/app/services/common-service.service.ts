@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { convertJSONToFormData } from '../common_fun';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class CommonServiceService {
 
   private apiURL = environment.API_URL;
 
-  httpOptions = new HttpHeaders().set('Content-Type','application/json')
-  
+  httpOptions = new HttpHeaders().set('Content-Type', 'application/json')
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -37,6 +38,14 @@ export class CommonServiceService {
       )
   }
 
+  get_pickup_address(): Observable<any> {
+    return this.httpClient.get<any>(this.apiURL + '/get_pickup_address').pipe(catchError(this.errorHandler))
+  }
+
+  getSetting(): Observable<any> {
+    return this.httpClient.get<any>(this.apiURL + '/setting').pipe(catchError(this.errorHandler))
+  }
+
   getPrivacyPageContent(): Observable<any> {
     return this.httpClient.get<any>(this.apiURL + '/getPrivacyPageContent')
       .pipe(
@@ -51,16 +60,9 @@ export class CommonServiceService {
       )
   }
 
-  convertJSONToFormData(params:any){
-      let n = new FormData();
-      for(let key in params){
-        n.append(key,params[key])
-      }
-      return n;
-  }
-
-  contactForSameDay(data:any): Observable<any> {
-    return this.httpClient.post<any>(this.apiURL + '/contactForSameDay',this.convertJSONToFormData(data))
+  contactForSameDay(data: any): Observable<any> {
+    
+    return this.httpClient.post<any>(this.apiURL + '/contactForSameDay', convertJSONToFormData(data))
       .pipe(
         catchError(this.errorHandler)
       )
