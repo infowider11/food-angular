@@ -230,7 +230,7 @@ class Api extends CI_Controller {
 
 	public function get_pickup_address()
 	{
-		$data = $this->common_model->GetAllData('pickup_address');
+		$data = $this->common_model->GetAllData('pickup_location');
 		if($data) 
 		{
 			$output['status'] = 1;
