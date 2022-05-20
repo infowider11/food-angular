@@ -188,7 +188,7 @@ export class CheckoutComponent implements OnInit {
       if(data.status==1){
         this.checkout_user_info = data.data
         this.is_logged_in=true;
-        
+        this.step3 = true;
 
         this.AuthService.authorization(data.data)
         this.login_error_message='';
@@ -196,7 +196,7 @@ export class CheckoutComponent implements OnInit {
         this.login_error_message=data.message;
       }
 
-      //this.step3 = true;
+      
       
     })
   }

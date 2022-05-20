@@ -82,7 +82,7 @@
                 <form [formGroup]="form">
                     <div class="delivery-address">
 
-                        <div class="condition-div" *ngIf="step1">
+                        <div class="condition-div" *ngIf="step1 && !is_logged_in">
                             <div id="Cars3" class="desc">
                                 <div class="delivery-div">
                                     <div class="newkdf">
@@ -207,8 +207,8 @@
                                                             <i class="fas fa-home"></i>
                                                         </div>
                                                         <div class="contact-info ml-3">
-                                                            <h5 class="heading-5 mb-2">{{pickup_addres.title}}</h5>
-                                                            <p>{{pickup_addres.address}}</p>
+                                                            <h5 class="heading-5 mb-2">{{pickup_addres.location_name}} ({{pickup_addres.location_postcode}})</h5>
+                                                            <p>{{pickup_addres.location_address}}</p>
                                                         </div>
                                                     </div>
                                                 </label>
