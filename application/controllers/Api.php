@@ -25,6 +25,193 @@ class Api extends CI_Controller {
 		echo json_encode($data);
 		exit();
 	}
+	
+	private function CustomerProfile($id=null){
+
+		$user = $this->common_model->GetSingleData('users',array('id'=>$id));
+		$output = false;
+		if($user) {
+
+			$output['id'] = $user['id'];
+			// $output['user_type'] = $user['user_type'];
+			$output['name'] = $user['name'];
+			$output['email'] = $user['email'];
+			$output['phone'] = $user['phone'];
+			$output['lat'] = $user['lat'];
+			$output['lng'] = $user['lng'];
+			$output['address'] = $user['address'];
+		 		
+		}
+
+		return $output;
+
+	}
+	
+	public function login() {
+		//https://webwiders.in/WEB01/QuickCash/Api/login
+		$this->form_validation->set_rules('email','Email','required|trim');
+		$this->form_validation->set_rules('password','password','required|trim');
+		// $this->form_validation->set_rules('user_type','user_type','required|trim');
+		if($this->form_validation->run()== FALSE) {
+
+			$output['status'] = 0;
+			$output['message']='Check parameter.';     
+
+		} else {
+
+			$email=$this->input->post('email');
+			$password=$this->input->post('password');
+		
+			$userData=array(
+				'email'=>$email,
+				'password'=>$password
+			);
+
+			$result_id=$this->common->GetColumnName('users',$userData,array('id'));
+			if(!empty($result_id)){
+				$user_id = $result_id['id'];
+				$user_profile=$this->CustomerProfile($user_id);
+		
+				$output['data'] = $user_profile;
+		
+				$output['status'] = 1;
+				$output['message']='Success.';
+				
+			}else{
+				$output['status'] = 0;
+				$output['message']='Invalid login details.';   
+			}
+
+
+		}
+
+		echo json_encode($output);
+
+	}
+	
+	public function signup(){
+
+		//https://webwiders.in/WEB01/QuickCash/Api/Signup
+		
+		// $this->form_validation->set_rules('user_type','user_type','trim|required');
+		$this->form_validation->set_rules('name','name','trim|required');
+		$this->form_validation->set_rules('email','email','trim|required');
+		$this->form_validation->set_rules('password','password','trim|required');
+
+		if($this->form_validation->run()){
+
+			$this->form_validation->set_rules('email','Email','trim|required|is_unique[users.email]');
+			if($this->form_validation->run()==false){
+				$output['status'] = 0;
+				$output['message'] = 'This email is already exist!';
+			} else {
+		
+			
+				// $insert['user_type'] = $this->input->post('user_type');
+				$insert['name'] = $this->input->post('name');
+				$insert['email'] = $this->input->post('email');
+				$insert['password'] = $this->input->post('password');
+
+				$insert['created_at'] = date('Y-m-d H:i:s');
+				$insert['updated_at'] = date('Y-m-d H:i:s');
+			
+				$run = $this->common->InsertData('users',$insert);						
+
+				$output['data'] = $this->CustomerProfile($run);
+				$output['status'] = 1;
+				$output['message']="Congratulations your account has been created successfully.";
+
+					
+
+			}
+
+		}  else {
+
+			$output['status'] = 0;
+			$output['message'] = "Check parameter!";
+
+		}
+
+		echo json_encode($output);
+
+	}
+	public function check_email(){
+		//https://www.bluediamondresearch.com/WEB01/bayarea/Api/CreatePaymentIntent
+		$this->form_validation->set_rules('email','email','trim|required|valid_email');
+		
+		if($this->form_validation->run()){
+			
+			$email = $this->input->post('email');
+			
+			$data = $this->common_model->GetColumnName('users', array('email'=>$email));
+			
+			
+			if($data){
+				$output['status'] = 1;
+				$output['message'] = 'Available';
+				$output['data'] = $this->CustomerProfile($data['id']);
+			} else {
+				$output['status'] = 2;
+				$output['message'] = 'New User';
+			}
+			
+			
+		} else {
+			$output['status'] = 0;
+			$output['message'] = 'Check parameter.';
+		}
+		echo json_encode($output);
+	}
+
+	public function CreatePaymentIntent(){
+		//https://www.bluediamondresearch.com/WEB01/bayarea/Api/CreatePaymentIntent
+		$this->form_validation->set_rules('email','email','trim|required');
+		$this->form_validation->set_rules('amount','amount','trim|required');
+		if($this->form_validation->run()){
+			
+			$setting = $this->common_model->GetSingleData('settings', array('id'=>1));
+			
+			$email = $this->input->post('email');
+			$amount = $this->input->post('amount')*1;
+			require_once('application/libraries/stripe-php-7.49.0/init.php');
+			
+			$secret_key = $setting['stripe_sk'];
+			
+			$statement_descriptor = 'Order Checkout';
+			
+			\Stripe\Stripe::setApiKey($secret_key);
+			try {
+				$customer = \Stripe\Customer::create(['email' => $email]);
+				$paymentIntent = \Stripe\PaymentIntent::create([
+					'amount' => $amount*100,
+					'currency' => 'USD',
+					'customer' => $customer->id,
+					'description' => $statement_descriptor,
+					'setup_future_usage' => 'off_session',
+					'payment_method_types'=>['card'],
+					'payment_method_options' => [
+						"card" => [
+							"request_three_d_secure" => "any"
+						]
+					 ]
+				]);
+				$output = array(
+						'status' => 1, 
+						'customerID' => $customer->id,
+						'clientSecret' => $paymentIntent->client_secret
+					);
+			} catch (Error $e) {
+				$output = array(
+					'status' => 0, 
+					'message' => $e->getMessage()
+				);
+			}
+		} else {
+			$output['status'] = 0;
+			$output['message'] = 'Check parameter.';
+		}
+		echo json_encode($output);
+	}
 
 	public function setting()
 	{
@@ -41,9 +228,24 @@ class Api extends CI_Controller {
 		echo json_encode($output);
 	}
 
+	public function get_pickup_address()
+	{
+		$data = $this->common_model->GetAllData('pickup_address');
+		if($data) 
+		{
+			$output['status'] = 1;
+			$output['data'] = $data;
+		}
+		else{
+			$output['status'] = 0;
+			$output['message'] = 'No data found';
+		}
+		echo json_encode($output);
+	}
+
 	public function preferences()
 	{
-		$where = "1=1";
+		$where = "available=1";
 		if (isset($_REQUEST['cat_id']) && !empty($_REQUEST['cat_id'])) {
 				$where .= ' and category_id='.$_REQUEST['cat_id'].'';
 		}
@@ -311,7 +513,7 @@ class Api extends CI_Controller {
 	}
 	public function getMeals(){
 		//
-		$where = "is_enabled = 1 and is_taking=1";
+		$where = "is_enabled = 1";
 		
 		if(isset($_REQUEST['category']) && $_REQUEST['category'] != 0){
 			$where .= " and category = ".$_REQUEST['category'];
@@ -601,99 +803,7 @@ class Api extends CI_Controller {
 
 	}
 		
-	public function Signup(){
-
-		//https://webwiders.in/WEB01/QuickCash/Api/Signup
-		
-		// $this->form_validation->set_rules('user_type','user_type','trim|required');
-		$this->form_validation->set_rules('full_name','full_name','trim|required');
-		$this->form_validation->set_rules('email','email','trim|required');
-		$this->form_validation->set_rules('gender','gender','trim|required');
-		$this->form_validation->set_rules('phone_code','phone code','trim|required');
-		$this->form_validation->set_rules('phone','phone','trim|required');
-		$this->form_validation->set_rules('password','password','trim|required');
-
-		if($this->form_validation->run()){
-
-			$this->form_validation->set_rules('email','Email','trim|required|is_unique[users.email]');
-			if($this->form_validation->run()==false){
-				$output['status'] = 0;
-				$output['message'] = 'This email is already exist!';
-			} else {
-		
-				$this->form_validation->set_rules('phone','phone','trim|required|is_unique[users.phone]');
-				if($this->form_validation->run()==false){
-
-					$output['status'] = 0;
-					$output['message'] = 'This phone is already exist!';
-				} else {
-				
-					// $insert['user_type'] = $this->input->post('user_type');
-					$insert['full_name'] = $this->input->post('full_name');
-					$insert['email'] = $this->input->post('email');
-					$insert['gender'] = $this->input->post('gender');
-					$insert['password'] = $this->input->post('password');			
-					$insert['phone'] = $this->input->post('phone');
-					$insert['phone_with_code'] = $this->input->post('phone_code').''.$this->input->post('phone');
-
-					// $insert['is_skilled'] = $this->input->post('is_skilled');
-					// $insert['lat'] = $this->input->post('lat');
-					// $insert['lng'] = $this->input->post('lng');
-					$insert['created_at'] = date('Y-m-d H:i:s');
-					$insert['updated_at'] = date('Y-m-d H:i:s');
-					$insert['otp'] = rand(1000,9999);
-					// echo "<pre>"; print_r($insert);
-					// exit;
-
-					// $insert['doc_submit'] = 1;
-					// if ($insert['user_type'] == 2) {
-					// $insert['doc_name'] = $this->input->post('doc_name');	
-						
-						// if(isset($_FILES['doc_file']['name'])) {
-
-      //               $config['upload_path']="upload/users_doc/";
-      //               $config['allowed_types'] = '*';
-      //               $config['encrypt_name']=true;
-      //               $this->load->library("upload",$config);
-      //               if ($this->upload->do_upload('doc_file')) {
-      //               $u_profile=$this->upload->data("file_name");
-      //               $insert['doc_file'] = $u_profile;
-      //               } 
-      //         }
-
-					// } 
-
-					$run = $this->common->InsertData('users',$insert);						
-
-						if($run){
-
-							$subject="Account created successfully!!";
-		          $body = '<p>Hello '.$insert['full_name'].'</p>';
-		          $body .= '<p>Your account has been created successfully.</p>'; 
-		          $body .= '<p>Kindly verify your accout</p>'; 
-		          $body .= '<p>OTP is : '.$insert['otp'].'</p>'; 
-		          $send = $this->common_model->SendMail($insert['email'],$subject,$body); 
-
-							$output['data'] = $this->CustomerProfile($run);
-							$output['status'] = 1;
-							$output['message']="Congratulations your account has been created successfully.";
-						}
-
-					}
-
-				}
-
-			}  else {
-
-			$output['status'] = 0;
-
-			$output['message'] = "Check parameter!";
-
-		}
-
-		echo json_encode($output);
-
-	}
+	
 
 	public function EditProfile() {
 		//https://webwiders.in/WEB01/QuickCash/Api/EditProfile
@@ -801,76 +911,7 @@ class Api extends CI_Controller {
 
 	} 
 
-	public function login() {
-		//https://webwiders.in/WEB01/QuickCash/Api/login
-		$this->form_validation->set_rules('email','Email','required|trim');
-		$this->form_validation->set_rules('password','password','required|trim');
-		// $this->form_validation->set_rules('user_type','user_type','required|trim');
-		if($this->form_validation->run()== FALSE) {
-
-			$output['status'] = 0;
-			$output['message']='Check parameter.';     
-
-		} else {
-
-			$email=$this->input->post('email');
-			$password=$this->input->post('password');
-			// $user_type=$this->input->post('user_type');
-			// $userData=array(
-			// 	'email'=>$email,
-			// 	'password'=>$password,
-			// 	'user_type'=>$user_type
-			// );
-			$userData=array(
-				'email'=>$email,
-				'password'=>$password
-			);
-
-			$result_id=$this->common->GetSingleData('users',$userData);
-			if(!empty($result_id)){
-					$user_id = $result_id['id'];
-					$user_profile=$this->CustomerProfile($user_id);
-			
-
-					$output['data'] = $user_profile;
-			
-					$output['status'] = 1;
-					$output['message']='Success.';
-				// if($result_id['is_block']==1){
-				// 	$output['status'] = 0;
-				// 	$output['message'] = "your account blocked by admin!";
-				// }else {
-					
-				// }
-			}else{
-				$output['status'] = 0;
-				$output['message']='Invalid login details.';   
-			}
-
-// echo "<pre>"; print_r($result_id);
-// exit();
-
-			// if($result_id && $result_id['doc_is_verified'] == 1) {
-			// 		$user_id = $result_id['id'];
-			// 		$user_profile=$this->CustomerProfile($user_id);
-			// 		$output['data'] = $user_profile;
-			// 		$output['status'] = 1;
-			// 		$output['message']='Success.';
-			// } elseif ($result_id && $result_id['doc_is_verified'] == 0) {
-			// 	  $output['status'] = 0;
-			// 		$output['message']='Document still pending by admin';
-			// } else {
-
-			// 	$output['status'] = 0;
-			// 	$output['message']='Invalid login details.';        
-
-			// }
-
-		}
-
-		echo json_encode($output);
-
-	}
+	
 
 
   public function ChangePassword(){

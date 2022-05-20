@@ -118,13 +118,7 @@ class Meal extends CI_Controller
 			else{
 				$insert['is_enabled'] = 0;
 			}
-			if(isset($_REQUEST['is_taking']))
-			{
-				$insert['is_taking'] = $this->input->post('is_taking');
-			}
-			else{
-				$insert['is_taking'] = 0;
-			}
+		
 			if(isset($_REQUEST['disabled_dates']))
 			{
 				$insert['disabled_dates'] = $this->input->post('disabled_dates');
@@ -309,6 +303,7 @@ class Meal extends CI_Controller
 		} else {
 			$insert['title'] = $this->input->post('title');
 			$insert['category_id'] = $this->input->post('category_id');
+			$insert['available'] = $this->input->post('available');
 
 			$run = $this->common_model->InsertData('preference', $insert);
 			if($run)
@@ -337,6 +332,7 @@ class Meal extends CI_Controller
 			$id = $this->input->post('id');
 			$update['title'] = $this->input->post('title');
 			$update['category_id'] = $this->input->post('category_id');
+			$update['available'] = $this->input->post('available');
 
 			$run = $this->common_model->UpdateData('preference',array('id'=>$id), $update);
 			if($run)

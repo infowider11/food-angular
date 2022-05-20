@@ -136,16 +136,7 @@ Content body start
 
                                     <?php } ?>
                                     </div>
-                                    <div class="mb-3 col-md-6">
-                                        <?php if($mealData['is_taking'] == 1) { ?>
-                                        <input type="checkbox" name="is_taking" value="1" checked/>
-                                        <label class="form-label"><strong>Is Taking</strong></label>
-                                    <?php } else { ?>
-                                        <input type="checkbox" name="is_taking" value="1" />
-                                        <label class="form-label"><strong>Is Taking</strong></label>
-
-                                    <?php } ?>
-                                    </div>
+                              
 
                                     <div class="mb-3 col-md-6">
                                         <div class="choose-date">
@@ -164,14 +155,22 @@ Content body start
                                         <div class="choose-date">
                                             <label class="form-label"><strong>Select Disable Days</strong></label>
                                             <select name="disabled_days[]" value="$mealData['disabled_days']" class="form-control select2" multiple >
+																						
+																								<?php
+																								$last_array = [];
+																								if($mealData['disabled_days']){
+																									$last_array = explode(',',$mealData['disabled_days']);
+																								}
+																								
+																								?>
 
-                                                <option data-select="<?= $selected ?>" value="0">Sunday</option>
-                                                <option data-select="<?= $selected ?>" value="1">Monday</option>
-                                                <option  value="2">Tuesday</option>
-                                                <option  value="3">Wednesday</option>
-                                                <option  value="4">Thursday</option>
-                                                <option value="5">Friday</option>
-                                                <option  value="6">Saturday</option>
+                                                <option <?= (in_array(0,$last_array)) ? 'data-select="selected"' : ''; ?> value="0">Sunday</option>
+                                                <option <?= (in_array(1,$last_array)) ? 'data-select="selected"' : ''; ?> value="1">Monday</option>
+                                                <option <?= (in_array(2,$last_array)) ? 'data-select="selected"' : ''; ?> value="2">Tuesday</option>
+                                                <option <?= (in_array(3,$last_array)) ? 'data-select="selected"' : ''; ?> value="3">Wednesday</option>
+                                                <option <?= (in_array(4,$last_array)) ? 'data-select="selected"' : ''; ?> value="4">Thursday</option>
+                                                <option <?= (in_array(5,$last_array)) ? 'data-select="selected"' : ''; ?> value="5">Friday</option>
+                                                <option <?= (in_array(6,$last_array)) ? 'data-select="selected"' : ''; ?> value="6">Saturday</option>
                                             
                                             
                                         </select>

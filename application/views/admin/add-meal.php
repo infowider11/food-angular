@@ -107,11 +107,7 @@ Content body start
                                     <input type="checkbox" name="is_enabled" value="1" />
                                     <label class="form-label"><strong>Is Enabled</strong></label>
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    
-                                    <input type="checkbox" name="is_taking" value="1" />
-                                    <label class="form-label"><strong>Is Taking</strong></label>
-                                </div>
+                             
 
                                 <div class="mb-3 col-md-6">
                                     <div class="choose-date">

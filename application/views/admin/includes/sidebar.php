@@ -86,7 +86,7 @@
                         </ul>
                     </li>
                     <li style="display: none;"><a href="<?= site_url('admin/setting-management'); ?>"><i class="flaticon-043-menu"></i>Setting Management</a></li> 
-                    <li><a href="<?= site_url('admin/sameday-delivery'); ?>"><i class="flaticon-043-menu"></i>Sameday Delivery Request</a></li>
+                
 
 
 

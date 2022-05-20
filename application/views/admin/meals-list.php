@@ -172,15 +172,7 @@
                             echo "<span Class='badge badge-danger'> Disabled</span>";
                         }?>
                     </div>
-                    <div class="mb-3 col-md-12">
-                        <label><strong>Is Taking : </strong></label> 
-                        <?php if($val['is_taking'] == 1)
-                        {
-                            echo "<span Class='badge badge-success'> Yes</span>";
-                        } else {
-                            echo "<span Class='badge badge-danger'> No</span>";
-                        }?>
-                    </div>
+              
 
                     <div class="mb-3 col-md-12">
                         <label><strong>Disabled Dates : </strong></label> 
@@ -193,7 +185,8 @@
                     </div>
                     <div class="mb-3 col-md-12">
                         <label><strong>Disabled Days : </strong></label> 
-                        <?php $days = explode(',', $val['disabled_days']);
+                        <?php 
+												$days = explode(',', $val['disabled_days']);
                         $disabled_days = '';
                         foreach($days as $value)
                         {
@@ -221,7 +214,7 @@
                                 $disabled_days .= "Saturday";
                             }
                         }
-                        echo $disabled_days;
+                        echo rtrim($disabled_days,',');
                         ?>
                     </div>
                 </div>
