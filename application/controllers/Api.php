@@ -26,6 +26,300 @@ class Api extends CI_Controller {
 		exit();
 	}
 	
+	public function PlaceOrder(){
+		
+		$this->form_validation->set_rules('user_id','user_id','trim|required');	
+		$this->form_validation->set_rules('payment_id','payment_id','trim|required');	
+		$this->form_validation->set_rules('stripe_customer_id','stripe_customer_id','trim|required');	
+		$this->form_validation->set_rules('grand_total','grand_total','trim|required');	
+		$this->form_validation->set_rules('sub_total','sub_total','trim|required');	
+		$this->form_validation->set_rules('tax_price','tax_price','trim|required');	
+		$this->form_validation->set_rules('pickup_location','pickup_location','trim|required');	
+		$this->form_validation->set_rules('is_new_address','is_new_address','trim|required');	
+		
+		
+		if($this->form_validation->run()){
+			$user_id = $this->input->post('user_id');
+			$payment_id = $this->input->post('payment_id');
+			$stripe_customer_id = $this->input->post('stripe_customer_id');
+			$grand_total = $this->input->post('grand_total');
+			$sub_total = $this->input->post('sub_total');
+			$tax_price = $this->input->post('tax_price');
+			$is_new_address = $this->input->post('is_new_address');
+			$items = $this->input->post('items');
+			$pickup_location = $this->input->post('pickup_location');
+			
+			$insert = [];
+			
+			$insert['user_id'] = $user_id;
+			$insert['payment_id'] = $payment_id;
+			$insert['stripe_customer_id'] = $stripe_customer_id;
+			$insert['grand_total'] = $grand_total;
+			$insert['sub_total'] = $sub_total;
+			$insert['tax_price'] = $tax_price;
+			$insert['pickup_location'] = $pickup_location;
+			$insert['status'] = 0;
+			
+			
+			
+			$insert['created_at'] = date('Y-m-d H:i:s');
+			$insert['updated_at'] = date('Y-m-d H:i:s');
+			
+			$order_id = $this->common_model->InsertData('orders',$insert);
+			
+			
+			if($is_new_address!=1){
+				$delivery_address_id = $this->input->post('delivery_address_id');
+			} else {
+				
+				$inser2 = [];
+				
+				$inser2['delivery_email'] = $this->input->post('delivery_email');
+				$inser2['delivery_name'] = $this->input->post('delivery_name');
+				$inser2['delivery_address'] = $this->input->post('delivery_address');
+				$inser2['delivery_phone'] = $this->input->post('delivery_phone');
+				$inser2['delivery_remark'] = $this->input->post('delivery_remark');
+				
+				$delivery_address_id = $this->common_model->InsertData('user_address',$inser2);
+				
+			}
+			
+			$this->common_model->UpdateData('orders',array('id'=>$order_id),array('delivery_address_id'=>$delivery_address_id));
+			
+			if(!empty($items)){
+				foreach($items as $key => $item){
+					
+					if(!empty($item['products'])){
+						foreach($item['products'] as $key2 => $product){
+							
+							$insert3 = [];
+							
+							$insert3['user_id'] = $user_id;
+							$insert3['order_id'] = $order_id;
+							$insert3['meal_id'] = $item['meal_id'];
+							$insert3['remark'] = $item['remark'];
+							$insert3['price'] = $item['price'];
+							$insert3['quantity'] = $product['quantity'];
+							$insert3['date'] = date('Y-m-d',strtotime($product['date']));
+							
+							$preference = '';
+							if(isset($product['preference'])){
+								$preference = implode(',',$product['preference']);
+							}
+							
+							
+							$insert3['preference'] = $preference;
+							$insert3['total_price'] = $item['price'] * $product['quantity'];
+							
+							$this->common_model->InsertData('orders_items',$insert3);
+						}
+					}
+					
+				}
+			}
+			
+			
+			
+			$run = $this->common_model->GetColumnName('users',array('id' =>$user_id),array('password','email','name','id'));
+				
+
+			$email = $run['email'];
+			$name = $run['name'];
+			$id = $run['id'];
+			$subject = "Order Place";
+			$html = '<p>Hello, '.$name.'</p>';
+
+			$html .= '<p>Your order has been place successfully.</p>';
+			$html .= '<p>Your order ID : #'.$order_id.'</p>';
+
+			$this->common_model->SendMail($run['email'],$subject,$html);
+		//$return = $this->CustomerProfile($id);
+
+			
+			//$output['data'] = $return;
+			$output['status'] = 1;
+			$output['message'] = 'Order has been placed successfully.';
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+	public function ForgetPassword(){
+
+		$this->form_validation->set_rules('email','email','required');	
+		if($this->form_validation->run()){
+			$email = $this->input->post('email');
+		    $run = $this->common_model->GetColumnName('users',array('email' =>$email),array('password','email','name','id'));
+			if($run){			
+
+				$email = $run['email'];
+				$name = $run['name'];
+				$id = $run['id'];
+				$subject = "Forget password";
+				$html = '<p>Hello, '.$name.'</p>';
+
+				$html .= '<p>This is an automated message . If you did not recently initiate the Forgot Password process, please disregard this email.</p>';
+
+				$html .= '<p>You indicated that you forgot your login password. We can generate a temporary password for you to log in with, then once logged in you can change your password to anything you like.</p>';
+
+				$html .= '<p>Password: <b>'.$run['password'].'</b></p>';
+				$this->common_model->SendMail($run['email'],$subject,$html);
+				//$return = $this->CustomerProfile($id);
+
+				
+				//$output['data'] = $return;
+				$output['status'] = 1;
+				$output['message'] = 'Password sent to your email address.';
+
+			} else {
+
+				$output['status'] = 0;
+				$output['message'] = 'Email address that you have entered is not registered with us.';
+
+			}
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		return $this->response($output);
+
+	}
+	
+	public function ChangePassword(){
+		
+		$this->form_validation->set_rules('current_password','current password','trim|required');
+		$this->form_validation->set_rules('password','New password','trim|required');
+		$this->form_validation->set_rules('user_id','id','trim|required');
+
+		
+		if($this->form_validation->run()){
+
+			$id = $this->input->post('user_id');
+			$cpassword=  $this->input->post('current_password');
+			$npassword=  $this->input->post('password');
+
+			$user = $this->common_model->GetColumnName('users',array('id'=>$id),array('password'));
+
+			if($user){
+
+				if($user['password']==$cpassword){
+					$insert['password']=$npassword;
+					$run = $this->common_model->UpdateData('users',array('id'=>$id),$insert);
+					if($run){
+						$output['status'] = 1;
+						$output['message'] = 'Your password has been updated successfully.';
+					} else {
+						$output['status'] = 0;
+						$output['message'] = 'We did not find any changes.';
+					}
+
+				} else {
+					$output['status'] = 0;
+					$output['message'] = 'Your existing password is incorrect.';
+
+				}	
+			} else {
+				$output['status'] = 0;
+				$output['message'] = 'We did not find any records.';
+
+			}
+
+				
+
+ 		} else {
+ 			$output['status'] = 0;
+ 			$output['message'] = 'Check parameter.';
+
+		}
+
+	  return $this->response($output);
+
+	}
+	
+	public function EditProfile() {
+		
+		//print_r($_REQUEST);
+		
+		$this->form_validation->set_rules('user_id','user_id','trim|required');
+		$this->form_validation->set_rules('name','name','trim|required');
+		$this->form_validation->set_rules('email','email','trim|required');
+		$this->form_validation->set_rules('phone','phone','trim|required');
+
+		if($this->form_validation->run()){
+
+				//$check = true;
+				$name = $this->input->post('name');
+				$user_id = $this->input->post('user_id');
+				$email = $this->input->post('email');
+				
+				if($this->common_model->GetColumnName('users',array('id != '=>$user_id,'email'=>$email))){
+					$output['status']=0;
+					$output['message']='Email already exist.';
+					return $this->response($output);
+				}
+				
+				$phone = $this->input->post('phone');
+				
+				if($this->common_model->GetColumnName('users',array('id != '=>$user_id,'phone'=>$phone))){
+					$output['status']=0;
+					$output['message']='Email already exist.';
+					return $this->response($output);
+				}
+				$alternate_number = $this->input->post('alternate_number');
+
+		
+	
+
+				if(isset($_FILES['image']['name'])) {
+					$config['upload_path']="upload/users/";
+					$config['allowed_types'] = '*';
+					$config['encrypt_name']=true;
+					$this->load->library("upload",$config);
+					if ($this->upload->do_upload('image')) {
+						$u_profile=$this->upload->data("file_name");
+						$updata['image'] = $u_profile;
+					} 
+        }
+				
+				
+				$updata['name'] = $name;
+				$updata['email'] = $email;
+				$updata['phone'] = $phone;
+				$updata['alternate_number'] = $alternate_number;
+				
+        $updata['updated_at'] = date('Y-m-d H:i:s');
+				$run = $this->common->UpdateData('users',array('id'=>$user_id),$updata);
+
+				$output['data'] = $this->CustomerProfile($user_id);
+
+				$output['status'] = 1;
+				$output['message']="Your profile has been updated successfully.";
+
+
+			} else {
+
+			$output['status'] = 0;
+			$output['message'] = "Check parameter!";
+
+		}
+
+		return $this->response($output);
+
+	} 
+	
 	private function CustomerProfile($id=null){
 
 		$user = $this->common_model->GetSingleData('users',array('id'=>$id));
@@ -40,6 +334,7 @@ class Api extends CI_Controller {
 			$output['lat'] = $user['lat'];
 			$output['lng'] = $user['lng'];
 			$output['address'] = $user['address'];
+			$output['alternate_number'] = $user['alternate_number'];
 		 		
 		}
 
@@ -85,7 +380,7 @@ class Api extends CI_Controller {
 
 		}
 
-		echo json_encode($output);
+		return $this->response($output);
 
 	}
 	
@@ -132,11 +427,11 @@ class Api extends CI_Controller {
 
 		}
 
-		echo json_encode($output);
+		return $this->response($output);
 
 	}
 	public function check_email(){
-		//https://www.bluediamondresearch.com/WEB01/bayarea/Api/CreatePaymentIntent
+		
 		$this->form_validation->set_rules('email','email','trim|required|valid_email');
 		
 		if($this->form_validation->run()){
@@ -160,7 +455,7 @@ class Api extends CI_Controller {
 			$output['status'] = 0;
 			$output['message'] = 'Check parameter.';
 		}
-		echo json_encode($output);
+		return $this->response($output);
 	}
 
 	public function CreatePaymentIntent(){
@@ -210,7 +505,7 @@ class Api extends CI_Controller {
 			$output['status'] = 0;
 			$output['message'] = 'Check parameter.';
 		}
-		echo json_encode($output);
+		return $this->response($output);
 	}
 
 	public function setting()
@@ -225,7 +520,7 @@ class Api extends CI_Controller {
 			$output['status'] = 0;
 			$output['message'] = 'No data found';
 		}
-		echo json_encode($output);
+		return $this->response($output);
 	}
 
 	public function get_pickup_address()
@@ -265,7 +560,7 @@ class Api extends CI_Controller {
 			$output['status'] = 0;
 			$output['message'] = "No Data Found";
 		}
-		echo json_encode($output);
+		return $this->response($output);
 	}
 
 
@@ -330,7 +625,7 @@ class Api extends CI_Controller {
 
 		}
 
-		echo json_encode($output);
+		return $this->response($output);
 
 	}
 
@@ -381,7 +676,7 @@ class Api extends CI_Controller {
 
 		}
 
-		echo json_encode($output);
+		return $this->response($output);
 
 	}
 	
@@ -423,8 +718,6 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
-	
-	
 	public function getHomePageContent(){
 		
 		$homePage = $this->common_model->GetDataById('home_content',1);
@@ -447,7 +740,6 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
-	
 	public function getFooterContent(){
 		
 		$contact = $this->common_model->GetDataById('contact_details',1);
@@ -463,7 +755,6 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
-	
 	public function getAboutPageContent(){
 		
 		$content = $this->common_model->GetDataById('inner_content',1);
@@ -476,7 +767,6 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
-	
 	public function getPrivacyPageContent(){
 		
 		$content = $this->common_model->GetDataById('inner_content',1);
@@ -501,8 +791,6 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
-	
-	
 	public function getMealType(){
 		$data = $this->common_model->GetAllData('meal_type');
 		$output['status'] = 1;;
@@ -559,7 +847,6 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
-
 	public function getMealsDataForCart()
 	{
 		//
@@ -805,168 +1092,12 @@ class Api extends CI_Controller {
 		
 	
 
-	public function EditProfile() {
-		//https://webwiders.in/WEB01/QuickCash/Api/EditProfile
-		$this->form_validation->set_rules('user_id','user_id','trim|required');
-
-		if($this->form_validation->run()){
-
-				//$check = true;
-				$user_id = $this->input->post('user_id');
-
-		
-				if (isset($_REQUEST['full_name'])) {
-					$full_name = $this->input->post('full_name');
-					$updata['full_name'] = $full_name;
-				}
-			
-				if (isset($_REQUEST['city'])) {
-					$city = $this->input->post('city');
-					$updata['city'] = $city;
-				}
-				
-				if (isset($_REQUEST['gender'])) {
-					$gender = $this->input->post('gender');
-					$updata['gender'] = $gender;
-				}
-			
-				if (isset($_REQUEST['lat'])) {
-					$lat = $this->input->post('lat');
-					$updata['lat'] = $lat;
-				}
-				
-				if (isset($_REQUEST['lng'])) {
-					$lng = $this->input->post('lng');
-					$updata['lng'] = $lng;
-				}
-				
-				if (isset($_REQUEST['about'])) {
-					$about = $this->input->post('about');
-					$updata['about'] = $about;
-				}
-				
-				if (isset($_REQUEST['profession'])) {
-					$profession = $this->input->post('profession');
-					$updata['profession'] = $profession;
-				}
-
-				if (isset($_REQUEST['address'])) {
-					$address = $this->input->post('address');
-					$updata['address'] = $address;
-				}
-
-				if (isset($_REQUEST['country'])) {
-					$country = $this->input->post('country');
-					$updata['country'] = $country;
-				}
-				
-				if (isset($_REQUEST['state'])) {
-					$state = $this->input->post('state');
-					$updata['state'] = $state;
-				}
-
-				if (isset($_REQUEST['skills'])) {
-					$skills = $this->input->post('skills');
-					$updata['skills'] = $skills;
-				}
-
-				if (isset($_REQUEST['dob'])) {
-					$dob = $this->input->post('dob');
-					$updata['dob'] = $dob;
-				}		
-
-				if(isset($_FILES['image']['name'])) {
-
-					$config['upload_path']="upload/users/";
-					$config['allowed_types'] = '*';
-					$config['encrypt_name']=true;
-					$this->load->library("upload",$config);
-					if ($this->upload->do_upload('image')) {
-						$u_profile=$this->upload->data("file_name");
-						$updata['image'] = $u_profile;
-					} 
-        }
-				
-        $updata['updated_at'] = date('Y-m-d H:i:s');
-				$run = $this->common->UpdateData('users',array('id'=>$user_id),$updata);
-
-				//echo $this->db->last_query();
-
-				if($run){
-					$output['data'] = $this->CustomerProfile($user_id);
-
-					$output['status'] = 1;
-					$output['message']="Your profile has been updated successfully.";
-
-				}
-
-			} else {
-
-			$output['status'] = 0;
-			$output['message'] = "Check parameter!";
-
-		}
-
-		echo json_encode($output);
-
-	} 
+	
 
 	
 
 
-  public function ChangePassword(){
-
-		//https://webwiders.in/WEB01/QuickCash/Api/ChangePassword
-
-		$this->form_validation->set_rules('current_password','current password','trim|required');
-		$this->form_validation->set_rules('password','New password','trim|required');
-		$this->form_validation->set_rules('user_id','id','trim|required');
-
-		
-		if($this->form_validation->run()){
-
-			$id = $this->input->post('user_id');
-			$cpassword=  $this->input->post('current_password');
-			$npassword=  $this->input->post('password');
-
-			$user = $this->common_model->GetColumnName('users',array('id'=>$id),array('password'));
-
-			if($user){
-
-				if($user['password']==$cpassword){
-					$insert['password']=$npassword;
-					$run = $this->common_model->UpdateData('users',array('id'=>$id),$insert);
-					if($run){
-						$output['status'] = 1;
-						$output['message'] = 'Your password has been updated successfully.';
-
-					} else {
-						$output['status'] = 0;
-						$output['message'] = 'We did not find any changes.';
-					}
-
-				} else {
-					$output['status'] = 0;
-					$output['message'] = 'Your existing password is incorrect.';
-
-				}	
-			} else {
-				$output['status'] = 0;
-				$output['message'] = 'We did not find any records.';
-
-			}
-
-				
-
- 		} else {
- 			$output['status'] = 0;
- 			$output['message'] = 'Check parameter.';
-
-		}
-
-		echo json_encode($output);
-
-	}
+  
 
 	public function GetCountryByIP(){ 
 
@@ -1064,173 +1195,6 @@ class Api extends CI_Controller {
 				$output['message'] = "Check parameters";
  	 	}
  	 	echo json_encode($output);
-	}
-
-
-	public function ForgetPassword(){
-
-		//https://webwiders.in/WEB01/QuickCash/Api/ForgetPassword
-
-		$this->form_validation->set_rules('email','email','required');	
-		if($this->form_validation->run()){
-			$email = $this->input->post('email');
-		    $run = $this->common_model->GetColumnName('users',array('email' =>$email),array('password','email','full_name','id'));
-			if($run){			
-
-				$email = $run['email'];
-				$name = $run['full_name'];
-				$id = $run['id'];
-				$subject = "Forget password";
-				$html = '<p>Hello, '.$name.'</p>';
-
-				$html .= '<p>This is an automated message . If you did not recently initiate the Forgot Password process, please disregard this email.</p>';
-
-				$html .= '<p>You indicated that you forgot your login password. We can generate a temporary password for you to log in with, then once logged in you can change your password to anything you like.</p>';
-
-				$html .= '<p>Password: <b>'.$run['password'].'</b></p>';
-				$this->common_model->SendMail($run['email'],$subject,$html);
-				$return = $this->CustomerProfile($id);
-
-				
-				//$output['data'] = $return;
-				$output['status'] = 1;
-				$output['message'] = 'Password sent to your email address.';
-
-			} else {
-
-				$output['status'] = 0;
-				$output['message'] = 'Email address that you have entered is not registered with us.';
-
-			}
-
- 		} else {
-
-			$output['status'] = 0;
-
-			$output['message'] = 'Check parameter.';
-
-		}
-		echo json_encode($output);
-
-	}
-
-
-	private function CustomerProfile($id=null){
-
-		$user = $this->common_model->GetSingleData('users',array('id'=>$id));
-		$output = false;
-		if($user) {
-
-			$output['id'] = $user['id'];
-			// $output['user_type'] = $user['user_type'];
-			$output['full_name'] = $user['full_name'];
-			$output['email'] = $user['email'];
-			$output['phone'] = $user['phone'];
-			$output['phone_with_code'] = $user['phone_with_code'];
-			$output['is_verified'] = $user['is_verified'];
-			$output['free_plan'] = $user['free_plan'];
-			$output['profession'] = $user['profession'];
-			$output['gender'] = $user['gender'];
-			$output['lat'] = $user['lat'];
-			$output['lng'] = $user['lng'];
-			$output['dob'] = $user['dob'];
-			$output['about'] = $user['about'];
-			$output['city'] = $user['city'];
-			$output['state'] = $user['state'];
-			$output['country'] = $user['country'];
-			$output['address'] = $user['address'];
-			$output['is_block'] = $user['is_block'];
-			$output['avg_rate_as_client'] = 0;
-			$output['avg_rate_as_worker'] = 0;
-			$getAvgRateClient = $this->common_model->GetColumnName('bookings', array('user_id'=>$id, 'status'=>3, 'client_rating !='=>0), array('SUM(client_rating) as avg_rate', 'COUNT(id) as total_data'));
-			if ($getAvgRateClient && $getAvgRateClient['total_data'] > 0) {
-				$output['avg_rate_as_client'] = $getAvgRateClient['avg_rate']/$getAvgRateClient['total_data'];	 
-			}  		
-
-			$getAvgRateWorker = $this->common_model->GetColumnName('bookings', array('worker_id'=>$id, 'status'=> 3, 'worker_rating !='=>0), array('SUM(worker_rating) as avg_rate', 'COUNT(id) as total_data'));
-			if ($getAvgRateWorker && $getAvgRateWorker['total_data'] > 0) {
-				$output['avg_rate_as_worker'] = $getAvgRateWorker['avg_rate']/$getAvgRateWorker['total_data'];	 
-			} 
-
-			$output['wallet_amount'] = $user['wallet_amount'];
-			$skills  = array();
-			$sub_skills  = array();
-
-			if($user['skills']){
-
-				$skills =$this->common_model->GetColumnName('category' , "id in (".$user['skills'].")",array('*',"CONCAT('" .site_url() ."',icon) AS icon"),true);
-
-
-			}
-
-			$output['skills'] = $skills;
-
-			if($user['sub_skills']){
-
-				$sub_skills =$this->common_model->GetColumnName('category' , "id in (".$user['sub_skills'].")",array('*',"CONCAT('" .site_url() ."',icon) AS icon"),true);
-
-
-			}
-
-			$output['sub_skills'] = $sub_skills;
-						
-
-			if($user['image']){
-				$output['image'] = site_url().'upload/users/'.$user['image'];
-			} else {
-				$output['image'] = site_url().'upload/users/demo_image.jpg';
-			}
-			
-			$today = date('Y-m-d');
-			
-			$user_plan = $this->common_model->GetSingleData('user_plan',"user_id = $id",'id','desc');
-			//$user_plan = $this->common_model->GetSingleData('user_plan',"user_id = $id and DATE(start_date) <= DATE('".$today."') and DATE(end_date) >= DATE('".$today."')",'id','desc');
-			
-			$is_worker = 0;
-			
-			if($user_plan && $user_plan['is_bid']==1){
-				$is_worker = 1;
-			}
-
-			if ($user_plan) {
-				 $plan = $this->common_model->GetColumnName('plans', array('id'=>$user_plan['plan_id']), array('name'));
-				 $user_plan['plan_title'] = $plan['name'];
-			}
-			
-			$output['is_worker'] = $is_worker;
-			$output['plans'] = $user_plan;
-			
-
-		}
-
-		return $output;
-
-	}
-
-
-	private function CustomerShortProfile($id=null){
-
-		$user = $this->common_model->GetSingleData('users',array('id'=>$id));
-		$output = false;
-		if($user) {
-
-			$output['id'] = $user['id'];
-			// $output['user_type'] = $user['user_type'];
-			$output['full_name'] = $user['full_name'];
-			$output['email'] = $user['email'];
-			$output['phone'] = $user['phone'];
-			$output['phone_with_code'] = $user['phone_with_code'];									
-
-			if($user['image']){
-				$output['image'] = site_url().'upload/users/'.$user['image'];
-			} else {
-				$output['image'] = site_url().'upload/users/demo_image.jpg';
-			}						
-
-		}
-
-		return $output;
-
 	}
 
 	public function getKey()

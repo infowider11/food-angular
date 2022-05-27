@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 20, 2022 at 01:27 PM
+-- Generation Time: May 27, 2022 at 01:16 PM
 -- Server version: 5.7.23-23
 -- PHP Version: 7.3.32
 
@@ -365,6 +365,92 @@ INSERT INTO `meal_type` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `payment_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `stripe_customer_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `grand_total` float NOT NULL DEFAULT '0',
+  `sub_total` float NOT NULL DEFAULT '0',
+  `tax_price` float NOT NULL DEFAULT '0',
+  `delivery_fee` float NOT NULL DEFAULT '0',
+  `delivery_address_id` int(11) NOT NULL DEFAULT '0',
+  `pickup_location` int(11) NOT NULL DEFAULT '0',
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '0= pending, 1= completed',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `payment_id`, `stripe_customer_id`, `grand_total`, `sub_total`, `tax_price`, `delivery_fee`, `delivery_address_id`, `pickup_location`, `quantity`, `status`, `created_at`, `updated_at`) VALUES
+(1000, 1, 'pi_3L42mMLEGsv8VYZL0gGTOYOi', 'cus_LlZwrtfC4VVmy9', 473.74, 393, 70.74, 0, 0, 1, 0, 0, '2022-05-27 17:01:38', '2022-05-27 17:01:38'),
+(1001, 1, 'pi_3L42otLEGsv8VYZL0omlVbt5', 'cus_LlZysFpfU3nTDN', 473.74, 393, 70.74, 0, 1, 1, 0, 0, '2022-05-27 17:03:26', '2022-05-27 13:03:26'),
+(1002, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 2, 1, 0, 0, '2022-05-27 17:05:31', '2022-05-27 13:05:31'),
+(1003, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 3, 1, 0, 0, '2022-05-27 17:06:30', '2022-05-27 13:06:30'),
+(1004, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 4, 1, 0, 0, '2022-05-27 17:07:13', '2022-05-27 13:07:13'),
+(1005, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 5, 1, 0, 0, '2022-05-27 17:07:34', '2022-05-27 13:07:34'),
+(1006, 1, 'pi_3L42tPLEGsv8VYZL0w3CcgsK', 'cus_Lla3KS7Q3MYNkB', 473.74, 393, 70.74, 0, 6, 2, 0, 0, '2022-05-27 17:08:06', '2022-05-27 13:08:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_items`
+--
+
+CREATE TABLE `orders_items` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `order_id` int(11) NOT NULL DEFAULT '0',
+  `meal_id` int(11) NOT NULL DEFAULT '0',
+  `remark` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `price` float NOT NULL DEFAULT '0',
+  `date` date DEFAULT NULL,
+  `preference` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `total_price` float NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `orders_items`
+--
+
+INSERT INTO `orders_items` (`id`, `user_id`, `order_id`, `meal_id`, `remark`, `quantity`, `price`, `date`, `preference`, `total_price`) VALUES
+(1, 1, 1002, 6, 'test', 1, 1, '2022-05-26', NULL, 1),
+(2, 1, 1002, 5, 'test', 3, 3, '2022-05-27', '', 9),
+(3, 1, 1002, 4, 'test', 2, 6, '2022-05-26', '', 12),
+(4, 1, 1002, 4, 'test', 2, 6, '2022-05-27', '', 12),
+(5, 1, 1002, 4, 'test', 2, 6, '2022-05-26', '', 12),
+(6, 1, 1003, 6, 'test', 1, 1, '2022-05-26', '', 1),
+(7, 1, 1003, 5, 'test', 3, 3, '2022-05-27', NULL, 9),
+(8, 1, 1003, 4, 'test', 2, 6, '2022-05-26', NULL, 12),
+(9, 1, 1003, 4, 'test', 2, 6, '2022-05-27', NULL, 12),
+(10, 1, 1003, 4, 'test', 2, 6, '2022-05-26', NULL, 12),
+(11, 1, 1004, 6, 'test', 1, 1, '2022-05-26', '', 1),
+(12, 1, 1004, 5, 'test', 3, 3, '2022-05-27', '1', 9),
+(13, 1, 1004, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12),
+(14, 1, 1004, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12),
+(15, 1, 1004, 4, 'test', 2, 6, '2022-05-26', '31,33', 12),
+(16, 1, 1005, 6, 'test', 1, 1, '2022-05-26', '', 1),
+(17, 1, 1005, 5, 'test', 3, 3, '2022-05-27', '1', 9),
+(18, 1, 1005, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12),
+(19, 1, 1005, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12),
+(20, 1, 1005, 4, 'test', 2, 6, '2022-05-26', '31,33', 12),
+(21, 1, 1006, 6, 'test', 1, 1, '2022-05-26', '', 1),
+(22, 1, 1006, 5, 'test', 3, 3, '2022-05-27', '1', 9),
+(23, 1, 1006, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12),
+(24, 1, 1006, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12),
+(25, 1, 1006, 4, 'test', 2, 6, '2022-05-26', '31,33', 12);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pickup_location`
 --
 
@@ -482,6 +568,7 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `alternate_number` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `otp` int(11) NOT NULL,
@@ -498,11 +585,39 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `image`, `otp`, `is_verified`, `address`, `lat`, `lng`, `device_id`, `created_at`, `updated_at`) VALUES
-(1, 'Anil', 'anil.webwiders@gmail.com', '8357086224', '123456', NULL, 9180, 1, 'Indore, Madhya Pradesh, India', '22.7195687', '75.8577258', 'f08dd364-b5a0-11ec-a896-000000000000', '2022-04-06 16:17:27', '2022-04-08 11:01:40'),
-(2, 'Anil', 'anil@gmail.com', '', '123456', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:44:43', '2022-05-20 14:44:43'),
-(3, 'Anil', 'anil@test.com', '', '123', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:53:47', '2022-05-20 14:53:47'),
-(4, 'sdfsdf', 'admin@gmail.com', '', '123456', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 16:41:21', '2022-05-20 16:41:21');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alternate_number`, `password`, `image`, `otp`, `is_verified`, `address`, `lat`, `lng`, `device_id`, `created_at`, `updated_at`) VALUES
+(1, 'Anil Vishwakarma', 'anil.webwiders@gmail.com', '9874563210', '1223123122', '123456', NULL, 9180, 1, 'Indore, Madhya Pradesh, India', '22.7195687', '75.8577258', 'f08dd364-b5a0-11ec-a896-000000000000', '2022-04-06 16:17:27', '2022-05-27 09:49:01'),
+(2, 'Anil', 'anil@gmail.com', '231223122', '2342334234 23234', '123456', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:44:43', '2022-05-27 10:58:20'),
+(3, 'Anil', 'anil@test.com', '', NULL, '123', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:53:47', '2022-05-20 14:53:47'),
+(4, 'sdfsdf', 'admin@gmail.com', '', NULL, '123456', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 16:41:21', '2022-05-20 16:41:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_address`
+--
+
+CREATE TABLE `user_address` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `delivery_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `delivery_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `delivery_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `delivery_remark` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `delivery_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `user_address`
+--
+
+INSERT INTO `user_address` (`id`, `user_id`, `delivery_address`, `delivery_email`, `delivery_phone`, `delivery_remark`, `delivery_name`) VALUES
+(1, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
+(2, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
+(3, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
+(4, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
+(5, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
+(6, 0, 'test', 'test@gmail.com', '234234', '', 'test');
 
 -- --------------------------------------------------------
 
@@ -609,6 +724,18 @@ ALTER TABLE `meal_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders_items`
+--
+ALTER TABLE `orders_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pickup_location`
 --
 ALTER TABLE `pickup_location`
@@ -631,6 +758,12 @@ ALTER TABLE `settings`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_address`
+--
+ALTER TABLE `user_address`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -716,6 +849,18 @@ ALTER TABLE `meal_type`
   MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1007;
+
+--
+-- AUTO_INCREMENT for table `orders_items`
+--
+ALTER TABLE `orders_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- AUTO_INCREMENT for table `pickup_location`
 --
 ALTER TABLE `pickup_location`
@@ -738,6 +883,12 @@ ALTER TABLE `settings`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user_address`
+--
+ALTER TABLE `user_address`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `why_order_content`
