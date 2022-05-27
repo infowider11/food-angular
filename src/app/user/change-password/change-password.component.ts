@@ -5,11 +5,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-dashbord',
-  templateUrl: './dashbord.component.html',
-  styleUrls: ['./dashbord.component.css']
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css']
 })
-export class DashbordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit {
 
   form!: FormGroup;
   is_loading:boolean= false;
@@ -26,24 +26,32 @@ export class DashbordComponent implements OnInit {
     }
 
     this.form = new FormGroup({
-      email: new FormControl(this.AuthService.userdata.email, [Validators.required, Validators.email]),
-      name: new FormControl(this.AuthService.userdata.name,[Validators.required]),
-      phone: new FormControl(this.AuthService.userdata.phone,[Validators.required,Validators.pattern('[- +()0-9]+')]),
-      alternate_number: new FormControl(this.AuthService.userdata.alternate_number,[Validators.required,Validators.pattern('[- +()0-9]+')]),
+      current_password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirm_password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     })
   }
 
   ngOnInit(): void {
   }
 
-  editProfile() {
+  changePassword() {
 
     this.is_loading = true;
     console.log('1', this.form.value);
 
+
+    if(this.form.value.password != this.form.value.confirm_password) {
+      this.login_error_message = "Confirm password not matched with new Password field"
+      this.is_loading = false;
+      return
+    }
+    this.is_loading = true;
+
+    
     this.form.value.user_id = this.AuthService.userdata.id;
     
-    this.userService.EditProfile(this.form.value).subscribe((data: any) => {
+    this.userService.ChangePassword(this.form.value).subscribe((data: any) => {
       console.log('edit_profile form', data);
       this.login_error_message = '';
       this.is_loading = false;
@@ -52,8 +60,13 @@ export class DashbordComponent implements OnInit {
 
         this.login_success_message = data.message;
         
-        this.AuthService.authorization(data.data)
         this.login_error_message='';
+
+        this.form = new FormGroup({
+          current_password: new FormControl('', [Validators.required]),
+          password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+          confirm_password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+        })
 
         setTimeout(()=>{
           this.login_success_message = '';

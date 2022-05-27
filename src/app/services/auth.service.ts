@@ -49,6 +49,17 @@ export class AuthService {
     
    }
 
+   updateUserData(data:any){
+   
+    this.userdata = data
+    this.is_user_logged_in=true;
+    localStorage.setItem("user-auth", JSON.stringify(this.userdata));
+
+      return data
+      
+    
+   }
+
    logout(){
     localStorage.clear();
     this.is_user_logged_in = false;

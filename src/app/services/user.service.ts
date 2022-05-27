@@ -29,6 +29,28 @@ export class UserService {
     return this.httpClient.post<any>(this.apiURL+'/signup',convertJSONToFormData(data))
   }
 
+  EditProfile(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/EditProfile',convertJSONToFormData(data))
+  }
+
+  ChangePassword(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/ChangePassword',convertJSONToFormData(data))
+  }
+
+  
+  CreatePaymentIntent(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/CreatePaymentIntent',convertJSONToFormData(data))
+  }
+
+  
+  MakeOrder(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/PlaceOrder',data)
+  }
+
+  ForgetPassword(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/ForgetPassword',convertJSONToFormData(data))
+  }
+
   errorHandler(error:any){
     let errorMessage = '';
     if(error.error instanceof ErrorEvent){

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ForgotComponent } from './auth-user/forgot/forgot.component';
 import { LoginComponent } from './auth-user/login/login.component';
 import { SignupComponent } from './auth-user/signup/signup.component';
 import { CheckoutComponent } from './checkout/checkout/checkout.component';
@@ -13,7 +14,9 @@ import { PageNotFoundComponent } from './static-pages/page-not-found/page-not-fo
 import { PrivacyPolicyComponent } from './static-pages/privacy-policy/privacy-policy.component';
 import { SearchComponent } from './static-pages/search/search.component';
 import { TermsAndConditionsComponent } from './static-pages/terms-and-conditions/terms-and-conditions.component';
+import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { DashbordComponent } from './user/dashbord/dashbord.component';
+import { MealHistoryComponent } from './user/meal-history/meal-history.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,7 +33,9 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'dashboard', component:DashbordComponent},
-
+  { path: 'change-password', component:ChangePasswordComponent},
+  { path: 'forgot-password', component:ForgotComponent},
+  { path: 'meal-history', component:MealHistoryComponent},
 
   {
     path: '**', pathMatch: 'full',
