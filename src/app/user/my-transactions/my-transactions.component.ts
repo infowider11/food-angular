@@ -4,13 +4,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-meal-history',
-  templateUrl: './meal-history.component.html',
-  styleUrls: ['./meal-history.component.css']
+  selector: 'app-my-transactions',
+  templateUrl: './my-transactions.component.html',
+  styleUrls: ['./my-transactions.component.css']
 })
-export class MealHistoryComponent implements OnInit {
+export class MyTransactionsComponent implements OnInit {
 
-  orders:any=[]
+  transactions:any=[]
 
   constructor(
     private router: Router,
@@ -24,10 +24,10 @@ export class MealHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.MyOrders(this.AuthService.userdata.id).subscribe((data:any)=>{
+    this.userService.MyTransactions(this.AuthService.userdata.id).subscribe((data:any)=>{
       if(data.status==1 && data.data.length > 0){
-        this.orders = data.data
-        console.log('transactions',this.orders);
+        this.transactions = data.data
+        console.log('transactions',this.transactions);
       }
     })
   }

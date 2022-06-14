@@ -1,1 +1,61 @@
-<p>meal-history works!</p>
+<div class="page-header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="page-header-container">
+                    <div class="page-header-content">
+                        <h1 class="heading-one">Meal History</h1>
+                        <div class="page-nav">
+                            <ul>
+                                <li><a routerLink="/home">Home &gt;</a></li>
+                                <li>Meal History</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dashboard-page">
+    <div class="container">
+        <div class="row">
+            <!-- sidebar-->
+            <div class="col-sm-3">
+                <app-sidebar></app-sidebar>
+            </div>
+            <!-- sidebar-->
+            <div class="col-sm-9">
+                <div class="right-dash">
+                    <h3>Meal History</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Meal Id</th>
+                                <th>Order Date</th>
+                                <th>Picture</th>
+                                <th>Meal Name</th>
+                                <th>Status</th>
+                            </tr>
+                            <tr *ngFor="let order of orders; let i = index">
+                                <td>#{{order.meal_id}}</td>
+                                <td>{{order.date | date : 'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <img *ngIf="!order.mealData.image" src="assets/img/meal1.png" width="80px">
+                                    <img *ngIf="order.mealData.image" src="{{order.mealData.image}}" width="80px">
+                                </td>
+                                <td>{{order.mealData.name}}</td>
+                                <td>
+                                    
+                                    <label *ngIf="order.status==0" class="label label-warning"> Panding</label>
+                                    <label *ngIf="order.status==1" class="label label-success"> Completed</label>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

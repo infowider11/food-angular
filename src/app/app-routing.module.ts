@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ForgotComponent } from './auth-user/forgot/forgot.component';
 import { LoginComponent } from './auth-user/login/login.component';
+import { ResetPasswordComponent } from './auth-user/reset-password/reset-password.component';
 import { SignupComponent } from './auth-user/signup/signup.component';
 import { CheckoutComponent } from './checkout/checkout/checkout.component';
 import { HomePageComponent } from './home/home-page/home-page.component';
@@ -17,6 +18,8 @@ import { TermsAndConditionsComponent } from './static-pages/terms-and-conditions
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { DashbordComponent } from './user/dashbord/dashbord.component';
 import { MealHistoryComponent } from './user/meal-history/meal-history.component';
+import { MyAddressComponent } from './user/my-address/my-address.component';
+import { MyTransactionsComponent } from './user/my-transactions/my-transactions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,6 +39,9 @@ const routes: Routes = [
   { path: 'change-password', component:ChangePasswordComponent},
   { path: 'forgot-password', component:ForgotComponent},
   { path: 'meal-history', component:MealHistoryComponent},
+  { path: 'my-transactions', component:MyTransactionsComponent},
+  { path: 'my-address', component:MyAddressComponent},
+  { path: 'reset-password', component:ResetPasswordComponent},
 
   {
     path: '**', pathMatch: 'full',

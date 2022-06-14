@@ -38,8 +38,10 @@ export class CommonServiceService {
       )
   }
 
-  get_pickup_address(): Observable<any> {
-    return this.httpClient.get<any>(this.apiURL + '/get_pickup_address').pipe(catchError(this.errorHandler))
+  get_pickup_address(keywords: any): Observable<any> {
+   
+    return this.httpClient.get<any>(this.apiURL + '/get_pickup_address?keywords='+keywords).pipe(catchError(this.errorHandler))
+    
   }
 
   getSetting(): Observable<any> {

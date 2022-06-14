@@ -47,8 +47,43 @@ export class UserService {
     return this.httpClient.post<any>(this.apiURL+'/PlaceOrder',data)
   }
 
+  MyOrders(user_id:any):Observable<any> {
+    let params = new HttpParams().set("user_id",user_id);
+
+    return this.httpClient.get<any>(this.apiURL + '/MyOrders/',{params})
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
+  MyTransactions(user_id:any):Observable<any> {
+    let params = new HttpParams().set("user_id",user_id);
+
+    return this.httpClient.get<any>(this.apiURL + '/MyTransactions/',{params})
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
+  
+  MyAddress(user_id:any):Observable<any> {
+    let params = new HttpParams().set("user_id",user_id);
+
+    return this.httpClient.get<any>(this.apiURL + '/MyAddress/',{params})
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
   ForgetPassword(data:any):Observable<any>{
     return this.httpClient.post<any>(this.apiURL+'/ForgetPassword',convertJSONToFormData(data))
+  }
+  ResetPassword(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/ResetPassword',convertJSONToFormData(data))
+  }
+
+  verifyToken(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL + '/verifyToken',convertJSONToFormData(data))
   }
 
   errorHandler(error:any){

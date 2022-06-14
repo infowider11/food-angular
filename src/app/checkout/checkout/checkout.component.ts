@@ -31,7 +31,7 @@ export class CheckoutComponent implements OnInit {
   is_new_user: boolean = (this.AuthService.is_user_logged_in) ? true : false;
   is_logged_in: boolean = this.AuthService.is_user_logged_in;
   is_loading: boolean = false;
-  is_new_address:string='1'
+  is_new_address:string='1';
 
   login_error_message: string = '';
   same_password_error: string = '';
@@ -108,13 +108,26 @@ export class CheckoutComponent implements OnInit {
     })
     this.GetCartItems();
 
-    this.commonService.get_pickup_address().subscribe((data: any) => {
+    this.commonService.get_pickup_address(this.form.value.search_area_by_keywords).subscribe((data: any) => {
       if (data.status == 1) {
         this.pickup_address = data.data
       }
     })
 
 
+  }
+
+  searchArea(){
+    this.step4 = false;
+    this.step5 = false;
+    this.step6 = false;
+
+    console.log('search_area_by_keywords',this.form.value.search_area_by_keywords);
+    this.commonService.get_pickup_address(this.form.value.search_area_by_keywords).subscribe((data: any) => {
+      if (data.status == 1) {
+        this.pickup_address = data.data
+      }
+    })
   }
 
 
@@ -132,6 +145,7 @@ export class CheckoutComponent implements OnInit {
       delivery_email: new FormControl('test@gmail.com', [Validators.required, Validators.email]),
       delivery_address: new FormControl('test', [Validators.required]),
       delivery_remark: new FormControl(''),
+      search_area_by_keywords: new FormControl(''),
     })
 
   }
