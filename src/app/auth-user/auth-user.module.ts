@@ -6,6 +6,7 @@ import { SignupComponent } from './signup/signup.component';
 import { ForgotComponent } from './forgot/forgot.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 
 
@@ -14,7 +15,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoginComponent,
     SignupComponent,
     ForgotComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SocialLoginComponent
   ],
   imports: [
     CommonModule,

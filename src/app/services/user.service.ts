@@ -29,6 +29,11 @@ export class UserService {
     return this.httpClient.post<any>(this.apiURL+'/signup',convertJSONToFormData(data))
   }
 
+  
+  socialLogin(data:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiURL+'/socialLogin',convertJSONToFormData(data))
+  }
+
   EditProfile(data:any):Observable<any>{
     return this.httpClient.post<any>(this.apiURL+'/EditProfile',convertJSONToFormData(data))
   }
