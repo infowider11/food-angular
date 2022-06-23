@@ -35,12 +35,28 @@ Content body start
                     </div>
                     <div class="card-body">    
     			         <form method="post" onsubmit="return updateSetting(event)" id="updateSetting" enctype="multipart/form-data">    					
-                                <div class="row">
+                                <div class="row" style="display: none;">
                                     <div class="mb-3 col-md-6">
-                                        <label class="form-label"><strong>Commission (%)</strong></label><br/>
-                                        <input type="text" name="transaction" class="form-control" required value="<?= $setting['transaction']?>" placeholder="Commission..">
+                                        <label class="form-label"><strong>Transaction (%)</strong></label><br/>
+                                        <input type="number" name="transaction" class="form-control" required value="<?= $setting['transaction']?>" placeholder="Commission.." min="1" step="0.01">
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label"><strong>Tax (%)</strong></label><br/>
+                                        <input type="number" name="tax" class="form-control" required value="<?= $setting['tax']?>" placeholder="tax.." min="1" step="0.01">
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label"><strong>Delivery Fee (%)</strong></label><br/>
+                                        <input type="number" name="delivery_fee" class="form-control" required value="<?= $setting['delivery_fee']?>" placeholder="Delivery fee.." min="1" step="0.01">
+                                    </div>
+                                </div>
+
                             
                                 <button class="btn btn-primary" id="upbtn" type="submit">Update</button>
                             </form>

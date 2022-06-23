@@ -133,7 +133,7 @@ class Common_model extends CI_Model {
   }
   
 	
-	public function GetAllData($table,$where=null,$ob=null,$obc='DESC',$limit=null,$offset=null,$select=null){
+	public function GetAllData($table,$where=null,$ob=null,$obc='DESC',$limit=null,$offset=0,$select=null){
    
 		if($select) {
 			$this->db->select($select);

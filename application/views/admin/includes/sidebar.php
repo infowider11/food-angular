@@ -11,6 +11,14 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
+                      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-043-menu"></i>
+                            <span class="nav-text">Users Management</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="<?= site_url('admin/user-list'); ?>">User List</a></li>
+                        </ul>
+                    </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                             <i class="flaticon-043-menu"></i>
                             <span class="nav-text">Area Management</span>
@@ -77,6 +85,15 @@
                         </ul>
                     </li>
 
+                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-043-menu"></i>
+                            <span class="nav-text">Orders Management</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="<?= site_url('admin/order-list'); ?>">Orders List</a></li>
+                        </ul>
+                    </li>
+
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                             <i class="flaticon-043-menu"></i>
                             <span class="nav-text">Preference Management</span>
@@ -85,7 +102,7 @@
                             <li><a href="<?= site_url('admin/preference-list'); ?>">Preference List</a></li>
                         </ul>
                     </li>
-                    <li style="display: none;"><a href="<?= site_url('admin/setting-management'); ?>"><i class="flaticon-043-menu"></i>Setting Management</a></li> 
+                    <li ><a href="<?= site_url('admin/setting-management'); ?>"><i class="flaticon-043-menu"></i>Setting Management</a></li> 
                 
 
 

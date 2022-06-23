@@ -9,6 +9,7 @@ class Meal extends CI_Controller
 	
 	public function __construct() {
 		parent::__construct();
+		$this->load->model('Send_sms');
 		$this->check_login();
 		
 	}
@@ -366,5 +367,56 @@ class Meal extends CI_Controller
 		echo json_encode($json);
 	}
 
-}
+	public function order_list(){
+ 		$data["data"] = $this->common_model->GetAllData("orders",'','id','desc');
 
+ 		$this->load->view("admin/order-list", $data);
+ 	}
+
+ 	public function order_view($id) {
+ 		$data["data"] = $this->common_model->GetSingleData("orders",array("id"=>$id));
+ 		$data["orders_items"] = $this->common_model->GetAllData("orders_items", array("order_id"=>$data["data"]["id"]));
+ 		$data["pickup_location"] = $this->common_model->GetSingleData("pickup_location", array("id"=>$data["data"]["pickup_location"]));
+ 		$data["user_address"] = $this->common_model->GetSingleData("user_address", array("id"=>$data["data"]["delivery_address_id"]));
+ 		$this->load->view("admin/order-view", $data);
+ 		 
+ 	}
+
+ 	/*public function mark_as_complete($id) {
+ 		$run = $this->common_model->UpdateData("orders", array("id"=>$id), array("status"=>1));
+ 		if ($run) {
+				$this->session->set_flashdata('msgs','<div class="alert alert-success">Order Marked as completed successfully</div>'); 			
+ 		} else {
+				$this->session->set_flashdata('msgs','<div class="alert alert-danger">Something is Worng.</div>');
+ 		}
+ 		redirect('admin/order-list');
+ 	}*/
+
+ 	public function mark_as_complete($id,$order_id,$user_id) {
+ 		
+ 		$run = $this->common_model->UpdateData("orders_items", array("id"=>$id), array("status"=>1));
+ 		$check = $this->common_model->GetAllData("orders_items", array("order_id"=>$order_id,'status'=>0));
+ 		if(empty($check)){
+ 			$run1 = $this->common_model->UpdateData("orders", array("id"=>$order_id), array("status"=>1));
+ 		}
+
+ 		$userdata = $this->common_model->GetSingleData("users", array("id"=>$user_id));
+ 		if ($run) {
+				$this->session->set_flashdata('msgs','<div class="alert alert-success">Order Marked as completed successfully</div>'); 
+				  $message = "Your Order Complete Successfully";
+
+				try {
+                     $this->Send_sms->send($userdata["phone_with_code"],$message);
+		       } catch (\Exception $exception) {
+		            Log::error($exception);
+		            $this->session->set_flashdata('msgs','<div class="alert alert-danger">Something is Worng.</div>');
+		       }
+
+		} else {
+				$this->session->set_flashdata('msgs','<div class="alert alert-danger">Something is Worng.</div>');
+ 		}
+ 		redirect('admin/order-view/'.$order_id);
+ 	}
+
+}
+?>

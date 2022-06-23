@@ -75,10 +75,12 @@ class Api extends CI_Controller {
 				$inser2 = [];
 				
 				$inser2['delivery_email'] = $this->input->post('delivery_email');
+				$inser2['user_id'] = $user_id;
 				$inser2['delivery_name'] = $this->input->post('delivery_name');
 				$inser2['delivery_address'] = $this->input->post('delivery_address');
 				$inser2['delivery_phone'] = $this->input->post('delivery_phone');
 				$inser2['delivery_remark'] = $this->input->post('delivery_remark');
+				$inser2['delivery_title'] = $this->input->post('delivery_title');
 				
 				$delivery_address_id = $this->common_model->InsertData('user_address',$inser2);
 				
@@ -153,6 +155,302 @@ class Api extends CI_Controller {
 		return $this->response($output);
 		
 	}
+	
+	public function add_address(){
+		
+		$this->form_validation->set_rules('user_id','user_id','trim|required');	
+		$this->form_validation->set_rules('delivery_title','delivery_title','trim|required');	
+		$this->form_validation->set_rules('delivery_name','delivery_name','trim|required');	
+		$this->form_validation->set_rules('delivery_phone','delivery_phone','trim|required');	
+		$this->form_validation->set_rules('delivery_email','delivery_email','trim|required');	
+		$this->form_validation->set_rules('delivery_address','delivery_address','trim|required');	
+		
+		
+		if($this->form_validation->run()){
+			$user_id = $this->input->post('user_id');
+			
+			$inser2 = [];
+			
+			$inser2['delivery_email'] = $this->input->post('delivery_email');
+			$inser2['delivery_name'] = $this->input->post('delivery_name');
+			$inser2['delivery_address'] = $this->input->post('delivery_address');
+			$inser2['delivery_phone'] = $this->input->post('delivery_phone');
+			$inser2['delivery_remark'] = $this->input->post('delivery_remark');
+			$inser2['delivery_title'] = $this->input->post('delivery_title');
+			$inser2['user_id'] = $user_id;
+				
+			$this->common_model->InsertData('user_address',$inser2);
+				
+			
+			$output['status'] = 1;
+			$output['message'] = 'Address added successfully.';
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+	
+	public function edit_address(){
+		
+		$this->form_validation->set_rules('user_id','user_id','trim|required');	
+		$this->form_validation->set_rules('id','id','trim|required');	
+		$this->form_validation->set_rules('delivery_title','delivery_title','trim|required');	
+		$this->form_validation->set_rules('delivery_name','delivery_name','trim|required');	
+		$this->form_validation->set_rules('delivery_phone','delivery_phone','trim|required');	
+		$this->form_validation->set_rules('delivery_email','delivery_email','trim|required');	
+		$this->form_validation->set_rules('delivery_address','delivery_address','trim|required');	
+		
+		
+		if($this->form_validation->run()){
+			$user_id = $this->input->post('user_id');
+			$id = $this->input->post('id');
+			
+			$inser2 = [];
+			
+			$inser2['delivery_email'] = $this->input->post('delivery_email');
+			$inser2['delivery_name'] = $this->input->post('delivery_name');
+			$inser2['delivery_address'] = $this->input->post('delivery_address');
+			$inser2['delivery_phone'] = $this->input->post('delivery_phone');
+			$inser2['delivery_remark'] = $this->input->post('delivery_remark');
+			$inser2['delivery_title'] = $this->input->post('delivery_title');
+			$inser2['user_id'] = $user_id;
+				
+			$last_id = $this->common_model->UpdateData('user_address',['id'=>$id,'user_id'=>$user_id],$inser2);
+				
+			
+			$output['status'] = 1;
+			$output['message'] = 'Address updated successfully.';
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+	
+	public function delete_address(){
+		
+		$this->form_validation->set_rules('user_id','user_id','trim|required');	
+		$this->form_validation->set_rules('id','id','trim|required');
+		
+		
+		if($this->form_validation->run()){
+			$user_id = $this->input->post('user_id');
+			$id = $this->input->post('id');
+			
+			
+			$last_id = $this->common_model->DeleteData('user_address',['id'=>$id,'user_id'=>$user_id]);
+				
+			
+			$output['status'] = 1;
+			$output['message'] = 'Address deleted successfully.';
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+	
+	
+	public function MyTransactions(){
+		
+		if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
+			$user_id = $_REQUEST['user_id'];
+			
+			$where = "user_id = $user_id";
+			
+			if(isset($_REQUEST['start_date']) && !empty($_REQUEST['start_date'])){
+				
+				$start_date = date('Y-m-d',strtotime($_REQUEST['start_date']));
+				$where .= " and DATE(created_at) >= DATE('".$start_date."')";
+				
+			}
+			if(isset($_REQUEST['start_date']) && !empty($_REQUEST['start_date'])){
+				
+				$end_date = date('Y-m-d',strtotime($_REQUEST['end_date']));
+				$where .= " and DATE(created_at) <= DATE('".$end_date."')";
+				
+			}
+			if(isset($_REQUEST['status']) && !empty($_REQUEST['status'])){
+				
+				$status = $_REQUEST['status'];
+				$where .= " and status = $status";
+				
+			}
+		
+			
+			$data = $this->common_model->GetAllData('orders',$where,"id","desc");
+		
+			
+			
+			//$output['data'] = $return;
+			$output['status'] = 1;
+			$output['message'] = 'Success';
+			$output['data'] = $data;
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+	
+	public function my_address(){
+		
+		if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
+			$user_id = $_REQUEST['user_id'];
+			
+			$where = "user_id = $user_id";
+			
+			$data = $this->common_model->GetAllData('user_address',$where,"id","desc");
+		
+			
+			
+			//$output['data'] = $return;
+			$output['status'] = 1;
+			$output['message'] = 'Success';
+			$output['data'] = $data;
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+
+	public function MyOrders(){
+		
+	
+		if(isset($_REQUEST['user_id']) && !empty($_REQUEST['user_id'])){
+			$user_id = $_REQUEST['user_id'];
+			
+			$data = [];
+			
+			$where = "user_id = $user_id";
+			
+			if(isset($_REQUEST['start_date']) && !empty($_REQUEST['start_date'])){
+				
+				$start_date = date('Y-m-d',strtotime($_REQUEST['start_date']));
+				$where .= " and DATE(date) >= DATE('".$start_date."')";
+				
+			}
+			if(isset($_REQUEST['start_date']) && !empty($_REQUEST['start_date'])){
+				
+				$end_date = date('Y-m-d',strtotime($_REQUEST['end_date']));
+				$where .= " and DATE(date) <= DATE('".$end_date."')";
+				
+			}
+			if(isset($_REQUEST['status']) && !empty($_REQUEST['status'])){
+				
+				$status = $_REQUEST['status'];
+				$where .= " and status = $status";
+				
+			}
+			
+			$orders = $this->common_model->GetColumnName('orders_items',$where,array("id"),true,"id","desc");
+			
+			if(!empty($orders)){
+				foreach($orders as $key => $order){
+					
+					$newOrder = $this->OrderItemData($order['id']);
+					
+					array_push($data,$newOrder);
+					
+				}
+			}
+			
+			
+			//$output['data'] = $return;
+			$output['status'] = 1;
+			$output['message'] = 'Success';
+			$output['data'] = $data;
+
+		
+
+ 		} else {
+
+			$output['status'] = 0;
+
+			$output['message'] = 'Check parameter.';
+
+		}
+		
+		return $this->response($output);
+		
+	}
+	
+	
+	
+	public function OrderItemData($id){
+		
+		$output = $this->common_model->GetDataById('orders_items',$id);
+		
+		if($output){
+			$mealData = $this->common_model->GetColumnName('meals',array('id'=>$output['meal_id']),array('name','id'));
+			$mealImage = '';
+			if($mealData){
+				
+				$images = $this->common_model->GetColumnName('meal_images',array('meal_id'=>$output['meal_id']),array('*',"CONCAT('".site_url()."',image) as image"));
+				if($images){
+					$mealImage = $images['image'];
+				}
+				
+			}
+			
+			$preferences = [];
+			
+			if($output['preference']){
+				$preferences = $this->common_model->GetAllData('preference',"id in (".$output['preference'].")");
+			}
+			
+			$mealData['image'] = $mealImage;
+			$output['preferences'] = $preferences;
+			$output['mealData'] = $mealData;
+			
+		}
+		
+		return $output;
+		
+	}
+	
 	public function ForgetPassword(){
 
 		$this->form_validation->set_rules('email','email','required');	
@@ -165,16 +463,21 @@ class Api extends CI_Controller {
 				$name = $run['name'];
 				$id = $run['id'];
 				$subject = "Forget password";
+				$token = md5(uniqid());
+				//$link = "http://localhost:4200/reset-password?id=$id&token=$token";
+
+				$link = "https://bluediamondresearch.com/WEB01/Delicious-Meal/dist/reset-password?id=$id&token=$token";
 				$html = '<p>Hello, '.$name.'</p>';
 
 				$html .= '<p>This is an automated message . If you did not recently initiate the Forgot Password process, please disregard this email.</p>';
 
-				$html .= '<p>You indicated that you forgot your login password. We can generate a temporary password for you to log in with, then once logged in you can change your password to anything you like.</p>';
+				$html .= '<p>You indicated that you forgot your login password. We can generate a reset password link for you to change password.</p>';
 
-				$html .= '<p>Password: <b>'.$run['password'].'</b></p>';
+				$html .= '<p>Link: <strong><a href="'.$link.'">'.$link.'</a></strong></p>';
 				$this->common_model->SendMail($run['email'],$subject,$html);
 				//$return = $this->CustomerProfile($id);
-
+				
+				$this->common_model->UpdateData('users',['id',$id],['token'=>$token]);
 				
 				//$output['data'] = $return;
 				$output['status'] = 1;
@@ -249,6 +552,77 @@ class Api extends CI_Controller {
 
 	}
 	
+	public function verifyToken(){
+		
+		$this->form_validation->set_rules('id','id','trim|required');
+		$this->form_validation->set_rules('token','token','trim|required');
+	
+		if($this->form_validation->run()){
+
+			$id = $this->input->post('id');
+			$token=  $this->input->post('token');
+
+			$user = $this->common_model->GetColumnName('users',array('id'=>$id,'token'=>$token),array('id'));
+
+			if($user){
+				$output['status'] = 1;
+				$output['message'] = 'Valid';
+			} else {
+				$output['status'] = 0;
+				$output['message'] = 'Invalid Token';
+			}
+
+ 		} else {
+ 			$output['status'] = 0;
+ 			$output['message'] = 'Check parameter.';
+
+		}
+
+	  return $this->response($output);
+
+	}
+	
+	public function ResetPassword(){
+		
+		$this->form_validation->set_rules('id','id','trim|required');
+		$this->form_validation->set_rules('token','token','trim|required');
+		$this->form_validation->set_rules('password','password','trim|required');
+	
+		if($this->form_validation->run()){
+
+			$id = $this->input->post('id');
+			$token=  $this->input->post('token');
+			$password=  $this->input->post('password');
+
+			$user = $this->common_model->GetColumnName('users',array('id'=>$id,'token'=>$token),array('id'));
+
+			if($user){
+				
+				$update['password'] = $password;
+				$update['token'] = '';
+				$this->common_model->UpdateData('users',['id'=>$id],$update);
+				
+				$output['status'] = 1;
+				$output['message'] = 'Your password has been changed successfully.';
+				
+				
+				
+			} else {
+				
+				$output['status'] = 0;
+				$output['message'] = 'Invalid Token';
+			}
+
+ 		} else {
+ 			$output['status'] = 0;
+ 			$output['message'] = 'Check parameter.';
+
+		}
+
+	  return $this->response($output);
+
+	}
+	
 	public function EditProfile() {
 		
 		//print_r($_REQUEST);
@@ -257,6 +631,7 @@ class Api extends CI_Controller {
 		$this->form_validation->set_rules('name','name','trim|required');
 		$this->form_validation->set_rules('email','email','trim|required');
 		$this->form_validation->set_rules('phone','phone','trim|required');
+		$this->form_validation->set_rules('country','country','trim|required');
 
 		if($this->form_validation->run()){
 
@@ -264,6 +639,8 @@ class Api extends CI_Controller {
 				$name = $this->input->post('name');
 				$user_id = $this->input->post('user_id');
 				$email = $this->input->post('email');
+				$country_id = $this->input->post('country');
+				$phone = $this->input->post('phone');
 				
 				if($this->common_model->GetColumnName('users',array('id != '=>$user_id,'email'=>$email))){
 					$output['status']=0;
@@ -271,7 +648,11 @@ class Api extends CI_Controller {
 					return $this->response($output);
 				}
 				
-				$phone = $this->input->post('phone');
+				$country = $this->common_model->GetDataById("country",$country_id);
+				
+				$phone_with_code = $country['phonecode'] . $phone;
+				
+		
 				
 				if($this->common_model->GetColumnName('users',array('id != '=>$user_id,'phone'=>$phone))){
 					$output['status']=0;
@@ -292,15 +673,17 @@ class Api extends CI_Controller {
 						$u_profile=$this->upload->data("file_name");
 						$updata['image'] = $u_profile;
 					} 
-        }
+                }
 				
 				
 				$updata['name'] = $name;
 				$updata['email'] = $email;
 				$updata['phone'] = $phone;
+				$updata['phone_with_code'] = $phone_with_code;
+				$updata['country'] = $country_id;
 				$updata['alternate_number'] = $alternate_number;
 				
-        $updata['updated_at'] = date('Y-m-d H:i:s');
+                $updata['updated_at'] = date('Y-m-d H:i:s');
 				$run = $this->common->UpdateData('users',array('id'=>$user_id),$updata);
 
 				$output['data'] = $this->CustomerProfile($user_id);
@@ -335,6 +718,8 @@ class Api extends CI_Controller {
 			$output['lng'] = $user['lng'];
 			$output['address'] = $user['address'];
 			$output['alternate_number'] = $user['alternate_number'];
+			$output['country'] = $user['country'];
+			$output['phone_with_code'] = $user['phone_with_code'];
 		 		
 		}
 
@@ -525,16 +910,31 @@ class Api extends CI_Controller {
 
 	public function get_pickup_address()
 	{
-		$data = $this->common_model->GetAllData('pickup_location');
-		if($data) 
-		{
-			$output['status'] = 1;
+		$where = "1 = 1";
+		
+		if(isset($_REQUEST['keywords']) && !empty($_REQUEST['keywords'])){
+			$keywords = $_REQUEST['keywords'];
+			$where .= " and (location_name like '%".$keywords."%' || location_description like '%".$keywords."%' || location_address like '%".$keywords."%' || location_postcode like '%".$keywords."%')";
+		}
+		
+		$data = $this->common_model->GetAllData('pickup_location',$where,'id','desc',3);
+		$output['status'] = 1;
 			$output['data'] = $data;
+		echo json_encode($output);
+	}
+	
+	public function get_country()
+	{
+		$where = "1 = 1";
+		
+		if(isset($_REQUEST['id']) && !empty($_REQUEST['id'])){
+			$id = $_REQUEST['id'];
+			$where .= " and id = $id";
 		}
-		else{
-			$output['status'] = 0;
-			$output['message'] = 'No data found';
-		}
+		
+		$data = $this->common_model->GetAllData('country',$where,'name','asc');
+		$output['status'] = 1;
+		$output['data'] = $data;
 		echo json_encode($output);
 	}
 

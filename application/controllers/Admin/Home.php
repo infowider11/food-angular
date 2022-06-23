@@ -1,9 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller {
+
   public function __construct() {
     parent::__construct();
-		//$this->check_login();
+		$this->check_login();
 		header("Access-Control-Allow-Origin:*");
     $this->db->query("set sql_mode = ''");
 
@@ -11,13 +12,16 @@ class Home extends CI_Controller {
   }
 	
 	public function check_login(){
-		if($this->session->userdata('user_id')){
+		/*if($this->session->userdata('user_id')){
 			$user_id =$this->session->userdata('user_id');
 			$user_data = $this->common_model->GetSingleData('users', array('id'=>$user_id));
 			if ($user_data['email_verified']==0) {			 
 				redirect('email-verification');
 				die;
 			}
+		}*/
+		if(!$this->session->userdata('admin_id')){
+			redirect('admin');
 		}
 	}
 	
@@ -244,9 +248,13 @@ class Home extends CI_Controller {
 	public function update_setting()
 	{
 		$this->form_validation->set_rules('transaction', 'Comission', 'required|trim');
+		$this->form_validation->set_rules('tax', 'tax', 'required|trim');
+		$this->form_validation->set_rules('delivery_fee', 'delivery fee', 'required|trim');
 
         if ($this->form_validation->run() == true) {
             $update['transaction'] = $this->input->post('transaction');
+            $update['tax'] = $this->input->post('tax');
+            $update['delivery_fee'] = $this->input->post('delivery_fee');
             
             $run = $this->common_model->UpdateData('settings',array('id'=>1),  $update);
             //echo $run; die;

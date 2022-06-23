@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 27, 2022 at 01:16 PM
+-- Generation Time: Jun 23, 2022 at 12:33 PM
 -- Server version: 5.7.23-23
 -- PHP Version: 7.3.32
 
@@ -186,6 +186,267 @@ INSERT INTO `contact_request` (`id`, `name`, `email`, `phone`, `subject`, `messa
 (1, 'neha', 'neha@gmail.com', '8745874587', 'testing', 'this is for testing', '2022-04-21 13:04:15', '2022-04-21 13:04:15'),
 (2, 'Anil', 'anil.webwiders@gmail.com', '234234', 'T', 'Test', '2022-05-02 12:20:05', '2022-05-02 12:20:05'),
 (3, 'Anil', 'anil.webwiders@gmail.com', '234234', 'T', 'Test', '2022-05-05 14:31:10', '2022-05-05 14:31:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `country`
+--
+
+CREATE TABLE `country` (
+  `id` int(11) NOT NULL,
+  `iso` char(2) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
+  `iso3` char(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `numcode` smallint(6) DEFAULT NULL,
+  `phonecode` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `UTC_offset` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `country`
+--
+
+INSERT INTO `country` (`id`, `iso`, `name`, `iso3`, `numcode`, `phonecode`, `UTC_offset`) VALUES
+(1, 'AF', 'Afghanistan', 'AFG', 4, '+93', '+04:30'),
+(2, 'AL', 'Albania', 'ALB', 8, '+355', '+01:00'),
+(3, 'DZ', 'Algeria', 'DZA', 12, '+213', '+01:00'),
+(4, 'AS', 'American Samoa', 'ASM', 16, '+1684', '+11:00'),
+(5, 'AD', 'Andorra', 'AND', 20, '+376', '+01:00'),
+(6, 'AO', 'Angola', 'AGO', 24, '+244', '+01:00'),
+(7, 'AI', 'Anguilla', 'AIA', 660, '+1264', '+04:00'),
+(8, 'AQ', 'Antarctica', NULL, NULL, '+672', '+11:00'),
+(9, 'AG', 'Antigua and Barbuda', 'ATG', 28, '+1268', '+04:00'),
+(10, 'AR', 'Argentina', 'ARG', 32, '+54', '+03:00'),
+(11, 'AM', 'Armenia', 'ARM', 51, '+374', '+04:00'),
+(12, 'AW', 'Aruba', 'ABW', 533, '+297', '+04:00'),
+(13, 'AU', 'Australia', 'AUS', 36, '+61', '+09:30'),
+(14, 'AT', 'Austria', 'AUT', 40, '+43', '+01:00'),
+(15, 'AZ', 'Azerbaijan', 'AZE', 31, '+994', '+04:00'),
+(16, 'BS', 'Bahamas', 'BHS', 44, '+1242', '+05:00'),
+(17, 'BH', 'Bahrain', 'BHR', 48, '+973', '+03:00'),
+(18, 'BD', 'Bangladesh', 'BGD', 50, '+880', '+06:00'),
+(19, 'BB', 'Barbados', 'BRB', 52, '+1246', '+04:00'),
+(20, 'BY', 'Belarus', 'BLR', 112, '+375', '+03:00'),
+(21, 'BE', 'Belgium', 'BEL', 56, '+32', '+01:00'),
+(22, 'BZ', 'Belize', 'BLZ', 84, '+501', '+06:00'),
+(23, 'BJ', 'Benin', 'BEN', 204, '+229', '+01:00'),
+(24, 'BM', 'Bermuda', 'BMU', 60, '+1441', '+04:00'),
+(25, 'BT', 'Bhutan', 'BTN', 64, '+975', '+06:00'),
+(26, 'BO', 'Bolivia', 'BOL', 68, '+591', '+04:00'),
+(27, 'BA', 'Bosnia and Herzegovina', 'BIH', 70, '+387', '+01:00'),
+(28, 'BW', 'Botswana', 'BWA', 72, '+267', '+02:00'),
+(29, 'BV', 'Bouvet Island', NULL, NULL, '+47', ''),
+(30, 'BR', 'Brazil', 'BRA', 76, '+55', '+03:00'),
+(31, 'IO', 'British Indian Ocean Territory', NULL, NULL, '+246', '+06:00'),
+(32, 'BN', 'Brunei Darussalam', 'BRN', 96, '+673', '+08:00'),
+(33, 'BG', 'Bulgaria', 'BGR', 100, '+359', '+02:00'),
+(34, 'BF', 'Burkina Faso', 'BFA', 854, '+226', '+00:00'),
+(35, 'BI', 'Burundi', 'BDI', 108, '+257', '+02:00'),
+(36, 'KH', 'Cambodia', 'KHM', 116, '+855', '+07:00'),
+(37, 'CM', 'Cameroon', 'CMR', 120, '+237', '+01:00'),
+(38, 'CA', 'Canada', 'CAN', 124, '+1', '+05:00'),
+(39, 'CV', 'Cape Verde', 'CPV', 132, '+238', '+01:00'),
+(40, 'KY', 'Cayman Islands', 'CYM', 136, '+1345', '+05:00'),
+(41, 'CF', 'Central African Republic', 'CAF', 140, '+236', '+01:00'),
+(42, 'TD', 'Chad', 'TCD', 148, '+235', '+01:00'),
+(43, 'CL', 'Chile', 'CHL', 152, '+56', '+04:00'),
+(44, 'CN', 'China', 'CHN', 156, '+86', '+08:00'),
+(45, 'CX', 'Christmas Island', NULL, NULL, '+61', '+07:00'),
+(46, 'CC', 'Cocos (Keeling) Islands', NULL, NULL, '+672', '+06:30'),
+(47, 'CO', 'Colombia', 'COL', 170, '+57', '+05:00'),
+(48, 'KM', 'Comoros', 'COM', 174, '+269', '+03:00'),
+(49, 'CG', 'Congo', 'COG', 178, '+242', '+01:00'),
+(50, 'CD', 'Congo, the Democratic Republic of the', 'COD', 180, '+242', '+01:00'),
+(51, 'CK', 'Cook Islands', 'COK', 184, '+682', '+10:00'),
+(52, 'CR', 'Costa Rica', 'CRI', 188, '+506', '+06:00'),
+(53, 'CI', 'Cote D\'Ivoire', 'CIV', 384, '+225', '+00:00'),
+(54, 'HR', 'Croatia', 'HRV', 191, '+385', '+01:00'),
+(55, 'CU', 'Cuba', 'CUB', 192, '+53', '+05:00'),
+(56, 'CY', 'Cyprus', 'CYP', 196, '+357', '+02:00'),
+(57, 'CZ', 'Czech Republic', 'CZE', 203, '+420', '+01:00'),
+(58, 'DK', 'Denmark', 'DNK', 208, '+45', '+01:00'),
+(59, 'DJ', 'Djibouti', 'DJI', 262, '+253', '+03:00'),
+(60, 'DM', 'Dominica', 'DMA', 212, '+1767', '+04:00'),
+(61, 'DO', 'Dominican Republic', 'DOM', 214, '+1809', '+04:00'),
+(62, 'EC', 'Ecuador', 'ECU', 218, '+593', '+05:00'),
+(63, 'EG', 'Egypt', 'EGY', 818, '+20', '+02:00'),
+(64, 'SV', 'El Salvador', 'SLV', 222, '+503', '+06:00'),
+(65, 'GQ', 'Equatorial Guinea', 'GNQ', 226, '+240', '+01:00'),
+(66, 'ER', 'Eritrea', 'ERI', 232, '+291', '+03:00'),
+(67, 'EE', 'Estonia', 'EST', 233, '+372', '+02:00'),
+(68, 'ET', 'Ethiopia', 'ETH', 231, '+251', '+03:00'),
+(69, 'FK', 'Falkland Islands (Malvinas)', 'FLK', 238, '+500', '+03:00'),
+(70, 'FO', 'Faroe Islands', 'FRO', 234, '+298', '+00:00'),
+(71, 'FJ', 'Fiji', 'FJI', 242, '+679', '+12:00'),
+(72, 'FI', 'Finland', 'FIN', 246, '+358', '+02:00'),
+(73, 'FR', 'France', 'FRA', 250, '+33', '+01:00'),
+(74, 'GF', 'French Guiana', 'GUF', 254, '+594', '+03:00'),
+(75, 'PF', 'French Polynesia', 'PYF', 258, '+689', '+09:00'),
+(76, 'TF', 'French Southern Territories', NULL, NULL, '+260', '+05:00'),
+(77, 'GA', 'Gabon', 'GAB', 266, '+241', '+01:00'),
+(78, 'GM', 'Gambia', 'GMB', 270, '+220', '+00:00'),
+(79, 'GE', 'Georgia', 'GEO', 268, '+995', '+04:00'),
+(80, 'DE', 'Germany', 'DEU', 276, '+49', '+01:00'),
+(81, 'GH', 'Ghana', 'GHA', 288, '+233', '+00:00'),
+(82, 'GI', 'Gibraltar', 'GIB', 292, '+350', '+01:00'),
+(83, 'GR', 'Greece', 'GRC', 300, '+30', '+02:00'),
+(84, 'GL', 'Greenland', 'GRL', 304, '+299', '+00:00'),
+(85, 'GD', 'Grenada', 'GRD', 308, '+1473', '+04:00'),
+(86, 'GP', 'Guadeloupe', 'GLP', 312, '+590', '+04:00'),
+(87, 'GU', 'Guam', 'GUM', 316, '+1671', '+10:00'),
+(88, 'GT', 'Guatemala', 'GTM', 320, '+502', '+06:00'),
+(89, 'GN', 'Guinea', 'GIN', 324, '+224', '+00:00'),
+(90, 'GW', 'Guinea-Bissau', 'GNB', 624, '+245', '+00:00'),
+(91, 'GY', 'Guyana', 'GUY', 328, '+592', '+04:00'),
+(92, 'HT', 'Haiti', 'HTI', 332, '+509', '+05:00'),
+(93, 'HM', 'Heard Island and Mcdonald Islands', NULL, NULL, '+291', ''),
+(94, 'VA', 'Holy See (Vatican City State)', 'VAT', 336, '+39', '+01:00'),
+(95, 'HN', 'Honduras', 'HND', 340, '+504', '+06:00'),
+(96, 'HK', 'Hong Kong', 'HKG', 344, '+852', '+08:00'),
+(97, 'HU', 'Hungary', 'HUN', 348, '+36', '+01:00'),
+(98, 'IS', 'Iceland', 'ISL', 352, '+354', '+00:00'),
+(99, 'IN', 'India', 'IND', 356, '+91', '+05:30'),
+(100, 'ID', 'Indonesia', 'IDN', 360, '+62', '+07:00'),
+(101, 'IR', 'Iran, Islamic Republic of', 'IRN', 364, '+98', '+03:30'),
+(102, 'IQ', 'Iraq', 'IRQ', 368, '+964', '+03:00'),
+(103, 'IE', 'Ireland', 'IRL', 372, '+353', '+00:00'),
+(104, 'IL', 'Israel', 'ISR', 376, '+972', '+02:00'),
+(105, 'IT', 'Italy', 'ITA', 380, '+39', '+01:00'),
+(106, 'JM', 'Jamaica', 'JAM', 388, '+1876', '+05:00'),
+(107, 'JP', 'Japan', 'JPN', 392, '+81', '+09:00'),
+(108, 'JO', 'Jordan', 'JOR', 400, '+962', '+03:00'),
+(109, 'KZ', 'Kazakhstan', 'KAZ', 398, '+7', '+06:00'),
+(110, 'KE', 'Kenya', 'KEN', 404, '+254', '+03:00'),
+(111, 'KI', 'Kiribati', 'KIR', 296, '+686', '+13:00'),
+(112, 'KP', 'Korea, Democratic People\'s Republic of', 'PRK', 408, '+850', '+09:00'),
+(113, 'KR', 'Korea, Republic of', 'KOR', 410, '+82', '+09:00'),
+(114, 'KW', 'Kuwait', 'KWT', 414, '+965', '+03:00'),
+(115, 'KG', 'Kyrgyzstan', 'KGZ', 417, '+996', '+06:00'),
+(116, 'LA', 'Lao People\'s Democratic Republic', 'LAO', 418, '+856', '+07:00'),
+(117, 'LV', 'Latvia', 'LVA', 428, '+371', '+02:00'),
+(118, 'LB', 'Lebanon', 'LBN', 422, '+961', '+02:00'),
+(119, 'LS', 'Lesotho', 'LSO', 426, '+266', '+02:00'),
+(120, 'LR', 'Liberia', 'LBR', 430, '+231', '+00:00'),
+(121, 'LY', 'Libyan Arab Jamahiriya', 'LBY', 434, '+218', '+01:00'),
+(122, 'LI', 'Liechtenstein', 'LIE', 438, '+423', '+01:00'),
+(123, 'LT', 'Lithuania', 'LTU', 440, '+370', '+02:00'),
+(124, 'LU', 'Luxembourg', 'LUX', 442, '+352', '+01:00'),
+(125, 'MO', 'Macao', 'MAC', 446, '+853', '+08:00'),
+(126, 'MK', 'Macedonia, the Former Yugoslav Republic of', 'MKD', 807, '+389', '+01:00'),
+(127, 'MG', 'Madagascar', 'MDG', 450, '+261', '+03:00'),
+(128, 'MW', 'Malawi', 'MWI', 454, '+265', '+02:00'),
+(129, 'MY', 'Malaysia', 'MYS', 458, '+60', '+08:00'),
+(130, 'MV', 'Maldives', 'MDV', 462, '+960', '+05:00'),
+(131, 'ML', 'Mali', 'MLI', 466, '+223', '+00:00'),
+(132, 'MT', 'Malta', 'MLT', 470, '+356', '+01:00'),
+(133, 'MH', 'Marshall Islands', 'MHL', 584, '+692', '+12:00'),
+(134, 'MQ', 'Martinique', 'MTQ', 474, '+596', '+04:00'),
+(135, 'MR', 'Mauritania', 'MRT', 478, '+222', '+00:00'),
+(136, 'MU', 'Mauritius', 'MUS', 480, '+230', '+04:00'),
+(137, 'YT', 'Mayotte', NULL, NULL, '+269', '+03:00'),
+(138, 'MX', 'Mexico', 'MEX', 484, '+52', '+06:00'),
+(139, 'FM', 'Micronesia, Federated States of', 'FSM', 583, '+691', '+10:00'),
+(140, 'MD', 'Moldova, Republic of', 'MDA', 498, '+373', '+02:00'),
+(141, 'MC', 'Monaco', 'MCO', 492, '+377', '+01:00'),
+(142, 'MN', 'Mongolia', 'MNG', 496, '+976', '+08:00'),
+(143, 'MS', 'Montserrat', 'MSR', 500, '+1664', '+04:00'),
+(144, 'MA', 'Morocco', 'MAR', 504, '+212', '+00:00'),
+(145, 'MZ', 'Mozambique', 'MOZ', 508, '+258', '+02:00'),
+(146, 'MM', 'Myanmar', 'MMR', 104, '+95', '+06:30'),
+(147, 'NA', 'Namibia', 'NAM', 516, '+264', '+01:00'),
+(148, 'NR', 'Nauru', 'NRU', 520, '+674', '+12:00'),
+(149, 'NP', 'Nepal', 'NPL', 524, '+977', '+05:45'),
+(150, 'NL', 'Netherlands', 'NLD', 528, '+31', '+01:00'),
+(151, 'AN', 'Netherlands Antilles', 'ANT', 530, '+599', ''),
+(152, 'NC', 'New Caledonia', 'NCL', 540, '+687', '+11:00'),
+(153, 'NZ', 'New Zealand', 'NZL', 554, '+64', '+12:00'),
+(154, 'NI', 'Nicaragua', 'NIC', 558, '+505', '+06:00'),
+(155, 'NE', 'Niger', 'NER', 562, '+227', '+01:00'),
+(156, 'NG', 'Nigeria', 'NGA', 566, '+234', '+01:00'),
+(157, 'NU', 'Niue', 'NIU', 570, '+683', '+11:00'),
+(158, 'NF', 'Norfolk Island', 'NFK', 574, '+672', '+11:30'),
+(159, 'MP', 'Northern Mariana Islands', 'MNP', 580, '+1670', '+10:00'),
+(160, 'NO', 'Norway', 'NOR', 578, '+47', '+01:00'),
+(161, 'OM', 'Oman', 'OMN', 512, '+968', '+04:00'),
+(162, 'PK', 'Pakistan', 'PAK', 586, '+92', '+05:00'),
+(163, 'PW', 'Palau', 'PLW', 585, '+680', '+09:00'),
+(164, 'PS', 'Palestinian Territory, Occupied', NULL, NULL, '+970', '+02:00'),
+(165, 'PA', 'Panama', 'PAN', 591, '+507', '+05:00'),
+(166, 'PG', 'Papua New Guinea', 'PNG', 598, '+675', '+10:00'),
+(167, 'PY', 'Paraguay', 'PRY', 600, '+595', '+04:00'),
+(168, 'PE', 'Peru', 'PER', 604, '+51', '+05:00'),
+(169, 'PH', 'Philippines', 'PHL', 608, '+63', '+08:00'),
+(170, 'PN', 'Pitcairn', 'PCN', 612, '+64', '+08:00'),
+(171, 'PL', 'Poland', 'POL', 616, '+48', '+01:00'),
+(172, 'PT', 'Portugal', 'PRT', 620, '+351', '+01:00'),
+(173, 'PR', 'Puerto Rico', 'PRI', 630, '+1787', '+04:00'),
+(174, 'QA', 'Qatar', 'QAT', 634, '+974', '+03:00'),
+(175, 'RE', 'Reunion', 'REU', 638, '+262', '+04:00'),
+(176, 'RO', 'Romania', 'ROM', 642, '+40', '+02:00'),
+(177, 'RU', 'Russian Federation', 'RUS', 643, '+70', '+12:00'),
+(178, 'RW', 'Rwanda', 'RWA', 646, '+250', '+02:00'),
+(179, 'SH', 'Saint Helena', 'SHN', 654, '+290', '+00:00'),
+(180, 'KN', 'Saint Kitts and Nevis', 'KNA', 659, '+1869', '+04:00'),
+(181, 'LC', 'Saint Lucia', 'LCA', 662, '+1758', '+04:00'),
+(182, 'PM', 'Saint Pierre and Miquelon', 'SPM', 666, '+508', '+03:00'),
+(183, 'VC', 'Saint Vincent and the Grenadines', 'VCT', 670, '+1784', '+04:00'),
+(184, 'WS', 'Samoa', 'WSM', 882, '+684', '+13:00'),
+(185, 'SM', 'San Marino', 'SMR', 674, '+378', '+01:00'),
+(186, 'ST', 'Sao Tome and Principe', 'STP', 678, '+239', '+00:00'),
+(187, 'SA', 'Saudi Arabia', 'SAU', 682, '+966', '+03:00'),
+(188, 'SN', 'Senegal', 'SEN', 686, '+221', '+00:00'),
+(189, 'CS', 'Serbia and Montenegro', NULL, NULL, '+381', ''),
+(190, 'SC', 'Seychelles', 'SYC', 690, '+248', '+04:00'),
+(191, 'SL', 'Sierra Leone', 'SLE', 694, '+232', '+00:00'),
+(192, 'SG', 'Singapore', 'SGP', 702, '+65', '+08:00'),
+(193, 'SK', 'Slovakia', 'SVK', 703, '+421', '+01:00'),
+(194, 'SI', 'Slovenia', 'SVN', 705, '+386', '+01:00'),
+(195, 'SB', 'Solomon Islands', 'SLB', 90, '+677', '+11:00'),
+(196, 'SO', 'Somalia', 'SOM', 706, '+252', '+03:00'),
+(197, 'ZA', 'South Africa', 'ZAF', 710, '+27', '+02:00'),
+(198, 'GS', 'South Georgia and the South Sandwich Islands', NULL, NULL, '+500', '+02:00'),
+(199, 'ES', 'Spain', 'ESP', 724, '+34', '+01:00'),
+(200, 'LK', 'Sri Lanka', 'LKA', 144, '+94', '+05:30'),
+(201, 'SD', 'Sudan', 'SDN', 736, '+249', '+03:00'),
+(202, 'SR', 'Suriname', 'SUR', 740, '+597', '+03:00'),
+(203, 'SJ', 'Svalbard and Jan Mayen', 'SJM', 744, '+47', '+01:00'),
+(204, 'SZ', 'Swaziland', 'SWZ', 748, '+268', '+02:00'),
+(205, 'SE', 'Sweden', 'SWE', 752, '+46', '+01:00'),
+(206, 'CH', 'Switzerland', 'CHE', 756, '+41', '+01:00'),
+(207, 'SY', 'Syrian Arab Republic', 'SYR', 760, '+963', '+02:00'),
+(208, 'TW', 'Taiwan, Province of China', 'TWN', 158, '+886', '+08:00'),
+(209, 'TJ', 'Tajikistan', 'TJK', 762, '+992', '+05:00'),
+(210, 'TZ', 'Tanzania, United Republic of', 'TZA', 834, '+255', '+03:00'),
+(211, 'TH', 'Thailand', 'THA', 764, '+66', '+07:00'),
+(212, 'TL', 'Timor-Leste', NULL, NULL, '+670', '+09:00'),
+(213, 'TG', 'Togo', 'TGO', 768, '+228', '+00:00'),
+(214, 'TK', 'Tokelau', 'TKL', 772, '+690', '+13:00'),
+(215, 'TO', 'Tonga', 'TON', 776, '+676', '+13:00'),
+(216, 'TT', 'Trinidad and Tobago', 'TTO', 780, '+1868', '+04:00'),
+(217, 'TN', 'Tunisia', 'TUN', 788, '+216', '+01:00'),
+(218, 'TR', 'Turkey', 'TUR', 792, '+90', '+02:00'),
+(219, 'TM', 'Turkmenistan', 'TKM', 795, '+7370', '+05:00'),
+(220, 'TC', 'Turks and Caicos Islands', 'TCA', 796, '+1649', '+05:00'),
+(221, 'TV', 'Tuvalu', 'TUV', 798, '+688', '+12:00'),
+(222, 'UG', 'Uganda', 'UGA', 800, '+256', '+03:00'),
+(223, 'UA', 'Ukraine', 'UKR', 804, '+380', '+02:00'),
+(224, 'AE', 'United Arab Emirates', 'ARE', 784, '+971', '+04:00'),
+(225, 'GB', 'United Kingdom', 'GBR', 826, '+44', '+00:00'),
+(226, 'US', 'United States', 'USA', 840, '+1', '+10:00'),
+(227, 'UM', 'United States Minor Outlying Islands', NULL, NULL, '+1', '+10:00'),
+(228, 'UY', 'Uruguay', 'URY', 858, '+598', '+03:00'),
+(229, 'UZ', 'Uzbekistan', 'UZB', 860, '+998', '+05:00'),
+(230, 'VU', 'Vanuatu', 'VUT', 548, '+678', '+11:00'),
+(231, 'VE', 'Venezuela', 'VEN', 862, '+58', '+04:30'),
+(232, 'VN', 'Viet Nam', 'VNM', 704, '+84', '+07:00'),
+(233, 'VG', 'Virgin Islands, British', 'VGB', 92, '+1284', '+04:00'),
+(234, 'VI', 'Virgin Islands, U.s.', 'VIR', 850, '+1340', '+04:00'),
+(235, 'WF', 'Wallis and Futuna', 'WLF', 876, '+681', '+12:00'),
+(236, 'EH', 'Western Sahara', 'ESH', 732, '+212', '+00:00'),
+(237, 'YE', 'Yemen', 'YEM', 887, '+967', '+03:00'),
+(238, 'ZM', 'Zambia', 'ZMB', 894, '+260', '+02:00'),
+(239, 'ZW', 'Zimbabwe', 'ZWE', 716, '+263', '+02:00');
 
 -- --------------------------------------------------------
 
@@ -390,13 +651,17 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `payment_id`, `stripe_customer_id`, `grand_total`, `sub_total`, `tax_price`, `delivery_fee`, `delivery_address_id`, `pickup_location`, `quantity`, `status`, `created_at`, `updated_at`) VALUES
-(1000, 1, 'pi_3L42mMLEGsv8VYZL0gGTOYOi', 'cus_LlZwrtfC4VVmy9', 473.74, 393, 70.74, 0, 0, 1, 0, 0, '2022-05-27 17:01:38', '2022-05-27 17:01:38'),
+(1000, 1, 'pi_3L42mMLEGsv8VYZL0gGTOYOi', 'cus_LlZwrtfC4VVmy9', 473.74, 393, 70.74, 0, 0, 1, 0, 1, '2022-05-27 17:01:38', '2022-06-04 08:30:02'),
 (1001, 1, 'pi_3L42otLEGsv8VYZL0omlVbt5', 'cus_LlZysFpfU3nTDN', 473.74, 393, 70.74, 0, 1, 1, 0, 0, '2022-05-27 17:03:26', '2022-05-27 13:03:26'),
-(1002, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 2, 1, 0, 0, '2022-05-27 17:05:31', '2022-05-27 13:05:31'),
+(1002, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 2, 1, 0, 1, '2022-05-27 17:05:31', '2022-06-23 08:32:10'),
 (1003, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 3, 1, 0, 0, '2022-05-27 17:06:30', '2022-05-27 13:06:30'),
 (1004, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 4, 1, 0, 0, '2022-05-27 17:07:13', '2022-05-27 13:07:13'),
 (1005, 1, 'pi_3L42qtLEGsv8VYZL0eTbBBBe', 'cus_Lla0IaoXik1F4m', 473.74, 393, 70.74, 0, 5, 1, 0, 0, '2022-05-27 17:07:34', '2022-05-27 13:07:34'),
-(1006, 1, 'pi_3L42tPLEGsv8VYZL0w3CcgsK', 'cus_Lla3KS7Q3MYNkB', 473.74, 393, 70.74, 0, 6, 2, 0, 0, '2022-05-27 17:08:06', '2022-05-27 13:08:06');
+(1006, 1, 'pi_3L42tPLEGsv8VYZL0w3CcgsK', 'cus_Lla3KS7Q3MYNkB', 473.74, 393, 70.74, 0, 6, 2, 0, 1, '2022-05-27 17:08:06', '2022-06-15 10:11:06'),
+(1007, 1, 'pi_3LCguXLEGsv8VYZL1e47u9qx', 'cus_LuVwC0QSOKsDPG', 63.45, 45, 8.22, 0, 7, 8, 0, 0, '2022-06-20 13:29:13', '2022-06-20 09:29:13'),
+(1008, 5, 'pi_3LCgxOLEGsv8VYZL18rcxWKg', 'cus_LuVzUmcOAuaZdD', 63.45, 45, 8.22, 0, 8, 8, 0, 1, '2022-06-20 13:49:02', '2022-06-20 09:55:51'),
+(1009, 5, 'pi_3LChNxLEGsv8VYZL1vd97oWs', 'cus_LuWQ7VnsAOeDNg', 195.9, 157, 28.67, 0, 9, 7, 0, 0, '2022-06-20 13:59:31', '2022-06-20 09:59:31'),
+(1010, 1, 'pi_3LDp4cLEGsv8VYZL0G7nz9Nr', 'cus_LvgR6LWixltZxW', 63.45, 45, 8.22, 0, 13, 8, 0, 0, '2022-06-23 16:25:51', '2022-06-23 12:25:51');
 
 -- --------------------------------------------------------
 
@@ -414,39 +679,46 @@ CREATE TABLE `orders_items` (
   `price` float NOT NULL DEFAULT '0',
   `date` date DEFAULT NULL,
   `preference` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `total_price` float NOT NULL DEFAULT '0'
+  `total_price` float NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `orders_items`
 --
 
-INSERT INTO `orders_items` (`id`, `user_id`, `order_id`, `meal_id`, `remark`, `quantity`, `price`, `date`, `preference`, `total_price`) VALUES
-(1, 1, 1002, 6, 'test', 1, 1, '2022-05-26', NULL, 1),
-(2, 1, 1002, 5, 'test', 3, 3, '2022-05-27', '', 9),
-(3, 1, 1002, 4, 'test', 2, 6, '2022-05-26', '', 12),
-(4, 1, 1002, 4, 'test', 2, 6, '2022-05-27', '', 12),
-(5, 1, 1002, 4, 'test', 2, 6, '2022-05-26', '', 12),
-(6, 1, 1003, 6, 'test', 1, 1, '2022-05-26', '', 1),
-(7, 1, 1003, 5, 'test', 3, 3, '2022-05-27', NULL, 9),
-(8, 1, 1003, 4, 'test', 2, 6, '2022-05-26', NULL, 12),
-(9, 1, 1003, 4, 'test', 2, 6, '2022-05-27', NULL, 12),
-(10, 1, 1003, 4, 'test', 2, 6, '2022-05-26', NULL, 12),
-(11, 1, 1004, 6, 'test', 1, 1, '2022-05-26', '', 1),
-(12, 1, 1004, 5, 'test', 3, 3, '2022-05-27', '1', 9),
-(13, 1, 1004, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12),
-(14, 1, 1004, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12),
-(15, 1, 1004, 4, 'test', 2, 6, '2022-05-26', '31,33', 12),
-(16, 1, 1005, 6, 'test', 1, 1, '2022-05-26', '', 1),
-(17, 1, 1005, 5, 'test', 3, 3, '2022-05-27', '1', 9),
-(18, 1, 1005, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12),
-(19, 1, 1005, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12),
-(20, 1, 1005, 4, 'test', 2, 6, '2022-05-26', '31,33', 12),
-(21, 1, 1006, 6, 'test', 1, 1, '2022-05-26', '', 1),
-(22, 1, 1006, 5, 'test', 3, 3, '2022-05-27', '1', 9),
-(23, 1, 1006, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12),
-(24, 1, 1006, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12),
-(25, 1, 1006, 4, 'test', 2, 6, '2022-05-26', '31,33', 12);
+INSERT INTO `orders_items` (`id`, `user_id`, `order_id`, `meal_id`, `remark`, `quantity`, `price`, `date`, `preference`, `total_price`, `status`) VALUES
+(1, 1, 1002, 6, 'test', 1, 1, '2022-05-26', NULL, 1, 1),
+(2, 2, 1002, 5, 'test', 3, 3, '2022-05-27', '', 9, 1),
+(3, 2, 1002, 4, 'test', 2, 6, '2022-05-26', '', 12, 1),
+(4, 1, 1002, 4, 'test', 2, 6, '2022-05-27', '', 12, 1),
+(5, 1, 1002, 4, 'test', 2, 6, '2022-05-26', '', 12, 1),
+(6, 1, 1003, 6, 'test', 1, 1, '2022-05-26', '', 1, 0),
+(7, 1, 1003, 5, 'test', 3, 3, '2022-05-27', NULL, 9, 0),
+(8, 1, 1003, 4, 'test', 2, 6, '2022-05-26', NULL, 12, 0),
+(9, 1, 1003, 4, 'test', 2, 6, '2022-05-27', NULL, 12, 0),
+(10, 1, 1003, 4, 'test', 2, 6, '2022-05-26', NULL, 12, 0),
+(11, 1, 1004, 6, 'test', 1, 1, '2022-05-26', '', 1, 0),
+(12, 1, 1004, 5, 'test', 3, 3, '2022-05-27', '1', 9, 0),
+(13, 1, 1004, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12, 0),
+(14, 1, 1004, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12, 0),
+(15, 1, 1004, 4, 'test', 2, 6, '2022-05-26', '31,33', 12, 0),
+(16, 1, 1005, 6, 'test', 1, 1, '2022-05-26', '', 1, 0),
+(17, 1, 1005, 5, 'test', 3, 3, '2022-05-27', '1', 9, 0),
+(18, 1, 1005, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12, 0),
+(19, 1, 1005, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12, 0),
+(20, 1, 1005, 4, 'test', 2, 6, '2022-05-26', '31,33', 12, 0),
+(21, 1, 1006, 6, 'test', 1, 1, '2022-05-26', '', 1, 0),
+(22, 1, 1006, 5, 'test', 3, 3, '2022-05-27', '1', 9, 0),
+(23, 1, 1006, 4, 'test', 2, 6, '2022-05-26', '31,31,33', 12, 0),
+(24, 1, 1006, 4, 'test', 2, 6, '2022-05-27', '31,33,33', 12, 0),
+(25, 1, 1006, 4, 'test', 2, 6, '2022-05-26', '31,33', 12, 0),
+(26, 1, 1007, 6, 'test', 1, 1, '1970-01-01', '7', 1, 0),
+(27, 5, 1008, 6, '', 1, 1, '1970-01-01', '', 1, 0),
+(28, 5, 1009, 6, '', 1, 1, '2022-06-22', '', 1, 0),
+(29, 5, 1009, 5, '', 1, 2, '1970-01-01', '', 2, 0),
+(30, 5, 1009, 5, '', 1, 2, '1970-01-01', '', 2, 0),
+(31, 1, 1010, 6, 'test', 1, 1, '2022-06-23', '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -471,7 +743,13 @@ CREATE TABLE `pickup_location` (
 
 INSERT INTO `pickup_location` (`id`, `area_group_id`, `location_name`, `location_description`, `location_address`, `location_postcode`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Paramatta', 'Pickpoint', 'Paramatta', '2155', '2022-04-20 11:22:50', '2022-04-20 11:22:50'),
-(2, 1, 'dfgdfg', 'Pickpoint', 'Kellyville', '2145', '2022-04-20 11:22:50', '2022-04-20 11:22:50');
+(2, 1, 'dfgdfg', 'Pickpoint', 'Kellyville', '2145', '2022-04-20 11:22:50', '2022-04-20 11:22:50'),
+(3, 1, 'House 12', 'Some description', '180, heathcote road', '2155', '2022-06-08 11:26:43', '2022-06-08 11:26:43'),
+(4, 1, 'House 13', 'Some description', '180, heathcote road', '2155', '2022-06-08 11:26:43', '2022-06-08 11:26:43'),
+(5, 1, 'House 14', 'Some description', '180, heathcote road', '2155', '2022-06-08 11:26:43', '2022-06-08 11:26:43'),
+(6, 1, 'House 15', 'Some description', '180, heathcote road', '2155', '2022-06-08 11:26:43', '2022-06-08 11:26:43'),
+(7, 1, 'House 16', 'Some description', '180, heathcote road', '2155', '2022-06-08 11:26:43', '2022-06-08 11:26:43'),
+(8, 1, 'House 17', 'Some description', '180, heathcote road', '2155', '2022-06-08 11:26:43', '2022-06-08 11:26:43');
 
 -- --------------------------------------------------------
 
@@ -555,7 +833,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `transaction`, `created_at`, `updated_at`, `tax`, `delivery_fee`, `stripe_pk`, `stripe_sk`) VALUES
-(1, '15.75', '2022-05-06 09:17:31', '2022-05-06 09:17:31', 18.00, 10.00, 'pk_test_393IAsXCfg8dt9UkOGz13zNy', 'sk_test_BA5v4UfqqAC5aPhdh675ijTd');
+(1, '15.85', '2022-05-06 09:17:31', '2022-05-06 09:17:31', 18.26, 10.23, 'pk_test_393IAsXCfg8dt9UkOGz13zNy', 'sk_test_BA5v4UfqqAC5aPhdh675ijTd');
 
 -- --------------------------------------------------------
 
@@ -573,23 +851,28 @@ CREATE TABLE `users` (
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `otp` int(11) NOT NULL,
   `is_verified` int(1) NOT NULL DEFAULT '0' COMMENT '0 = no,1= yes',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '1 = active,0=blocked',
   `address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `lat` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `device_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `updated_at` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL
+  `updated_at` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone_with_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `country` int(10) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alternate_number`, `password`, `image`, `otp`, `is_verified`, `address`, `lat`, `lng`, `device_id`, `created_at`, `updated_at`) VALUES
-(1, 'Anil Vishwakarma', 'anil.webwiders@gmail.com', '9874563210', '1223123122', '123456', NULL, 9180, 1, 'Indore, Madhya Pradesh, India', '22.7195687', '75.8577258', 'f08dd364-b5a0-11ec-a896-000000000000', '2022-04-06 16:17:27', '2022-05-27 09:49:01'),
-(2, 'Anil', 'anil@gmail.com', '231223122', '2342334234 23234', '123456', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:44:43', '2022-05-27 10:58:20'),
-(3, 'Anil', 'anil@test.com', '', NULL, '123', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:53:47', '2022-05-20 14:53:47'),
-(4, 'sdfsdf', 'admin@gmail.com', '', NULL, '123456', NULL, 0, 0, '', NULL, NULL, NULL, '2022-05-20 16:41:21', '2022-05-20 16:41:21');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alternate_number`, `password`, `image`, `otp`, `is_verified`, `status`, `address`, `lat`, `lng`, `device_id`, `created_at`, `updated_at`, `token`, `phone_with_code`, `country`) VALUES
+(1, 'Anil Vishwakarma', 'anil.webwiders@gmail.com', '9109916688', '1223123122', '123456', NULL, 9180, 1, 1, 'Indore, Madhya Pradesh, India', '22.7195687', '75.8577258', 'f08dd364-b5a0-11ec-a896-000000000000', '2022-04-06 16:17:27', '2022-06-23 11:55:57', '', '+919109916688', 99),
+(2, 'Anil', 'anil@gmail.com', '231223122', '2342334234 23234', '123456', NULL, 0, 0, 1, '', NULL, NULL, NULL, '2022-05-20 14:44:43', '2022-05-27 10:58:20', 'bee0fa28b60dfecb1e8399b5e95543e6', '+919691102641', NULL),
+(3, 'Anil', 'anil@test.com', '', NULL, '123', NULL, 0, 0, 0, '', NULL, NULL, NULL, '2022-05-20 14:53:47', '2022-05-20 14:53:47', 'bee0fa28b60dfecb1e8399b5e95543e6', NULL, NULL),
+(4, 'sdfsdf', 'admin@gmail.com', '', NULL, '123456', NULL, 0, 0, 1, '', NULL, NULL, NULL, '2022-05-20 16:41:21', '2022-05-20 16:41:21', 'bee0fa28b60dfecb1e8399b5e95543e6', NULL, NULL),
+(5, 'Saurabh Srivastava11', 'Saurabh.Srivastava07@gmail.com', '040469805923423', '12312312312313', 'P@$$w0rd', NULL, 0, 0, 0, '', NULL, NULL, NULL, '2022-06-06 11:34:49', '2022-06-20 13:21:16', 'bee0fa28b60dfecb1e8399b5e95543e6', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -604,20 +887,18 @@ CREATE TABLE `user_address` (
   `delivery_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `delivery_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `delivery_remark` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `delivery_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `delivery_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `delivery_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user_address`
 --
 
-INSERT INTO `user_address` (`id`, `user_id`, `delivery_address`, `delivery_email`, `delivery_phone`, `delivery_remark`, `delivery_name`) VALUES
-(1, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
-(2, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
-(3, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
-(4, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
-(5, 0, 'test', 'test@gmail.com', '234234', '', 'test'),
-(6, 0, 'test', 'test@gmail.com', '234234', '', 'test');
+INSERT INTO `user_address` (`id`, `user_id`, `delivery_address`, `delivery_email`, `delivery_phone`, `delivery_remark`, `delivery_name`, `delivery_title`) VALUES
+(1, 1, 'test1', 'test@gmail.com1', '2342341', ' test test', 'Test', 'HOME 1'),
+(2, 1, 'test', 'test@gmail.com', '234234', '', 'test', 'Office'),
+(13, 1, '315 Pukharaj corporate Indore MP, 452001', 'anil@gmail.com', '231223122', 'Near Ram Mandir', 'Anil', 'Adding address');
 
 -- --------------------------------------------------------
 
@@ -680,6 +961,12 @@ ALTER TABLE `contact_for_sameday`
 -- Indexes for table `contact_request`
 --
 ALTER TABLE `contact_request`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -813,6 +1100,12 @@ ALTER TABLE `contact_request`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
+
+--
 -- AUTO_INCREMENT for table `home_content`
 --
 ALTER TABLE `home_content`
@@ -852,19 +1145,19 @@ ALTER TABLE `meal_type`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1007;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1011;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `pickup_location`
 --
 ALTER TABLE `pickup_location`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `preference`
@@ -882,13 +1175,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_address`
 --
 ALTER TABLE `user_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `why_order_content`
