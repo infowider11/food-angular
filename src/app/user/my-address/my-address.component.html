@@ -32,62 +32,20 @@
 
                         <div class="contact-wrapper">
                             <div class="row">
-                                <div class="col-lg-6 col-sm-6">
+                                <div *ngFor="let address of addresses; let i = index" class="col-lg-6 col-sm-6 mt-4">
                                     <div
                                         class="single-contact d-flex align-items-center shadow p-4 custom-round border">
                                         <div class="sample-icon mr-2">
                                             <i class="fas fa-home"></i>
                                         </div>
                                         <div class="contact-info">
-                                            <h5 class="heading-5 mb-2">Home</h5>
-                                            <p>315, Pukhraj Corporat, Indore 452001</p>
+                                            <h5 class="heading-5 mb-2">{{address.delivery_title}}</h5>
+                                            <p>{{address.delivery_address}}</p>
                                             <div class="action-btn d-flex align-items-center mt-3">
-                                                <a href="#" class="default-btn">Edit</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6">
-                                    <div
-                                        class="single-contact d-flex align-items-center shadow p-4 custom-round border">
-                                        <div class="sample-icon mr-2">
-                                            <i class="fas fa-store-alt"></i>
-                                        </div>
-                                        <div class="contact-info">
-                                            <h5 class="heading-5 mb-2">Office</h5>
-                                            <p>315, Pukhraj Corporat, Indore 452001</p>
-                                            <div class="action-btn d-flex align-items-center mt-3">
-                                                <a href="#" class="default-btn">Edit</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 mt-4">
-                                    <div
-                                        class="single-contact d-flex align-items-center shadow p-4 custom-round border">
-                                        <div class="sample-icon mr-2">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </div>
-                                        <div class="contact-info">
-                                            <h6 class="heading-6 mb-2">Other</h6>
-                                            <p>315, Pukhraj Corporat, Indore 452001</p>
-                                            <div class="action-btn d-flex align-items-center mt-3">
-                                                <a href="#" class="default-btn">Edit</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 mt-4">
-                                    <div
-                                        class="single-contact d-flex align-items-center shadow p-4 custom-round border">
-                                        <div class="sample-icon mr-2">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </div>
-                                        <div class="contact-info">
-                                            <h6 class="heading-6 mb-2">Other</h6>
-                                            <p>315, Pukhraj Corporat, Indore 452001</p>
-                                            <div class="action-btn d-flex align-items-center mt-3">
-                                                <a href="#" class="default-btn">Edit</a>
+                                                <a  (click)="OpenEditAddress(address)"
+                                                    class="default-btn">Edit</a>
+                                                &nbsp; &nbsp;
+                                                <a class="default-btn btn-danger" (click)="deleteAddress(address.id,i)">Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -95,48 +53,76 @@
                             </div>
                         </div>
                         <h3 class="mt-5">Add New Address</h3>
-                        <form action="" method="post">
+                        <form [formGroup]="form">
                             <div class="form-group">
-                                <label class=" control-label">Title</label>
-                                <input type="text" placeholder="Title" class="form-control">
+                                <label class=" control-label">Delivery Title</label>
+                                <input type="text" formControlName="delivery_title" placeholder="Enter Title"
+                                    class="form-control">
+                                <div *ngIf="form.controls['delivery_title'].touched && form.controls['delivery_title'].invalid"
+                                    class="text-danger">
+                                    <div
+                                        *ngIf="form.controls['delivery_title'].errors && form.controls['delivery_title'].errors['required']">
+                                        Address title is required. Eg Home, Office etc.</div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label class=" control-label">Address</label>
-                                <input type="text" placeholder="Street 1" class="form-control">
+                                <label class=" control-label">Delivery Person Name</label>
+                                <input type="text" formControlName="delivery_name" placeholder="Enter Name"
+                                    class="form-control">
+                                <div *ngIf="form.controls['delivery_name'].touched && form.controls['delivery_name'].invalid"
+                                    class="text-danger">
+                                    <div
+                                        *ngIf="form.controls['delivery_name'].errors && form.controls['delivery_name'].errors['required']">
+                                        Name is required</div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label class=" control-label">Address</label>
-                                <input type="text" placeholder="Street 2" class="form-control">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class=" control-label">City</label>
-                                        <input type="text" placeholder="City" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class=" control-label">State</label>
-                                        <input type="text" placeholder="State" class="form-control">
-                                    </div>
+                                <label class=" control-label">Delivery Person Email</label>
+                                <input type="email" formControlName="delivery_email" placeholder="Enter Email"
+                                    class="form-control">
+                                <div *ngIf="form.controls['delivery_email'].touched && form.controls['delivery_email'].invalid"
+                                    class="text-danger">
+                                    <div
+                                        *ngIf="form.controls['delivery_email'].errors && form.controls['delivery_email'].errors['required']">
+                                        Email is required</div>
+                                    <div
+                                        *ngIf="form.controls['delivery_email'].errors && form.controls['delivery_email'].errors['email']">
+                                        Valid email is required</div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class=" control-label">Country</label>
-                                        <input type="text" placeholder="Country" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class=" control-label">Postal Code</label>
-                                        <input type="text" placeholder="Postal Code" class="form-control">
-                                    </div>
+                            <div class="form-group">
+                                <label class=" control-label">Delivery Person Phone</label>
+                                <input type="text" formControlName="delivery_phone" placeholder="Enter Phone"
+                                    class="form-control">
+                                <div *ngIf="form.controls['delivery_phone'].touched && form.controls['delivery_phone'].invalid"
+                                    class="text-danger">
+                                    <div
+                                        *ngIf="form.controls['delivery_phone'].errors && form.controls['delivery_phone'].errors['required']">
+                                        Phone is required</div>
+                                    <div
+                                        *ngIf="form.controls['delivery_phone'].errors && form.controls['delivery_phone'].errors['pattern']">
+                                        Please enter valid phone number</div>
                                 </div>
                             </div>
-                            <button id="sub_btn" class="btn btn-warning big_btn">Add</button>
+                            <div class="form-group">
+                                <label class=" control-label">Delivery Address</label>
+                                <input type="text" formControlName="delivery_address" placeholder="Enter Address"
+                                    class="form-control">
+                                <div *ngIf="form.controls['delivery_address'].touched && form.controls['delivery_address'].invalid"
+                                    class="text-danger">
+                                    <div
+                                        *ngIf="form.controls['delivery_address'].errors && form.controls['delivery_address'].errors['required']">
+                                        Address is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">Remark</label>
+                                <input type="text" formControlName="delivery_remark" placeholder="Optional"
+                                    class="form-control">
+                            </div>
+
+                            <button type="submit" (click)="submit_add_address_form()" class="btn btn-warning big_btn"
+                                [disabled]="form.controls['delivery_name'].invalid || form.controls['delivery_email'].invalid || form.controls['delivery_email'].invalid || form.controls['delivery_phone'].invalid || form.controls['delivery_address'].invalid || form.controls['delivery_title'].invalid">Add</button>
                         </form>
                     </div>
                 </div>
@@ -144,3 +130,92 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="edit-address" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contact us for Same Day Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="form2" (ngSubmit)="submit_edit_address_form()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class=" control-label">Delivery Title</label>
+                        <input type="text" formControlName="delivery_title" placeholder="Enter Title"
+                            class="form-control">
+                            <input type="hidden" formControlName="id" >
+                        <div *ngIf="form2.controls['delivery_title'].touched && form2.controls['delivery_title'].invalid"
+                            class="text-danger">
+                            <div
+                                *ngIf="form2.controls['delivery_title'].errors && form2.controls['delivery_title'].errors['required']">
+                                Address title is required. Eg Home, Office etc.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Delivery Person Name</label>
+                        <input type="text" formControlName="delivery_name" placeholder="Enter Name"
+                            class="form-control">
+                        <div *ngIf="form2.controls['delivery_name'].touched && form2.controls['delivery_name'].invalid"
+                            class="text-danger">
+                            <div
+                                *ngIf="form2.controls['delivery_name'].errors && form2.controls['delivery_name'].errors['required']">
+                                Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Delivery Person Email</label>
+                        <input type="email" formControlName="delivery_email" placeholder="Enter Email"
+                            class="form-control">
+                        <div *ngIf="form2.controls['delivery_email'].touched && form2.controls['delivery_email'].invalid"
+                            class="text-danger">
+                            <div
+                                *ngIf="form2.controls['delivery_email'].errors && form2.controls['delivery_email'].errors['required']">
+                                Email is required</div>
+                            <div
+                                *ngIf="form2.controls['delivery_email'].errors && form2.controls['delivery_email'].errors['email']">
+                                Valid email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Delivery Person Phone</label>
+                        <input type="text" formControlName="delivery_phone" placeholder="Enter Phone"
+                            class="form-control">
+                        <div *ngIf="form2.controls['delivery_phone'].touched && form2.controls['delivery_phone'].invalid"
+                            class="text-danger">
+                            <div
+                                *ngIf="form2.controls['delivery_phone'].errors && form2.controls['delivery_phone'].errors['required']">
+                                Phone is required</div>
+                            <div
+                                *ngIf="form2.controls['delivery_phone'].errors && form2.controls['delivery_phone'].errors['pattern']">
+                                Please enter valid phone number</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Delivery Address</label>
+                        <input type="text" formControlName="delivery_address" placeholder="Enter Address"
+                            class="form-control">
+                        <div *ngIf="form2.controls['delivery_address'].touched && form2.controls['delivery_address'].invalid"
+                            class="text-danger">
+                            <div
+                                *ngIf="form2.controls['delivery_address'].errors && form2.controls['delivery_address'].errors['required']">
+                                Address is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" control-label">Remark</label>
+                        <input type="text" formControlName="delivery_remark" placeholder="Optional"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit"class="btn btn-warning big_btn"
+                                [disabled]="form2.controls['delivery_name'].invalid || form2.controls['delivery_email'].invalid || form2.controls['delivery_email'].invalid || form2.controls['delivery_phone'].invalid || form2.controls['delivery_address'].invalid || form2.controls['delivery_title'].invalid">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Contact Popup-->

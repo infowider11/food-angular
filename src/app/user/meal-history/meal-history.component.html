@@ -28,6 +28,45 @@
             <div class="col-sm-9">
                 <div class="right-dash">
                     <h3>Meal History</h3>
+                    <div class="form-group">
+                        <div class="row">
+                            <h4>Filter data</h4>
+                            <div class="col-sm-3">
+                                <label for="">Start Date</label>
+                                <input [(ngModel)]="start_date" type="date" class="form-control">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="">End Date</label>
+                                <input [(ngModel)]="end_date" type="date" class="form-control">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label for="">Status</label>
+                                <select [(ngModel)]="status" class="form-control">
+                                    <option value="">Status</option>
+                                    <option value="1">Completed</option>
+                                    <option value="0">Pending</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-6">
+										<button (click)="searchFn()" [disabled]="loading" style="margin-top: 23px;"
+										class="btn btn-primary">
+										Search</button>
+									</div>
+									<div class="col-sm-6">
+										<button (click)="reset()" [disabled]="loading" style="margin-top: 23px;"
+										class="btn btn-info">
+										Reset</button>
+									</div>
+								</div>
+
+                               
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -46,10 +85,16 @@
                                 </td>
                                 <td>{{order.mealData.name}}</td>
                                 <td>
-                                    
-                                    <label *ngIf="order.status==0" class="label label-warning"> Panding</label>
+
+                                    <label *ngIf="order.status==0" class="label label-warning"> Pending</label>
                                     <label *ngIf="order.status==1" class="label label-success"> Completed</label>
 
+                                </td>
+                            </tr>
+                            <tr *ngIf="orders.length == 0">
+                                <td colspan="5">
+                                    <div *ngIf="!loading" class="text-danger">No records found</div>
+                                    <div *ngIf="loading" class=""><span class="fa fa-spin fa-spinner"></span>Loading</div>
                                 </td>
                             </tr>
                         </table>

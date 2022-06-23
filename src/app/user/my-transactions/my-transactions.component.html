@@ -1,4 +1,4 @@
-<div class="page-header-wrapper"> 
+<div class="page-header-wrapper">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 mx-auto">
@@ -7,7 +7,7 @@
 						<h1 class="heading-one">Transaction History</h1>
 						<div class="page-nav">
 							<ul>
-								<li><a routerLink="/home">Home &gt;</a></li> 
+								<li><a routerLink="/home">Home &gt;</a></li>
 								<li>Transaction History</li>
 							</ul>
 						</div>
@@ -15,19 +15,58 @@
 				</div>
 			</div>
 		</div>
-	</div> 
+	</div>
 </div>
 <div class="dashboard-page">
 	<div class="container">
 		<div class="row">
-		<!-- sidebar-->
+			<!-- sidebar-->
 			<div class="col-sm-3">
 				<app-sidebar></app-sidebar>
 
 			</div>
-		<!-- sidebar-->
+			<!-- sidebar-->
 			<div class="col-sm-9">
 				<div class="right-dash">
+					<div class="form-group">
+						<div class="row">
+							<h4>Filter data</h4>
+							<div class="col-sm-3">
+								<label for="">Start Date</label>
+								<input [(ngModel)]="start_date" type="date" class="form-control">
+							</div>
+							<div class="col-sm-3">
+								<label for="">End Date</label>
+								<input [(ngModel)]="end_date" type="date" class="form-control">
+							</div>
+
+							<div class="col-sm-3">
+								<label for="">Status</label>
+								<select [(ngModel)]="status" class="form-control">
+									<option value="">Status</option>
+									<option value="1">Completed</option>
+									<option value="0">Pending</option>
+								</select>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-6">
+										<button (click)="searchFn()" [disabled]="loading" style="margin-top: 23px;"
+											class="btn btn-primary">
+											Search</button>
+									</div>
+									<div class="col-sm-6">
+										<button (click)="reset()" [disabled]="loading" style="margin-top: 23px;"
+											class="btn btn-info">
+											Reset</button>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+						<hr>
+					</div>
 					<h3>Transaction History</h3>
 					<div class="table-responsive">
 						<table class="table">
@@ -47,9 +86,16 @@
 								<td>{{transaction.created_at | date : 'dd-MM-yyyy'}}</td>
 								<td>${{transaction.grand_total}}</td>
 								<td>
-                                    <label *ngIf="transaction.status==0" class="label label-warning"> Panding</label>
-                                    <label *ngIf="transaction.status==1" class="label label-success"> Completed</label>
-                                </td>
+									<label *ngIf="transaction.status==0" class="label label-warning"> Panding</label>
+									<label *ngIf="transaction.status==1" class="label label-success"> Completed</label>
+								</td>
+							</tr>
+							<tr *ngIf="transactions.length == 0">
+								<td colspan="5">
+									<div *ngIf="!loading" class="text-danger">No records found</div>
+									<div *ngIf="loading" class=""><span class="fa fa-spin fa-spinner"></span>Loading
+									</div>
+								</td>
 							</tr>
 						</table>
 					</div>

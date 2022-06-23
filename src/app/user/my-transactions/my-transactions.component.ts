@@ -11,6 +11,11 @@ import { Router } from '@angular/router';
 export class MyTransactionsComponent implements OnInit {
 
   transactions:any=[]
+  start_date:any='';
+  end_date:any='';
+  status:any="";
+  loading:boolean=false;
+  searchData:any={}
 
   constructor(
     private router: Router,
@@ -23,12 +28,48 @@ export class MyTransactionsComponent implements OnInit {
     }
   }
 
+
+
   ngOnInit(): void {
-    this.userService.MyTransactions(this.AuthService.userdata.id).subscribe((data:any)=>{
-      if(data.status==1 && data.data.length > 0){
+    this.getTransactionHitroy();
+  }
+
+  searchFn(){
+    this.getTransactionHitroy();
+  }
+  reset(){
+    this.start_date = '';
+    this.end_date = '';
+    this.status = '';
+    this.getTransactionHitroy();
+  }
+  
+
+  getTransactionHitroy(){
+    this.loading = true;
+
+    this.searchData= {
+      user_id:this.AuthService.userdata.id
+    }
+
+    if(this.start_date){
+      this.searchData["start_date"] = this.start_date
+    }
+    if(this.end_date){
+      this.searchData["end_date"] = this.end_date
+    }
+    
+    if(this.status){
+      this.searchData["status"] = this.status
+    }
+
+    this.userService.MyTransactions(this.searchData).subscribe((data:any)=>{
+      if(data.status==1){
         this.transactions = data.data
-        console.log('transactions',this.transactions);
+   
+        
       }
+      this.loading = false;
     })
   }
 

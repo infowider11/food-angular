@@ -31,7 +31,7 @@ export class CheckoutComponent implements OnInit {
   is_new_user: boolean = (this.AuthService.is_user_logged_in) ? true : false;
   is_logged_in: boolean = this.AuthService.is_user_logged_in;
   is_loading: boolean = false;
-  is_new_address:string='1';
+  is_new_address:any=0;
 
   login_error_message: string = '';
   same_password_error: string = '';
@@ -57,6 +57,8 @@ export class CheckoutComponent implements OnInit {
   stripe: any = '';
   stripeCard: any = ''
   is_stripeLoading: boolean = false;
+
+  my_addresss:any = []
 
 
 
@@ -113,6 +115,7 @@ export class CheckoutComponent implements OnInit {
         this.pickup_address = data.data
       }
     })
+    
 
 
   }
@@ -140,10 +143,12 @@ export class CheckoutComponent implements OnInit {
       set_password: new FormControl('', [Validators.required]),
       confirm_password: new FormControl('', [Validators.required]),
       pickup_location: new FormControl('', [Validators.required]),
-      delivery_name: new FormControl('test', [Validators.required]),
-      delivery_phone: new FormControl('234234', [Validators.required, Validators.pattern('[- +()0-9]+')]),
-      delivery_email: new FormControl('test@gmail.com', [Validators.required, Validators.email]),
-      delivery_address: new FormControl('test', [Validators.required]),
+      delivery_title: new FormControl('', [Validators.required]),
+      delivery_name: new FormControl('', [Validators.required]),
+      delivery_phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]+')]),
+      delivery_email: new FormControl('', [Validators.required, Validators.email]),
+      delivery_address: new FormControl('', [Validators.required]),
+      delivery_address_id: new FormControl(0, [Validators.required]),
       delivery_remark: new FormControl(''),
       search_area_by_keywords: new FormControl(''),
     })
@@ -225,6 +230,14 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
+  getMyaddress(){
+    this.userService.MyAddress({user_id:this.AuthService.userdata.id}).subscribe((data: any) => {
+      if (data.status == 1) {
+        this.my_addresss = data.data
+      }
+    })
+  }
+
   showStep3() {
 
     if (this.is_new_user == true && (this.form.controls['set_password'].invalid || this.form.controls['confirm_password'].invalid || this.form.controls['name'].invalid)) {
@@ -275,6 +288,8 @@ export class CheckoutComponent implements OnInit {
 
   }
 
+  
+
 
   showStep4() {
 
@@ -286,15 +301,28 @@ export class CheckoutComponent implements OnInit {
       return
     } else {
       this.step4 = true
+      this.getMyaddress();
     }
 
 
 
   }
 
+  CheckDeliveryAddress(id:any){
+    if(id>0){
+      this.mountStrpeCard();
+      this.step5 = true
+      this.is_new_address = false;
+    } else {
+      this.step5 = false;
+      this.step6 = false;
+      this.is_new_address = true;
+    }
+  }
+
   showStep5() {
 
-    if (this.form.controls['delivery_name'].invalid || this.form.controls['delivery_email'].invalid || this.form.controls['delivery_email'].invalid || this.form.controls['delivery_phone'].invalid || this.form.controls['delivery_address'].invalid) {
+    if (this.form.controls['delivery_name'].invalid || this.form.controls['delivery_email'].invalid || this.form.controls['delivery_email'].invalid || this.form.controls['delivery_phone'].invalid || this.form.controls['delivery_address'].invalid || this.form.controls['delivery_title'].invalid) {
 
       this.step5 = false;
       this.step6 = false;
@@ -348,6 +376,7 @@ export class CheckoutComponent implements OnInit {
 
   mountStrpeCard() {
 
+  
 
     this.stripe = Stripe(this.stripe_pk);
 
@@ -473,11 +502,13 @@ export class CheckoutComponent implements OnInit {
         n.append('tax_price', this.tax_price)
         n.append('delivery_fee', this.delivery_fee)
         n.append('delivery_address', this.form.value.delivery_address)
+        n.append('delivery_title', this.form.value.delivery_title)
         n.append('delivery_email', this.form.value.delivery_email)
         n.append('delivery_name', this.form.value.delivery_name)
         n.append('delivery_phone', this.form.value.delivery_phone)
         n.append('delivery_remark', this.form.value.delivery_remark)
         n.append('pickup_location', this.form.value.pickup_location)
+        n.append('delivery_address_id', this.form.value.delivery_address_id)
         n.append('is_new_address', this.is_new_address)
 
 

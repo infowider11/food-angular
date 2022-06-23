@@ -15,6 +15,7 @@ export class DashbordComponent implements OnInit {
   is_loading:boolean= false;
   login_error_message:string = '';
   login_success_message:string = '';
+  country:any = [];
 
   constructor(
     private router: Router,
@@ -30,10 +31,17 @@ export class DashbordComponent implements OnInit {
       name: new FormControl(this.AuthService.userdata.name,[Validators.required]),
       phone: new FormControl(this.AuthService.userdata.phone,[Validators.required,Validators.pattern('[- +()0-9]+')]),
       alternate_number: new FormControl(this.AuthService.userdata.alternate_number,[Validators.required,Validators.pattern('[- +()0-9]+')]),
+      country: new FormControl(this.AuthService.userdata.country,[Validators.required])
     })
   }
 
   ngOnInit(): void {
+    this.userService.GetCountry({}).subscribe((data:any)=>{
+      if(data.status = 1){
+        this.country = data.data
+        console.log(this.country)
+      }
+    })
   }
 
   editProfile() {

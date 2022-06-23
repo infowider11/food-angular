@@ -17,7 +17,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CheckoutModule } from './checkout/checkout.module';
 import { UserModule } from './user/user.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
