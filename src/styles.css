@@ -22,5 +22,108 @@
     border-radius: 4px !important;
     margin:2px 0px;
 }
-
+.row.filter-form.mb-5 .col-sm-4 .relative p{
+    margin-bottom: 0px;
+}
+.well.show-fdae .selected-date{
+    align-items: center;
+} 
+.well.show-fdae .selected-date input.mat-input-element{
+    height: 24px;
+    margin-top: 5px;
+}
+.well.show-fdae .mat-form-field-appearance-legacy .mat-form-field-infix{
+    padding: 0px;
+}
+.well.show-fdae .mat-form-field-flex {
+    padding-bottom: 5px;
+}
+.meal-type.my-select a.ng-star-inserted {
+    background: #e1e1e1;
+    padding: 8px;
+    font-size: 14px;
+    display: inherit;
+    color: #000;
+    text-align: center;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+.product-action.d-flex.align-items-center{
+    margin-right: 10px;
+}
+.add-new-flex{
+    display: flex;
+    align-items: center;
+}
+.add-new-flex1{
+    display: flex;
+    align-items: center;
+}
+.table-order .table>:not(:first-child){
+    border:1px solid #e1e1e1;
+}
+.table-order .table tr td{
+    padding: 5px;
+}
+.delivery-address .form-check .form-check-input{
+    margin:0px;
+}
+body .newkdf h5{
+    margin: 20px 0px 10px!important;
+}
+@media (min-width:100px) and (max-width:767px){
+    .row.filter-form.mb-5 .col-sm-4:first-of-type{
+        margin-bottom:20px;
+    }
+    .hero-area-wrapper .owl-carousel .owl-item img{
+        width:100%;
+        margin:0px;
+    }
+    .section-ptb {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .order-step-area .col-lg-4.col-sm-6.text-center.px-0:last-of-type .single-step{
+        margin-bottom: 0px;
+    }
+    .foods-tabs-area.section-ptb.bg-semi-white .col-lg-4.ng-star-inserted {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    .selected-date{
+        display: inline-block;
+        width: 100%;
+    }
+    .product-content{
+        padding: 0px;
+    }
+    .meal-type.my-select a.ng-star-inserted{
+        margin-left: 5px;
+    }
+    .product-content .product-action input{
+        width: 100%;
+    }
+    .product-action.d-flex.align-items-center{
+        width: 100%;
+    }
+    .reviews-info .nav-tabs li a {
+        font-size: 19px;
+        padding: 0px;
+    }
+    .card.rounded-3.mb-4.card_checkout h3{
+        margin: 10px 0px 5px;
+    }
+    .fill-pernal-deila{
+        padding: 15px;
+    }
+    .right-dash{
+        margin-top: 20px;
+    }
+    .set-meal-ms .col-sm-3{
+        margin-top: 20px;
+    }
+    .set-meal-ms .btn-primary{
+        margin:0px;
+    }
+}
 

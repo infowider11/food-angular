@@ -76,6 +76,8 @@
                             <!-- loop -->
                             <div class="selected-date"
                                 *ngFor="let mealOption of mealOptions; let indexOfelement=index;">
+                                
+                            <div class="add-new-flex1">
                                 <div class="date-rows">
                                     <mat-form-field>
                                         <input [matDatepickerFilter]="myHolidayFilter" matInput type="text"
@@ -131,6 +133,8 @@
 
                                 </div>
 
+                              </div>      
+                            <div class="add-new-flex">
                                 <div class="product-action d-flex align-items-center ">
                                     <input type="number" value="1" min="1" [(ngModel)]="mealOption.qunatity">
                                 </div>
@@ -141,6 +145,7 @@
                                         *ngIf="indexOfelement!=0" class="btn btn-danger"><i
                                             class="far fa-trash-alt"></i></a>
                                 </div>
+                            </div>
                             </div>
                             <!-- loop -->
 
